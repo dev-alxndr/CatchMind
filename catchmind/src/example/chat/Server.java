@@ -55,10 +55,8 @@ public class Server {
 class RunServer {
 	private Socket socket;
 	private HashMap<String, PrintWriter> map;
-	private String nick = "";
-	
-	
-	public RunServer(Socket socket, String nick) {
+	private String nick = "";  
+	RunServer(Socket socket, String nick) {
 		map = new HashMap<String, PrintWriter>();
 		this.nick = nick;
 		this.socket = socket;
