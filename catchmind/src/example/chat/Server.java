@@ -13,7 +13,7 @@ import java.util.Iterator;
 
 public class Server {
 	private static final int PORT = 12345;
-	private Socket socket;
+	//private Socket socket;
 	private ServerSocket ss;
 
 	String nick = null;
@@ -27,16 +27,17 @@ public class Server {
 		try {
 			ss = new ServerSocket(PORT);
 			System.out.println("Server Running....");
-
+			HashMap<String, Object> map = new HashMap<String, Object>();
 			while (true) {
 				System.out.println("waiting....");
-				socket = ss.accept();
-
+				Socket socket = ss.accept();
+				
 				br = new BufferedReader(new InputStreamReader(socket.getInputStream()));
 
 				nick = br.readLine();
 				System.out.println(nick + "접속");
-				RunServer sender = new RunServer(socket, nick);
+				
+				RunServer runServer = new RunServer(socket, nick, map);
 				System.out.println("Connected to" + socket.getInetAddress());
 				
 			}
@@ -56,18 +57,36 @@ public class Server {
 
 class RunServer {
 	private Socket socket;
-	private HashMap<String, PrintWriter> map;
+	private HashMap<String, Object> map;
 	private String nick = "";  
+	private PrintWriter pw;
 	
-	
-	RunServer(Socket socket, String nick) {
-		map = new HashMap<String, PrintWriter>();
-		this.nick = nick;
-		this.socket = socket;
+	RunServer(Socket socket, String nick, HashMap<String, Object> map) {
+		try {
+			this.map = map ;// 사용자 객체를 담을 HashMap
+			this.nick = nick;
+			this.socket = socket;
+			
+			pw = new PrintWriter(socket.getOutputStream());
+			join_member(socket, pw, nick);  // HashMap에 저장 
+			
+			Receiver r= new Receiver(socket);
+			r.start();
+			
+			System.out.println("runServer()");
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 
-	public void join_member(Socket socket, PrintWriter writer, String nick) {
-		map.put(nick, writer);
+	public void join_member(Socket socket, Object writer, String nick) {
+		synchronized(map) {
+			map.put(nick, writer);
+		}
+		System.out.println(map.size() + "map");
+		
+		System.out.println("join team");
 	}
 
 	// 클라이언트에게 전송
@@ -92,15 +111,27 @@ class RunServer {
 		@Override 
 		public void run() {
 			String str = "";
-			
-			while(true) {
+			System.out.println("Receiver Start");
 				try {
-					if((str = br.readLine())!=null) {
-						sendAll(str);
-						System.out.println("client :" + str);
+					while(true) {
+						if((str = br.readLine())!=null) {
+							
+							sendAll(str);
+							System.out.println("client :" + str);
+						}
 					}
 				} catch (IOException e) {
 					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}finally {
+				synchronized (map) {
+					map.remove(nick);
+				}
+				try {
+					if(socket != null) {
+						socket.close();
+					}
+				}catch(Exception e) {
 					e.printStackTrace();
 				}
 			}
@@ -109,13 +140,17 @@ class RunServer {
 		
 		// 모든 사용자에게 전파
 		public void sendAll(String str) {
+			int i = 0;
 			synchronized (map) {
-				Collection<PrintWriter> collection = map.values();
+				Collection<Object> collection = map.values();
 				Iterator<?> iter = collection.iterator();
 				while(iter.hasNext()) {
+					
 					PrintWriter pw = (PrintWriter) iter.next();
 					pw.println(str);
 					pw.flush();
+					System.out.println("send complete" + i);
+					i++;
 				}
 			}
 		}

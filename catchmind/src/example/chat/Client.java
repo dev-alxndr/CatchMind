@@ -27,7 +27,13 @@ public class Client {
 
 			GetStr gs = new GetStr(socket);
 			gs.start();
-			nick = s.nextLine();
+			System.out.println("Start to Read");
+			
+			SendStr ss = new SendStr(socket);
+			
+			
+			
+			
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -35,30 +41,41 @@ public class Client {
 	}
 
 	public static void main(String[] args) {
-
 		new Client();
 	}
 
 }
 
-class sendStr extends Thread {
+class SendStr {	
 	private Socket socket;
 	private PrintWriter pw;
 
-	sendStr(Socket socket) {
+	SendStr(Socket socket) {
 		this.socket = socket;
 		try {
 			pw = new PrintWriter(socket.getOutputStream());
+			go_chat();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+	
+	public void go_chat() {
+		BufferedReader keyboard = new BufferedReader(new InputStreamReader(System.in));
+		System.out.println("wating for keyboard");
+		String line = "";
+		try {
+			while( (line = keyboard.readLine()) != null) {
+				pw.println(line);
+				pw.flush();
+			}
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
 
-	public void run() {
-		pw.println();
-		pw.flush();
-	}
 }
 
 class GetStr extends Thread {
@@ -77,10 +94,14 @@ class GetStr extends Thread {
 
 	@Override
 	public void run() {
+		String msg= "";
 		try {
-			if (br.readLine() != null) {
-				System.out.println("서버로 부터옴 : " + br.readLine());
+			while(true) {
+				if ((msg = br.readLine()) != null) {
+					System.out.println("서버로 부터옴 : " + msg);
+				}
 			}
+			
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
