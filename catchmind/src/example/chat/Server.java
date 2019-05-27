@@ -37,7 +37,7 @@ public class Server {
 				System.out.println(nick + "접속");
 				RunServer sender = new RunServer(socket, nick);
 				System.out.println("Connected to" + socket.getInetAddress());
-
+				
 			}
 
 		} catch (IOException e) {

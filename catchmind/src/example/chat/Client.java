@@ -8,12 +8,12 @@ import java.util.Scanner;
 public class Client {
 	private static final int PORT = 12345;
 	public Client() {
+		Scanner s = new Scanner(System.in);
+		String nick = s.nextLine();
 		try {
 			Socket socket = new Socket("localhost", PORT);
 			System.out.println("connted complete");
 			
-			Scanner s = new Scanner(System.in);
-			String nick = s.nextLine();
 			
 			PrintWriter pw = new PrintWriter(socket.getOutputStream());
 			pw.println(nick);
