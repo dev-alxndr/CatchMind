@@ -9,66 +9,73 @@ import java.util.Scanner;
 
 public class Client {
 	private static final int PORT = 12345;
-	private PrintWriter pw;
+
 	public Client() {
+		System.out.println("Input your Nickname");
+		Scanner s = new Scanner(System.in);
+		String nick = s.nextLine();
+		System.out.println("Enjoy>>>>>>>>>>");
 		try {
 			Socket socket = new Socket("localhost", PORT);
-			System.out.println("connted complete");
-			
-			Scanner s = new Scanner(System.in);
-			String nick = s.nextLine();
+
+			PrintWriter pw = new PrintWriter(socket.getOutputStream());
+
 			pw = new PrintWriter(socket.getOutputStream());
 			pw.println(nick);
-			pw.flush();
-			
-			
-			GetStr gs = new GetStr(socket);
+			pw.flush();	// 첫 실행시 닉네임 설정을 위한 전송 
+
+			GetStr gs = new GetStr(socket);		// 서버로 부터 데이터를 받기 위한 쓰레드
 			gs.start();
-			nick = s.nextLine();
-		}catch (IOException e) {
+			SendStr ss = new SendStr(socket, nick);	// 서버로 채팅을 보내기 위한클래
+		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-		} 
+		}
 	}
-	
-	
+
 	public static void main(String[] args) {
-		
 		new Client();
 	}
 
 }
 
-
-class sendStr extends Thread{
+class SendStr {	
 	private Socket socket;
 	private PrintWriter pw;
-	
-	
-	sendStr(Socket socket){
+	private String nick;
+	SendStr(Socket socket, String nick) {
 		this.socket = socket;
+		this.nick = nick;
 		try {
-			pw = new PrintWriter(socket.getOutputStream());
+			pw = new PrintWriter(socket.getOutputStream());	// 서버에게 보내기 위해 스트림을 얻는
+			go_chat();
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
 	
-	public void run() {
-		pw.println(str);
-		pw.flush();
+	public void go_chat() {
+		BufferedReader keyboard = new BufferedReader(new InputStreamReader(System.in));	// 키보드 입력을 위한 버
+		String line = "";
+		try {
+			while( (line = keyboard.readLine()) != null) {
+				pw.println(nick+" : "+line);
+				pw.flush();
+			}
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
+
 }
 
-
-
-
-class GetStr extends Thread{
+class GetStr extends Thread {
 	private Socket socket;
 	private BufferedReader br;
-	
-	GetStr(Socket socket){
+
+	GetStr(Socket socket) {
 		this.socket = socket;
 		try {
 			br = new BufferedReader(new InputStreamReader(socket.getInputStream()));
@@ -77,13 +84,17 @@ class GetStr extends Thread{
 			e.printStackTrace();
 		}
 	}
-	
+
 	@Override
 	public void run() {
+		String msg= "";
 		try {
-			if(br.readLine()!=null) {
-				System.out.println("서버로 부터옴 : "+ br.readLine());
+			while(true) {
+				if ((msg = br.readLine()) != null) {
+					System.out.println(msg);
+				}
 			}
+			
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
