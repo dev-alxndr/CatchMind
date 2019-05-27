@@ -9,31 +9,24 @@ import java.util.Scanner;
 
 public class Client {
 	private static final int PORT = 12345;
-	private PrintWriter pw;
 
 	public Client() {
+		System.out.println("Input your Nickname");
 		Scanner s = new Scanner(System.in);
 		String nick = s.nextLine();
+		System.out.println("Enjoy>>>>>>>>>>");
 		try {
 			Socket socket = new Socket("localhost", PORT);
-			System.out.println("connted complete");
 
 			PrintWriter pw = new PrintWriter(socket.getOutputStream());
 
 			pw = new PrintWriter(socket.getOutputStream());
-
 			pw.println(nick);
-			pw.flush();
+			pw.flush();	// 첫 실행시 닉네임 설정을 위한 전송 
 
-			GetStr gs = new GetStr(socket);
+			GetStr gs = new GetStr(socket);		// 서버로 부터 데이터를 받기 위한 쓰레드
 			gs.start();
-			System.out.println("Start to Read");
-			
-			SendStr ss = new SendStr(socket);
-			
-			
-			
-			
+			SendStr ss = new SendStr(socket, nick);	// 서버로 채팅을 보내기 위한클래
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -49,11 +42,12 @@ public class Client {
 class SendStr {	
 	private Socket socket;
 	private PrintWriter pw;
-
-	SendStr(Socket socket) {
+	private String nick;
+	SendStr(Socket socket, String nick) {
 		this.socket = socket;
+		this.nick = nick;
 		try {
-			pw = new PrintWriter(socket.getOutputStream());
+			pw = new PrintWriter(socket.getOutputStream());	// 서버에게 보내기 위해 스트림을 얻는
 			go_chat();
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
@@ -62,12 +56,11 @@ class SendStr {
 	}
 	
 	public void go_chat() {
-		BufferedReader keyboard = new BufferedReader(new InputStreamReader(System.in));
-		System.out.println("wating for keyboard");
+		BufferedReader keyboard = new BufferedReader(new InputStreamReader(System.in));	// 키보드 입력을 위한 버
 		String line = "";
 		try {
 			while( (line = keyboard.readLine()) != null) {
-				pw.println(line);
+				pw.println(nick+" : "+line);
 				pw.flush();
 			}
 		} catch (IOException e) {
@@ -98,7 +91,7 @@ class GetStr extends Thread {
 		try {
 			while(true) {
 				if ((msg = br.readLine()) != null) {
-					System.out.println("서버로 부터옴 : " + msg);
+					System.out.println(msg);
 				}
 			}
 			
