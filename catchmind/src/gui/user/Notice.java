@@ -8,7 +8,7 @@ import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 
-public class notice extends JFrame implements ActionListener{
+public class Notice extends JFrame implements ActionListener{
 	JLabel lbnotice;
 	JButton btnclose;
 

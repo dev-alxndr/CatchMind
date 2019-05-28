@@ -10,7 +10,7 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
-public class login {
+public class Login {
 	public static void main(String[] args) {
 		login1 login = new login1();
 		login.display();
@@ -69,6 +69,7 @@ class login1 extends JFrame implements ActionListener{
 		setTitle("놓지마! 정신줄!!");
 		setSize(300,400);
 		setLocationRelativeTo(null);
+		setResizable(false);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		
 		add(ptitle);
@@ -87,7 +88,7 @@ class login1 extends JFrame implements ActionListener{
 			
 			//아이디, 비밀번호 값이 없으면
 			if(id.equals("") || pw.equals("")) {
-				notice notice = new notice();
+				Notice notice = new Notice();
 				notice.text("아이디 및 비밀번호를 써주세요");
 				notice.display("로그인 실패");
 			}

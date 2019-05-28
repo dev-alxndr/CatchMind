@@ -10,7 +10,7 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
-public class register extends JFrame{
+public class Register extends JFrame{
 	public static void main(String[] args) {
 		register1 register = new register1();
 		register.display();
@@ -93,7 +93,7 @@ class register1 extends JFrame implements ActionListener{
 			reg_nick = tfnick.getText();
 			System.out.println(reg_id +","+ reg_pw +","+ reg_nick);
 			
-			notice notice = new notice();
+			Notice notice = new Notice();
 			
 			//아이디, 패스워드, 닉네임 값 확인
 			if(reg_id.equals("") || reg_pw.equals("") || reg_nick.equals("")){
