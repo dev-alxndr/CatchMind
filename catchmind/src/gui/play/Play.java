@@ -1,5 +1,6 @@
 package gui.play;
 
+import java.awt.BorderLayout;
 import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -21,46 +22,56 @@ public class Play {
 
 }
 class MakeRoom extends JFrame implements ActionListener{
-	//유저 패널
-	JPanel p_player1, p_player2, p_player3, p_player4;
+	//전체 패널
+	JPanel p_layout = new JPanel(new BorderLayout(5,5));
 	
-	//단어, 그림판
+	//유저 패널
+	JPanel p_user1, p_user2, p_user3, p_user4;
+	JPanel p_leftuser, p_rightuser;
+	
+	//뒤로가기 버튼, 단어, 그림판
 	JPanel p_menubar, p_paintCanvas, p_word;
 	
-	JLabel lb_playerName1, lb_playerName2, lb_playerName3, lb_playerName4;
-	JLabel lb_playerScore1, lb_playerScore2, lb_playerScore3, lb_playerScore4;
-	JLabel lb_scoreView1, lb_scoreView2, lb_scoreView3, lb_scoreView4;
-	JButton btn_send, btn_back;
+	
+	//유저 이름
+	JLabel lb_userName1, lb_userName2, lb_userName3, lb_userName4;
+	
+//	점수 스코어 채팅시 -10점 정답시 +100
+//	JLabel lb_userScore1, lb_userScore2, lb_userScore3, lb_userScore4;
+//	JLabel lb_scoreView1, lb_scoreView2, lb_scoreView3, lb_scoreView4;
+	
+	JButton btn_send, btn_logout;
 	JTextArea ta_chatting;
 	JTextField tf_msg;
 
 	MakeRoom(){
-//		p_menubar = new JPanel(new FlowLayout());
-//		
-		p_player1 = new JPanel(new FlowLayout());
-		p_player2 = new JPanel(new FlowLayout());
-		p_player3 = new JPanel(new FlowLayout());
-		p_player4 = new JPanel(new FlowLayout());
+		p_menubar = new JPanel(new FlowLayout());
+		
+		p_user1 = new JPanel(new FlowLayout());
+		p_user2 = new JPanel(new FlowLayout());
+		p_user3 = new JPanel(new FlowLayout());
+		p_user4 = new JPanel(new FlowLayout());
 		
 		
-		lb_playerName1 = new JLabel("lb_playerName1");
-		lb_playerName2 = new JLabel("lb_playerName2");
-		lb_playerName3 = new JLabel("lb_playerName3");
-		lb_playerName4 = new JLabel("lb_playerName4");
+		lb_userName1 = new JLabel("lb_userName1");
+		lb_userName2 = new JLabel("lb_userName2");
+		lb_userName3 = new JLabel("lb_userName3");
+		lb_userName4 = new JLabel("lb_userName4");
 		
 		ta_chatting = new JTextArea(20,20);
 		tf_msg = new JTextField(15);
 		
 		btn_send = new JButton("보내기");
 		
-		p_player1.add(lb_playerName1);
-		p_player2.add(lb_playerName2);
-		p_player3.add(lb_playerName3);
-		p_player4.add(lb_playerName4);
+//		p_layout.add();
+		p_user1.add(lb_userName1);
+		p_user2.add(lb_userName2);
+		p_user3.add(lb_userName3);
+		p_user4.add(lb_userName4);
 		
-		p_player1.add(ta_chatting);
-		p_player1.add(tf_msg);
-		p_player1.add(btn_send);
+		p_user1.add(ta_chatting);
+		p_user1.add(tf_msg);
+		p_user1.add(btn_send);
 		
 		btn_send.addActionListener(this);
 	}
@@ -74,10 +85,10 @@ class MakeRoom extends JFrame implements ActionListener{
 		setResizable(true);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		
-		add(p_player1);
-		add(p_player2);
-		add(p_player3);
-		add(p_player4);
+		add(p_user1);
+		add(p_user2);
+		add(p_user3);
+		add(p_user4);
 	}
 	@Override
 	public void actionPerformed(ActionEvent e) {
