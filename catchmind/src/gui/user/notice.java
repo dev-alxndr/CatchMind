@@ -29,6 +29,7 @@ public class notice extends JFrame implements ActionListener{
 		setLayout(new FlowLayout());
 		setSize(300,200);
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+		setLocationRelativeTo(null);
 	}
 
 	@Override

@@ -68,6 +68,7 @@ class login1 extends JFrame implements ActionListener{
 		setLayout(new FlowLayout());
 		setTitle("놓지마! 정신줄!!");
 		setSize(300,400);
+		setLocationRelativeTo(null);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		
 		add(ptitle);

@@ -72,6 +72,8 @@ class register1 extends JFrame implements ActionListener{
 		setTitle("놓지마! 정신줄!!");
 		setSize(300,400);
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+		setLocationRelativeTo(null);
+		
 		add(ptitle);
 		add(pid);
 		add(pps);
