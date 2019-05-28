@@ -1,6 +1,8 @@
 package gui.user;
 
 import java.awt.FlowLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -16,13 +18,16 @@ public class register extends JFrame{
 }
 
 
-class register1 extends JFrame{
+class register1 extends JFrame implements ActionListener{
 	JPanel ptitle, pid, pps, pnick, pbtn;
 	JLabel lbtitle, lbid, lbpw, lbnick;
 	JButton btnback, btnregister;
 	JTextField tfid, tfpw, tfnick;
+	String reg_id, reg_pw, reg_nick;
+	String err="";
 	
 	register1() {
+		//객체생성
 		ptitle = new JPanel(new FlowLayout());
 		pid = new JPanel(new FlowLayout());
 		pps = new JPanel(new FlowLayout());
@@ -32,16 +37,20 @@ class register1 extends JFrame{
 		lbtitle = new JLabel("회원가입 화면 입니다.");
 		lbid = new JLabel("ID");
 		lbpw = new JLabel("PW");
-		lbnick = new JLabel("NickName");
+		lbnick = new JLabel("Nickname");
 		
-		tfid = new JTextField(20);
-		tfpw = new JTextField(20);
-		tfnick = new JTextField(20);
+		tfid = new JTextField(15);
+		tfpw = new JTextField(15);
+		tfnick = new JTextField(15);
 		
-		
+		btnregister = new JButton("가입완료");
 		btnback = new JButton("돌아가기");
-		btnregister = new JButton("회원가입");
 		
+		//버튼
+		btnregister.addActionListener(this);	//가입완료
+		btnback.addActionListener(this);		//돌아가기
+		
+		//Panel에 추가
 		ptitle.add(lbtitle);
 		
 		pid.add(lbid);
@@ -56,15 +65,54 @@ class register1 extends JFrame{
 		pbtn.add(btnregister);
 		pbtn.add(btnback);
 	}
+	
 	void display() {
 		setVisible(true);
 		setLayout(new FlowLayout());
 		setTitle("놓지마! 정신줄!!");
-		setSize(500,400);
+		setSize(300,400);
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+		setLocationRelativeTo(null);
+		
 		add(ptitle);
 		add(pid);
 		add(pps);
+		add(pnick);
 		add(pbtn);
+	}
+
+	@Override
+	public void actionPerformed(ActionEvent e) {
+		//회원가입 완료 버튼을 누를 시
+		if(e.getSource() == btnregister) {
+			System.out.println("[register]회원가입완료 버튼");
+			
+			//DB는 배우면 적용, 아이디, 패스워드, 닉네임 저장
+			reg_id = tfid.getText();
+			reg_pw = tfpw.getText();
+			reg_nick = tfnick.getText();
+			System.out.println(reg_id +","+ reg_pw +","+ reg_nick);
+			
+			notice notice = new notice();
+			
+			//아이디, 패스워드, 닉네임 값 확인
+			if(reg_id.equals("") || reg_pw.equals("") || reg_nick.equals("")){
+				notice.text("빈칸을 반드시 입력해 주세요");
+				notice.display("로그인 실패");
+			}
+			
+			//회원가입 성공시
+			if(!reg_id.equals("") && !reg_pw.equals("") && !reg_nick.equals("")) {
+				notice.text("회원가입에 성공하셨습니다!!");
+				notice.display("회원가입 안내");
+				dispose();
+			}
+		}
+		
+		//돌아가기 버튼을 누를 시
+		if(e.getSource() == btnback) {
+			System.out.println("[register]돌아가기 버튼");
+			dispose();
+		}
 	}
 }
