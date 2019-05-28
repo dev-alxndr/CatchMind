@@ -4,35 +4,51 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
+import java.io.ObjectOutputStream.PutField;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.rmi.RemoteException;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.StringTokenizer;
 
+
+
+
 public class Server {
 	private static final int PORT = 12345;
 	private ServerSocket ss;
-
-	String nick = null;
+	private String nick = null;
 	private BufferedReader br;
-
-	public Server() {
-
+	private UserInfoMap userInfoMap;
+	
+	public Server() { 
+		userInfoMap = new UserInfoMap();	
 	}
-
+/*
+ *  while (it.hasNext()) {
+            try {
+                PrintWriter out = (PrintWriter) userInfoMap.get().get(it.next()).pw;
+                out.println(msg);
+                out.flush();
+            } catch (Exception e) {
+            }
+        } // while
+ * */
 	// 클라이언트 접수 대기....
 	public void Connection() {
+		
 		try {
 			ss = new ServerSocket(PORT);
 			System.out.println("Server Running....");
-			HashMap<String, Object> map = new HashMap<String, Object>();
+			//HashMap<String, Object> map = new HashMap<String, Object>();
+			
 			while (true) {
 				System.out.println("waiting....");
 				Socket socket = ss.accept(); // socket은 클라이언트마다 새로 생
 
-				RunServer runServer = new RunServer(socket, map);
+				RunServer runServer = new RunServer(socket, userInfoMap);
 			}
 
 		} catch (IOException e) {
@@ -52,12 +68,14 @@ class RunServer {
 	private String nick = "";
 	private PrintWriter pw;
 	private BufferedReader br;
+	private UserInfoMap userInfoMap;
 	
-	RunServer(Socket socket, HashMap<String, Object> map) {
+	RunServer(Socket socket, UserInfoMap userInfoMap) {
 		try {
 			this.map = map;// 사용자 객체를 담을 HashMap
 			this.socket = socket;
-
+			this.userInfoMap = userInfoMap;
+			
 			br = new BufferedReader(new InputStreamReader(socket.getInputStream()));
 
 			nick = br.readLine();
@@ -74,9 +92,12 @@ class RunServer {
 		}
 	}
 
-	public void join_member(Socket socket, Object writer, String nick) {
+	public void join_member(PrintWriter writer, String nick) {
 		synchronized (map) {
 			map.put(nick, writer);
+		}
+		if(map.size() >= 4) {
+			
 		}
 	}
 
@@ -89,7 +110,7 @@ class RunServer {
 		private BufferedReader br;
 		private StringTokenizer st;
 		private AccessDB db;
-
+		
 		public Receiver(Socket socket) {
 			this.socket = socket;
 			db = new AccessDB();
@@ -119,10 +140,12 @@ class RunServer {
 							case 110:
 								set_userInfo(message);
 								break;
-								
+							case 200:
+								readyForGame(message);
+								break;
+							case 300:
+								break;
 						}
-								
-						
 						//System.out.println("Protocol " +message );
 						//sendAll(str);
 						
@@ -145,6 +168,13 @@ class RunServer {
 			}
 		}
 		
+		void readyForGame(String nick) {
+			String message = "200#"+nick+"님이 입장하셨습니다.";
+			join_member(pw, nick); // HashMap에 저장
+			sendAll(message);
+		}
+		
+		
 		void set_userInfo(String message) {	// 회원가입 메소드
 			st = new StringTokenizer(message, ",");
 			String id = st.nextToken();
@@ -163,11 +193,7 @@ class RunServer {
 			}
 			
 		}
-
-		
-		
-		
-		
+	
 		void do_login(String msg) {	// 로그인시 메소드
 			
 			st = new StringTokenizer(msg, ",");
@@ -176,11 +202,10 @@ class RunServer {
 			System.out.println(id + pw);
 			int result = db.do_login(id, password);
 				if(result == 1) {	
-					join_member(socket, pw, nick); // HashMap에 저장
-					pw.println("120#"+result); // 1 = sucess
+					pw.println("100#"+result); // 1 = sucess
 					pw.flush();
 				}else {
-					pw.println("120#"+result); // 0 = failed
+					pw.println("100#"+result); // 0 = failed
 					pw.flush();
 				}
 			
