@@ -145,8 +145,22 @@ class RunServer {
 			}
 		}
 		
-		void set_userInfo(String message) {
-			
+		void set_userInfo(String message) {	// 회원가입 메소드
+			st = new StringTokenizer(message, ",");
+			String id = st.nextToken();
+			String password = st.nextToken();
+			String nick = st.nextToken();
+			String msg = "";
+			int result = db.set_userInfo(id, password, nick);
+			if(result == 1) {
+				msg = "110#"+result;
+				pw.println(msg);
+				pw.flush();
+			}else {
+				msg = "110#"+result;
+				pw.println(msg);
+				pw.flush();
+			}
 			
 		}
 
