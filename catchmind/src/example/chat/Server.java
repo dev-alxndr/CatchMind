@@ -52,7 +52,7 @@ class RunServer {
 	private String nick = "";
 	private PrintWriter pw;
 	private BufferedReader br;
-
+	
 	RunServer(Socket socket, HashMap<String, Object> map) {
 		try {
 			this.map = map;// 사용자 객체를 담을 HashMap
@@ -64,7 +64,7 @@ class RunServer {
 			System.out.println(nick + "접속");
 
 			pw = new PrintWriter(socket.getOutputStream());
-			join_member(socket, pw, nick); // HashMap에 저장
+			
 
 			Receiver r = new Receiver(socket);
 			r.start();
@@ -88,9 +88,11 @@ class RunServer {
 		private Socket socket;
 		private BufferedReader br;
 		private StringTokenizer st;
+		private AccessDB db;
 
 		public Receiver(Socket socket) {
 			this.socket = socket;
+			db = new AccessDB();
 			try {
 				br = new BufferedReader(new InputStreamReader(socket.getInputStream()));
 			} catch (IOException e) {
@@ -102,7 +104,7 @@ class RunServer {
 		public void run() {
 			String str = "";
 			String message = "";
-            int num = 0;
+            int num = 1;
 			try {
 				while (true) {
 					if ((str = br.readLine()) != null) {
@@ -110,13 +112,20 @@ class RunServer {
 						num = Integer.parseInt(st.nextToken());
 						
 						message = st.nextToken();
-						
-						if(num == 100) {
-							set_login(message);
+						switch(num) {
+							case 100:// try Login
+								do_login(message);	
+								break;
+							case 110:
+								set_userInfo(message);
+								break;
+								
 						}
+								
+						
 						//System.out.println("Protocol " +message );
-						sendAll(str);
-						System.out.println(str);
+						//sendAll(str);
+						
 					}
 				}
 			} catch (IOException e) {
@@ -136,17 +145,40 @@ class RunServer {
 			}
 		}
 		
-		void set_login(String msg) {
-			System.out.println("login : "+ msg);
+		void set_userInfo(String message) {
+			
+			
 		}
 
+		
+		
+		
+		
+		void do_login(String msg) {	// 로그인시 메소드
+			
+			st = new StringTokenizer(msg, ",");
+			String id = st.nextToken();
+			String password = st.nextToken();
+			System.out.println(id + pw);
+			int result = db.do_login(id, password);
+				if(result == 1) {	
+					join_member(socket, pw, nick); // HashMap에 저장
+					pw.println("120#"+result); // 1 = sucess
+					pw.flush();
+				}else {
+					pw.println("120#"+result); // 0 = failed
+					pw.flush();
+				}
+			
+		}
+		
 		// 모든 사용자에게 전파
 		public void sendAll(String str) {
 			synchronized (map) {
 				Collection<Object> collection = map.values();
 				Iterator<?> iter = collection.iterator();
 				while (iter.hasNext()) {
-					PrintWriter pw = (PrintWriter) iter.next();
+					pw = (PrintWriter) iter.next();
 					pw.println(str);
 					pw.flush();
 				}
