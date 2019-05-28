@@ -9,6 +9,7 @@ import java.net.Socket;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.Iterator;
+import java.util.StringTokenizer;
 
 public class Server {
 	private static final int PORT = 12345;
@@ -86,6 +87,7 @@ class RunServer {
 		//아아아아아..........
 		private Socket socket;
 		private BufferedReader br;
+		private StringTokenizer st;
 
 		public Receiver(Socket socket) {
 			this.socket = socket;
@@ -99,9 +101,20 @@ class RunServer {
 		@Override
 		public void run() {
 			String str = "";
+			String message = "";
+            int num = 0;
 			try {
 				while (true) {
 					if ((str = br.readLine()) != null) {
+						st = new StringTokenizer(str,"#");						
+						num = Integer.parseInt(st.nextToken());
+						
+						message = st.nextToken();
+						
+						if(num == 100) {
+							set_login(message);
+						}
+						//System.out.println("Protocol " +message );
 						sendAll(str);
 						System.out.println(str);
 					}
@@ -121,6 +134,10 @@ class RunServer {
 					e.printStackTrace();
 				}
 			}
+		}
+		
+		void set_login(String msg) {
+			System.out.println("login : "+ msg);
 		}
 
 		// 모든 사용자에게 전파
