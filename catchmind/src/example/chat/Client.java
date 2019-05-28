@@ -19,7 +19,7 @@ public class Client {
 		String nick = s.nextLine();
 		System.out.println("Enjoy>>>>>>>>>>");
 		try {
-			Socket socket = new Socket("localhost", PORT);
+			Socket socket = new Socket("192.168.0.6", PORT);
 
 			PrintWriter pw = new PrintWriter(socket.getOutputStream());
 
