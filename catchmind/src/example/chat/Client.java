@@ -37,8 +37,8 @@ public class Client {
 		new Client();
 	}
 
-}
 
+}
 class SendStr {	
 	private Socket socket;
 	private PrintWriter pw;
@@ -68,10 +68,17 @@ class SendStr {
 			e.printStackTrace();
 		}
 	}
-
+	
+	public String user_draw() {// 사용자가 그림을 그릴때 서버로 좌표값을 전송하는 메소드
+		
+		
+		return ""; 
+	}
+	
+	
 }
 
-class GetStr extends Thread {
+class GetStr extends Thread {		// 클라이언트는 서버로 부터 정보를 받아서 그린다.
 	private Socket socket;
 	private BufferedReader br;
 
@@ -100,4 +107,6 @@ class GetStr extends Thread {
 			e.printStackTrace();
 		}
 	}
+	
+	
 }
