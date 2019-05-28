@@ -60,7 +60,7 @@ class SendStr {
 		String line = "";
 		try {
 			while( (line = keyboard.readLine()) != null) {
-				pw.println(nick+" : "+line);
+				pw.println(line);
 				pw.flush();
 			}
 		} catch (IOException e) {
