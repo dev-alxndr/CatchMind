@@ -83,7 +83,7 @@ class RunServer {
 
 	// 클라이언트로 부터 받음
 	class Receiver extends Thread {
-
+		//아아아아아..........
 		private Socket socket;
 		private BufferedReader br;
 
