@@ -170,9 +170,9 @@ public class Server {
 				String message = "200#"+nick+"#님이 입장하셨습니다.";
 				System.out.println("--"+nick);
 				join_member(pw, nick); // HashMap에 저장
-				pw.println(message);
-				pw.flush();
-				//sendAll(message);
+				//pw.println(message);
+				//pw.flush();
+				sendAll(message);
 			}
 			
 			
