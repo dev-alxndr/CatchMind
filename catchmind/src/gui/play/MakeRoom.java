@@ -50,7 +50,7 @@ public class MakeRoom extends JFrame implements ActionListener{
 	public JTextField tf_msg;
 	Client client;
 
-	public void launch_client(Client client) {
+	public void set_client(Client client) {
 		this.client = client;
 		System.out.println("dddddd");
 	}

@@ -74,10 +74,10 @@ public class Server {
 				this.socket = socket;
 				this.userInfoMap = userInfoMap;
 				
-				br = new BufferedReader(new InputStreamReader(socket.getInputStream()));
-
-				nick = br.readLine();
-				System.out.println(nick + "접속");
+//				br = new BufferedReader(new InputStreamReader(socket.getInputStream()));
+//
+//				nick = br.readLine();
+//				System.out.println(nick + "접속");
 
 				pw = new PrintWriter(socket.getOutputStream());
 				
@@ -112,6 +112,7 @@ public class Server {
 			
 			public Receiver(Socket socket) {
 				this.socket = socket;
+				
 				db = new AccessDB();
 				try {
 					br = new BufferedReader(new InputStreamReader(socket.getInputStream()));
@@ -204,7 +205,6 @@ public class Server {
 				st = new StringTokenizer(msg, ",");
 				String id = st.nextToken();
 				String password = st.nextToken();
-				System.out.println(id + password);
 				int result = db.do_login(id, password);
 					if(result == 1) {	
 						pw.println("100#"+result); // 1 = sucess

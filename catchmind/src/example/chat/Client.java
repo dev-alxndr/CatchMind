@@ -8,40 +8,52 @@ import java.net.Socket;
 import java.util.Scanner;
 import java.util.StringTokenizer;
 import gui.play.MakeRoom;
+import gui.user.Login;
 
 
 public class Client {
 	private static final int PORT = 12345;
 	private MakeRoom makeRoom;
+	private Login login;
 	private PrintWriter pw;
 	String nick;
-	public Client() {
-		makeRoom = new MakeRoom();
-		makeRoom.display();
-		makeRoom.launch_client(this);
-		
-		System.out.println("Input your Nickname");
-		Scanner s = new Scanner(System.in);
-		nick = s.nextLine();
-		System.out.println("Enjoy>>>>>>>>>>");
+	private Client client;
+	public void setLogin(Login login) {
+		System.out.println("SetLogin");
+		this.login = login;
+	}
+	public void setClient(Client client) {
+		this.client = client;
+	}
+	public Client(Login login) {
+		this.login = login;
+		login.setClient(this);
+		login.display();
+		runClient();
+	}
+	
+	public void runClient() {
+		//makeRoom = new MakeRoom();
+		//makeRoom.display();
+		//makeRoom.launch_client(this);
 		try {
 			Socket socket = new Socket("192.168.0.6", PORT);
 
 			pw = new PrintWriter(socket.getOutputStream());
-
-			// pw = new PrintWriter(socket.getOutputStream());
-			pw.println(nick);
-			pw.flush(); // 첫 실행시 닉네임 설정을 위한 전송
-
+			
 			GetStr gs = new GetStr(socket); // 서버로 부터 데이터를 받기 위한 쓰레드
 			gs.start();
 			SendStr ss = new SendStr(socket, nick); // 서버로 채팅을 보내기 위한클래
+			System.out.println("Server Ready");
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
-		
+	}
+	
+	
+	public Client() {
+		runClient();
 	}
 	// 사용자 채팅 전
 	public void send_msg(String message) {
@@ -51,13 +63,17 @@ public class Client {
 		pw.println(msg);
 		pw.flush();
 	}
-	public static void main(String[] args) {
-		new Client();
+	public void do_login(String id, String password){
+		System.out.println("do_Login : "+id+"/"+password);
+		String str = "100#"+id+","+password;
+		nick = id;
+		pw.println(str);
+		pw.flush();
 	}
 
 	class SendStr {
 		private Socket socket;
-		private PrintWriter pw;
+		//private PrintWriter pw;
 		private String nick;
 		// private Play play;
 
@@ -65,13 +81,6 @@ public class Client {
 			this.socket = socket;
 			this.nick = nick;
 
-			try {
-				pw = new PrintWriter(socket.getOutputStream()); // 서버에게 보내기 위해 스트림을 얻는
-				go_chat();
-			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
 		}
 		
 		
@@ -103,7 +112,7 @@ public class Client {
 		private BufferedReader br;
 		private StringTokenizer st;
 		int people = 0;
-
+		
 		GetStr(Socket socket) {
 			this.socket = socket;
 			try {
@@ -129,7 +138,18 @@ public class Client {
 						
 						switch (num) {
 						case 100: //Login
-							makeRoom.ta_chatting.append(message);
+							//makeRoom.ta_chatting.append(message);
+							if(message.equals("1")) {
+								login.setVisible(false);
+								MakeRoom mr = new MakeRoom();
+								mr.set_client(client);
+								mr.display();
+								
+							}else {
+								System.out.println(message + "/ denied");
+							}
+							
+							break;
 						case 200: //Ready for Game
 							st = new StringTokenizer(message,"#");
 							String id = st.nextToken();
@@ -143,6 +163,8 @@ public class Client {
 							break;
 						case 400:	// chat
 							makeRoom.ta_chatting.append(message+" \n");
+							makeRoom.tf_msg.setText("");
+							break;
 						}
 					}
 				}
@@ -154,7 +176,4 @@ public class Client {
 		}
 
 	}
-
-	
-
 }

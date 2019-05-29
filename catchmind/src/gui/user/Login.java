@@ -10,23 +10,23 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
-public class Login {
-	public static void main(String[] args) {
-		login1 login = new login1();
-		login.display();
-	}
-}
+import example.chat.Client;
 
-class login1 extends JFrame implements ActionListener{
-	
-	
-	JPanel ptitle, pid, pps, pbtn;
-	JLabel lbtitle, lbid, lbpw;
-	JButton btnlogin, btnregister;
-	JTextField tfid, tfpw;
-	String id, pw;
-	
-	login1() {
+public class Login extends JFrame implements ActionListener {
+
+	/**
+	 * 
+	 */
+	//private static final long serialVersionUID = 1L;
+	public JPanel ptitle, pid, pps, pbtn;
+	public JLabel lbtitle, lbid, lbpw;
+	public JButton btnlogin, btnregister;
+	public JTextField tfid, tfpw;
+	public String id, pw;
+	public Client client;
+
+	public Login() {
+		//this.client = client;
 		//객체생성
 		ptitle = new JPanel(new FlowLayout());
 		pid = new JPanel(new FlowLayout());
@@ -61,46 +61,58 @@ class login1 extends JFrame implements ActionListener{
 		
 //		tfid.setText("");
 //		tfpw.setText("");
-	}
-	
-	void display() {
-		setVisible(true);
-		setLayout(new FlowLayout());
-		setTitle("놓지마! 정신줄!!");
-		setSize(300,400);
-		setLocationRelativeTo(null);
-		setResizable(false);
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		
 		add(ptitle);
 		add(pid);
 		add(pps);
 		add(pbtn);
 	}
 
+	public void display() {
+		setVisible(true);
+		setLayout(new FlowLayout());
+		setTitle("놓지마! 정신줄!!");
+		setSize(300, 400);
+		setLocationRelativeTo(null);
+		setResizable(false);
+		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+	}
+	public void setClient(Client client) {
+		this.client = client;
+	}
+	
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		//로그인 버튼을 눌렀을 시
-		if(e.getSource() == btnlogin) {
+		// 로그인 버튼을 눌렀을 시
+		if (e.getSource() == btnlogin) {
 			System.out.println("[login]로그인 버튼이에요");
 			id = tfid.getText();
 			pw = tfpw.getText();
-			
-			//아이디, 비밀번호 값이 없으면
-			if(id.equals("") || pw.equals("")) {
+
+			// 아이디, 비밀번호 값이 없으면
+			if (id.equals("") || pw.equals("")) {
 				Notice notice = new Notice();
 				notice.text("아이디 및 비밀번호를 써주세요");
 				notice.display("로그인 실패");
+			}else {
+				client.do_login(id,pw);
 			}
 		}
 
-		//회원가입 버튼을 눌렀을 시
-		if(e.getSource() == btnregister) {
+		// 회원가입 버튼을 눌렀을 시
+		if (e.getSource() == btnregister) {
 			System.out.println("[login]회원가입 하러 갈게요");
-			
-			//회원가입 화면으로 이동
+
+			// 회원가입 화면으로 이동
 			register1 reg = new register1();
 			reg.display();
 		}
 	}
+	public static void main(String[] args) {
+		Login login = new Login();
+		Client client = new Client(login);
+		client.setClient(client);
+		
+		
+	}
 }
+
