@@ -13,18 +13,20 @@ import gui.play.MakeRoom;
 public class Client {
 	private static final int PORT = 12345;
 	private MakeRoom makeRoom;
+	private PrintWriter pw;
+	String nick;
 	public Client() {
 		makeRoom = new MakeRoom(this);
 		makeRoom.display();
 		
 		System.out.println("Input your Nickname");
 		Scanner s = new Scanner(System.in);
-		String nick = s.nextLine();
+		nick = s.nextLine();
 		System.out.println("Enjoy>>>>>>>>>>");
 		try {
 			Socket socket = new Socket("192.168.0.6", PORT);
 
-			PrintWriter pw = new PrintWriter(socket.getOutputStream());
+			pw = new PrintWriter(socket.getOutputStream());
 
 			// pw = new PrintWriter(socket.getOutputStream());
 			pw.println(nick);
@@ -37,8 +39,17 @@ public class Client {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		
+		
 	}
-
+	// 사용자 채팅 전
+			public void send_msg(String message) {
+				String status = "400#";
+				String msg = status+"["+nick+"] "+ message;
+				System.out.println(msg);
+				pw.println(msg);
+				pw.flush();
+			}
 	public static void main(String[] args) {
 		new Client();
 	}
@@ -61,7 +72,10 @@ public class Client {
 				e.printStackTrace();
 			}
 		}
-
+		
+		
+	
+		
 		public void go_chat() {
 			BufferedReader keyboard = new BufferedReader(new InputStreamReader(System.in)); // 키보드 입력을 위한 버
 			String line = "";
@@ -87,6 +101,7 @@ public class Client {
 		private Socket socket;
 		private BufferedReader br;
 		private StringTokenizer st;
+		int people = 0;
 
 		GetStr(Socket socket) {
 			this.socket = socket;
@@ -112,6 +127,8 @@ public class Client {
 						message = st.nextToken();
 						
 						switch (num) {
+						case 100:
+							makeRoom.ta_chatting.append(message);
 						case 200:
 							st = new StringTokenizer(message,"#");
 							String id = st.nextToken();
@@ -119,10 +136,12 @@ public class Client {
 								String note = st.nextToken();	
 								System.out.println("note : "+note);
 							}
-							
-							
+							people++;
 							makeRoom.lb_userName1.setText(id);
+							System.out.println(""+people);
 							break;
+						case 400:
+							
 						}
 					}
 				}
@@ -134,5 +153,7 @@ public class Client {
 		}
 
 	}
+
+	
 
 }

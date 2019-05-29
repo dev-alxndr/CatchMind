@@ -48,8 +48,9 @@ public class MakeRoom extends JFrame implements ActionListener{
 	public JButton btn_send, btn_logout;
 	public JTextArea ta_chatting;
 	public JTextField tf_msg;
+	Client client;
 	public MakeRoom(){
-		
+		client = new Client();
 	}
 	//삭제할 버튼(자리 확인용)
 	JButton btn1 = new JButton("자리 확인용 버튼");
@@ -188,8 +189,9 @@ public class MakeRoom extends JFrame implements ActionListener{
 			//널값이 아니면
 			if(!chat.equals(""))
 			{
-				ta_chatting.append(chat + "\n");
-				tf_msg.setText("");
+				client.send_msg(chat);
+				//ta_chatting.append(chat + "\n");
+				//tf_msg.setText("");
 			}
 			else if(chat.equals("")) {
 				

@@ -91,8 +91,11 @@ public class Server {
 		}
 
 		public void join_member(PrintWriter writer, String nick) {
-			userInfoMap.add(nick, writer);
-			if(userInfoMap.size() >= 4) {
+			
+			if(userInfoMap.size() < 4) {
+				userInfoMap.add(nick, writer);
+				
+			}else {				
 				System.out.println("over 4");
 			}
 		}
@@ -139,9 +142,14 @@ public class Server {
 								case 200:
 									readyForGame(message);
 									break;
-								case 300:
-									
+								case 300:									
 									break;
+								case 400:
+									System.out.println(message);
+									
+									sendAll(message);
+									//String str = "";
+									//sendAll(str);
 							}
 						}
 					}
