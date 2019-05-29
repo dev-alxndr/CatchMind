@@ -135,7 +135,7 @@ class MakeRoom extends JFrame implements ActionListener{
 //		add(ta_chatting);
 //		add(tf_msg);
 		
-		p_layout.setPreferredSize(new Dimension(600, 700));
+		p_layout.setPreferredSize(new Dimension(1000, 1000));
 		p_layout.setBorder(BorderFactory.createLineBorder(Color.black));
 		p_menubar.setBorder(BorderFactory.createLineBorder(Color.black));
 		p_leftuser.setBorder(BorderFactory.createLineBorder(Color.black));
@@ -144,6 +144,10 @@ class MakeRoom extends JFrame implements ActionListener{
 		p_user2.setBorder(BorderFactory.createLineBorder(Color.black));
 		p_user3.setBorder(BorderFactory.createLineBorder(Color.black));
 		p_user4.setBorder(BorderFactory.createLineBorder(Color.black));
+		p_user1.setPreferredSize(new Dimension(200,200));
+		p_user2.setPreferredSize(new Dimension(200,200));
+		p_user3.setPreferredSize(new Dimension(200,200));
+		p_user4.setPreferredSize(new Dimension(200,200));
 		p_center.setBorder(BorderFactory.createLineBorder(Color.black));
 		p_chat.setBorder(BorderFactory.createLineBorder(Color.black));
 		p_chatlog.setBorder(BorderFactory.createLineBorder(Color.black));
@@ -162,7 +166,7 @@ class MakeRoom extends JFrame implements ActionListener{
 		setVisible(true);
 		setLayout(new FlowLayout());
 		setTitle("놓지마! 정신줄!!");
-		setSize(600,600);
+		setSize(1500,1500);
 		setLocationRelativeTo(null);
 		setResizable(true);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
