@@ -147,7 +147,7 @@ public class Server {
 								case 400:
 									System.out.println(message);
 									
-									sendAll(message);
+									sendAll("400#"+message);
 									//String str = "";
 									//sendAll(str);
 							}

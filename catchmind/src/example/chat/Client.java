@@ -141,7 +141,8 @@ public class Client {
 							System.out.println(""+people);
 							break;
 						case 400:
-							
+							makeRoom.ta_chatting.append(message);
+							System.out.println(message);
 						}
 					}
 				}
