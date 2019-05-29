@@ -22,7 +22,6 @@ public class Server {
 	private String nick = null;
 	private BufferedReader br;
 	private UserInfoMap userInfoMap;
-	
 	public Server() { 
 		userInfoMap = new UserInfoMap();	
 	}
@@ -59,170 +58,174 @@ public class Server {
 		Server server = new Server();	/// launch
 		server.Connection();
 	}
-}
-
-class RunServer {
-	private Socket socket;
-	//private HashMap<String, Object> map;
-	private String nick = "";
-	private PrintWriter pw;
-	private BufferedReader br;
-	private UserInfoMap userInfoMap;
 	
-	RunServer(Socket socket, UserInfoMap userInfoMap) {
-		try {
-			//this.map = map;// 사용자 객체를 담을 HashMap
-			this.socket = socket;
-			this.userInfoMap = userInfoMap;
-			
-			br = new BufferedReader(new InputStreamReader(socket.getInputStream()));
-
-			nick = br.readLine();
-			System.out.println(nick + "접속");
-
-			pw = new PrintWriter(socket.getOutputStream());
-			
-
-			Receiver r = new Receiver(socket);
-			r.start();
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-	}
-
-	public void join_member(PrintWriter writer, String nick) {
-		userInfoMap.add(nick, writer);
-		if(userInfoMap.size() >= 4) {
-			System.out.println("over 4");
-		}
-	}
-
-	// 클라이언트에게 전송
-
-	// 클라이언트로 부터 받음
-	class Receiver extends Thread {
-		//아아아아아..........
+	class RunServer {
 		private Socket socket;
+		//private HashMap<String, Object> map;
+		private String nick = "";
+		private PrintWriter pw;
 		private BufferedReader br;
-		private StringTokenizer st;
-		private AccessDB db;
+		private UserInfoMap userInfoMap;
 		
-		public Receiver(Socket socket) {
-			this.socket = socket;
-			db = new AccessDB();
+		
+		RunServer(Socket socket, UserInfoMap userInfoMap) {
 			try {
+				//this.map = map;// 사용자 객체를 담을 HashMap
+				this.socket = socket;
+				this.userInfoMap = userInfoMap;
+				
 				br = new BufferedReader(new InputStreamReader(socket.getInputStream()));
+
+				nick = br.readLine();
+				System.out.println(nick + "접속");
+
+				pw = new PrintWriter(socket.getOutputStream());
+				
+
+				Receiver r = new Receiver(socket);
+				r.start();
 			} catch (IOException e) {
+				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 		}
 
-		@Override
-		public void run() {
-			String str = "";
-			String message = "";
-            int num = 1;
-			try {
-				while (true) {
-					if ((str = br.readLine()) != null) {
-						st = new StringTokenizer(str,"#");						
-						num = Integer.parseInt(st.nextToken());
-						
-						message = st.nextToken();
-						switch(num) {
-							case 100:// try Login
-								do_login(message);	
-								break;
-							case 110:
-								set_userInfo(message);
-								break;
-							case 200:
-								readyForGame(message);
-								break;
-							case 300:
-								break;
-						}
-						//System.out.println("Protocol " +message );
-						//sendAll(str);
-						
-					}
-				}
-			} catch (IOException e) {
-				e.printStackTrace();
-			} finally {
-				UserInfo exitUser = userInfoMap.getUser(nick);
-				userInfoMap.remove(nick);
-				if (exitUser.host) {
-                    if (userInfoMap.size() >= 1) {
-                        userInfoMap.getRandomUser().host = true;
-                    }
-                }
-				
+		public void join_member(PrintWriter writer, String nick) {
+			userInfoMap.add(nick, writer);
+			if(userInfoMap.size() >= 4) {
+				System.out.println("over 4");
+			}
+		}
+
+		// 클라이언트에게 전송
+
+		// 클라이언트로 부터 받음
+		class Receiver extends Thread {
+			//아아아아아..........
+			private Socket socket;
+			private BufferedReader br;
+			private StringTokenizer st;
+			private AccessDB db;
+			
+			public Receiver(Socket socket) {
+				this.socket = socket;
+				db = new AccessDB();
 				try {
-					if (socket != null) {
-						socket.close();
-					}
-				} catch (Exception e) {
+					br = new BufferedReader(new InputStreamReader(socket.getInputStream()));
+				} catch (IOException e) {
 					e.printStackTrace();
 				}
 			}
-		}
-		
-		void readyForGame(String nick) {
-			String message = "200#"+nick+"님이 입장하셨습니다.";
-			join_member(pw, nick); // HashMap에 저장
-			sendAll(message);
-		}
-		
-		
-		void set_userInfo(String message) {	// 회원가입 메소드
-			st = new StringTokenizer(message, ",");
-			String id = st.nextToken();
-			String password = st.nextToken();
-			String nick = st.nextToken();
-			String msg = "";
-			int result = db.set_userInfo(id, password, nick);
-			if(result == 1) {
-				msg = "110#"+result;
-				pw.println(msg);
-				pw.flush();
-			}else {
-				msg = "110#"+result;
-				pw.println(msg);
-				pw.flush();
+
+			@Override
+			public void run() {
+				String str = "";
+				String message = "";
+	            int num = 1;
+				try {
+					while (true) {
+						if ((str = br.readLine()) != null) {
+							st = new StringTokenizer(str,"#");						
+							num = Integer.parseInt(st.nextToken());
+							
+							message = st.nextToken();
+							switch(num) {
+								case 100:// try Login
+									do_login(message);	
+									break;
+								case 110:
+									set_userInfo(message);
+									break;
+								case 200:
+									readyForGame(message);
+									break;
+								case 300:
+									
+									break;
+							}
+						}
+					}
+				} catch (IOException e) {
+					e.printStackTrace();
+				} finally {
+					//UserInfo exitUser = userInfoMap.getUser(nick);
+					//userInfoMap.remove(nick);
+//					if (exitUser.host) {
+//	                    if (userInfoMap.size() >= 1) {
+//	                        userInfoMap.getRandomUser().host = true;
+//	                    }
+//	                }
+//					
+					try {
+						if (socket != null) {
+							socket.close();
+						}
+					} catch (Exception e) {
+						e.printStackTrace();
+					}
+				}
 			}
 			
-		}
-	
-		void do_login(String msg) {	// 로그인시 메소드
+			void readyForGame(String nick) {
+				String message = "200#"+nick+"#님이 입장하셨습니다.";
+				System.out.println("--"+nick);
+				join_member(pw, nick); // HashMap에 저장
+				pw.println(message);
+				pw.flush();
+				//sendAll(message);
+			}
 			
-			st = new StringTokenizer(msg, ",");
-			String id = st.nextToken();
-			String password = st.nextToken();
-			System.out.println(id + password);
-			int result = db.do_login(id, password);
-				if(result == 1) {	
-					pw.println("100#"+result); // 1 = sucess
+			
+			void set_userInfo(String message) {	// 회원가입 메소드
+				st = new StringTokenizer(message, ",");
+				String id = st.nextToken();
+				String password = st.nextToken();
+				String nick = st.nextToken();
+				String msg = "";
+				int result = db.set_userInfo(id, password, nick);
+				if(result == 1) {
+					msg = "110#"+result;
+					pw.println(msg);
 					pw.flush();
 				}else {
-					pw.println("100#"+result); // 0 = failed
+					msg = "110#"+result;
+					pw.println(msg);
 					pw.flush();
 				}
-			
-		}
+				
+			}
 		
-		// 모든 사용자에게 전파
-		public void sendAll(String str) {
-			Iterator it = userInfoMap.get().keySet().iterator();
-	        while (it.hasNext()) {
-	            try {
-	                PrintWriter out = (PrintWriter) userInfoMap.get().get(it.next()).pw;
-	                out.println(str);
-	                out.flush();
-	            } catch (Exception e) {
-	            }
-	        } // while
+			void do_login(String msg) {	// 로그인시 메소드
+				
+				st = new StringTokenizer(msg, ",");
+				String id = st.nextToken();
+				String password = st.nextToken();
+				System.out.println(id + password);
+				int result = db.do_login(id, password);
+					if(result == 1) {	
+						pw.println("100#"+result); // 1 = sucess
+						pw.flush();
+					}else {
+						pw.println("100#"+result); // 0 = failed
+						pw.flush();
+					}
+				
+			}
+			
+			// 모든 사용자에게 전파
+			public void sendAll(String str) {
+				Iterator it = userInfoMap.get().keySet().iterator();
+		        while (it.hasNext()) {
+		            try {
+		                PrintWriter out = (PrintWriter) userInfoMap.get().get(it.next()).pw;
+		                out.println(str);
+		                out.flush();
+		            } catch (Exception e) {
+		            }
+		        } // while
+			}
 		}
-	}
+}
+
+
 }

@@ -18,41 +18,42 @@ import javax.swing.JPanel;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
 
-import javafx.scene.layout.Border;
+import example.chat.Client;
 
-public class Play {
-
-	public static void main(String[] args) {
-		MakeRoom mr = new MakeRoom();
-		mr.display();
-	}
-
-}
-class MakeRoom extends JFrame implements ActionListener{
+//public class Play {
+//
+//	public static void main(String[] args) {
+//		MakeRoom mr = new MakeRoom();
+//		mr.display();
+//	}
+//
+//}
+public class MakeRoom extends JFrame implements ActionListener{
 	//전체 패널
-	JPanel p_layout;
+	public JPanel p_layout;
 	//유저 패널
-	JPanel p_leftuser, p_rightuser;
-	JPanel p_user1, p_user2, p_user3, p_user4;
+	public JPanel p_leftuser, p_rightuser;
+	public JPanel p_user1, p_user2, p_user3, p_user4;
 	//뒤로가기 버튼,중앙패널(단어, 그림판),하단(채팅)
-	JPanel p_menubar, p_center, p_paintCanvas, p_answerWord, p_chat, p_chatlog, p_send;
+	public JPanel p_menubar, p_center, p_paintCanvas, p_answerWord, p_chat, p_chatlog, p_send;
 
 	//유저 이름
-	JLabel lb_userName1, lb_userName2, lb_userName3, lb_userName4;
-	JLabel lb_answerWord;
+	public JLabel lb_userName1, lb_userName2, lb_userName3, lb_userName4;
+	public JLabel lb_answerWord;
 
 //	점수 스코어 채팅시 -10점 정답시 +100
 //	JLabel lb_userScore1, lb_userScore2, lb_userScore3, lb_userScore4;
 //	JLabel lb_scoreView1, lb_scoreView2, lb_scoreView3, lb_scoreView4;
 	
-	JButton btn_send, btn_logout;
-	JTextArea ta_chatting;
-	JTextField tf_msg;
-
-	
+	public JButton btn_send, btn_logout;
+	public JTextArea ta_chatting;
+	public JTextField tf_msg;
+	public MakeRoom(){
+		
+	}
 	//삭제할 버튼(자리 확인용)
 	JButton btn1 = new JButton("자리 확인용 버튼");
-	MakeRoom(){
+	public MakeRoom(Client client){
 		p_layout = new JPanel(new BorderLayout());
 		//위쪽
 		p_menubar = new JPanel();
@@ -162,7 +163,7 @@ class MakeRoom extends JFrame implements ActionListener{
 		btn_logout.addActionListener(this);
 	}
 	
-	void display() {
+	public void display() {
 		setVisible(true);
 		setLayout(new FlowLayout());
 		setTitle("놓지마! 정신줄!!");
