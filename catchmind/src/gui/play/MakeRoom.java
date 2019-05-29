@@ -52,7 +52,6 @@ public class MakeRoom extends JFrame implements ActionListener{
 
 	public void set_client(Client client) {
 		this.client = client;
-		System.out.println("dddddd");
 	}
 	//삭제할 버튼(자리 확인용)
 	JButton btn1 = new JButton("자리 확인용 버튼");

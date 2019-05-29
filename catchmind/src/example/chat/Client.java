@@ -13,18 +13,18 @@ import gui.user.Login;
 
 public class Client {
 	private static final int PORT = 12345;
-	private MakeRoom makeRoom;
 	private Login login;
 	private PrintWriter pw;
 	String nick;
 	private Client client;
 	public void setLogin(Login login) {
-		System.out.println("SetLogin");
 		this.login = login;
 	}
 	public void setClient(Client client) {
 		this.client = client;
 	}
+	
+	
 	public Client(Login login) {
 		this.login = login;
 		login.setClient(this);
@@ -33,9 +33,6 @@ public class Client {
 	}
 	
 	public void runClient() {
-		//makeRoom = new MakeRoom();
-		//makeRoom.display();
-		//makeRoom.launch_client(this);
 		try {
 			Socket socket = new Socket("192.168.0.6", PORT);
 
@@ -59,12 +56,10 @@ public class Client {
 	public void send_msg(String message) {
 		String status = "400#";
 		String msg = status+"["+nick+"] "+ message;
-		System.out.println(msg);
 		pw.println(msg);
 		pw.flush();
 	}
 	public void do_login(String id, String password){
-		System.out.println("do_Login : "+id+"/"+password);
 		String str = "100#"+id+","+password;
 		nick = id;
 		pw.println(str);
@@ -112,6 +107,7 @@ public class Client {
 		private BufferedReader br;
 		private StringTokenizer st;
 		int people = 0;
+		private MakeRoom makeRoom;
 		
 		GetStr(Socket socket) {
 			this.socket = socket;
@@ -142,9 +138,12 @@ public class Client {
 							if(message.equals("1")) {
 								login.setVisible(false);
 								MakeRoom mr = new MakeRoom();
+								this.makeRoom = mr;
+								String str = "200#"+nick;
 								mr.set_client(client);
 								mr.display();
-								
+								pw.println(str);
+								pw.flush();
 							}else {
 								System.out.println(message + "/ denied");
 							}
@@ -152,6 +151,7 @@ public class Client {
 							break;
 						case 200: //Ready for Game
 							st = new StringTokenizer(message,"#");
+							System.out.println(message);
 							String id = st.nextToken();
 							if(st.hasMoreTokens()) {
 								String note = st.nextToken();	
@@ -159,7 +159,6 @@ public class Client {
 							}
 							people++;
 							makeRoom.lb_userName1.setText(id);
-							System.out.println(""+people);
 							break;
 						case 400:	// chat
 							makeRoom.ta_chatting.append(message+" \n");
