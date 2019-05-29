@@ -10,23 +10,25 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
-public class Register extends JFrame{
-	public static void main(String[] args) {
-		register1 register = new register1();
-		register.display();
-	}
-}
+import example.chat.Client;
 
-
-class register1 extends JFrame implements ActionListener{
+public class Register extends JFrame implements ActionListener{
+//	public static void main(String[] args) {
+//		register1 register = new register1();
+//		register.display();
+//	}
 	JPanel ptitle, pid, pps, pnick, pbtn;
 	JLabel lbtitle, lbid, lbpw, lbnick;
 	JButton btnback, btnregister;
 	JTextField tfid, tfpw, tfnick;
 	String reg_id, reg_pw, reg_nick;
 	String err="";
+	Client client;
+	Login login;
 	
-	register1() {
+	Register(Client client, Login login) {
+		this.client = client;
+		this.login = login;
 		//객체생성
 		ptitle = new JPanel(new FlowLayout());
 		pid = new JPanel(new FlowLayout());
@@ -112,7 +114,11 @@ class register1 extends JFrame implements ActionListener{
 		//돌아가기 버튼을 누를 시
 		if(e.getSource() == btnback) {
 			System.out.println("[register]돌아가기 버튼");
+			login.tfid.setText("");
+			login.tfpw.setText("");
+			login.setVisible(true);
 			dispose();
 		}
 	}
 }
+
