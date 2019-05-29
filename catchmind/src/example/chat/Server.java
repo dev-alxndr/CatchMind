@@ -145,11 +145,7 @@ public class Server {
 								case 300:									
 									break;
 								case 400:
-									System.out.println(message);
-									
 									sendAll("400#"+message);
-									//String str = "";
-									//sendAll(str);
 							}
 						}
 					}

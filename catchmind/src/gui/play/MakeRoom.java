@@ -49,12 +49,15 @@ public class MakeRoom extends JFrame implements ActionListener{
 	public JTextArea ta_chatting;
 	public JTextField tf_msg;
 	Client client;
-	public MakeRoom(){
-		client = new Client();
+
+	public void launch_client(Client client) {
+		this.client = client;
+		System.out.println("dddddd");
 	}
 	//삭제할 버튼(자리 확인용)
 	JButton btn1 = new JButton("자리 확인용 버튼");
-	public MakeRoom(Client client){
+	public MakeRoom(){
+		
 		p_layout = new JPanel(new BorderLayout());
 		//위쪽
 		p_menubar = new JPanel();
@@ -92,6 +95,10 @@ public class MakeRoom extends JFrame implements ActionListener{
 		
 		p_layout.add(p_menubar,BorderLayout.NORTH);
 		p_menubar.add(btn_logout);
+		p_menubar.add(ta_chatting);
+		p_menubar.add(tf_msg);
+		p_menubar.add(btn_send);
+		
 		
 		add(p_layout);
 		
@@ -114,10 +121,10 @@ public class MakeRoom extends JFrame implements ActionListener{
 		p_center.add(p_paintCanvas);
 		p_center.add(p_chat);
 			p_chat.add(p_chatlog);
-				p_chatlog.add(ta_chatting);
+				//p_chatlog.add(ta_chatting);
 			p_chat.add(p_send);
-				p_send.add(tf_msg);
-				p_send.add(btn_send);
+				//p_send.add(tf_msg);
+				//p_send.add(btn_send);
 		
 		p_layout.add(btn1, BorderLayout.SOUTH);
 		

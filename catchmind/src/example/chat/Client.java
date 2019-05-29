@@ -16,8 +16,9 @@ public class Client {
 	private PrintWriter pw;
 	String nick;
 	public Client() {
-		makeRoom = new MakeRoom(this);
+		makeRoom = new MakeRoom();
 		makeRoom.display();
+		makeRoom.launch_client(this);
 		
 		System.out.println("Input your Nickname");
 		Scanner s = new Scanner(System.in);
@@ -43,13 +44,13 @@ public class Client {
 		
 	}
 	// 사용자 채팅 전
-			public void send_msg(String message) {
-				String status = "400#";
-				String msg = status+"["+nick+"] "+ message;
-				System.out.println(msg);
-				pw.println(msg);
-				pw.flush();
-			}
+	public void send_msg(String message) {
+		String status = "400#";
+		String msg = status+"["+nick+"] "+ message;
+		System.out.println(msg);
+		pw.println(msg);
+		pw.flush();
+	}
 	public static void main(String[] args) {
 		new Client();
 	}
@@ -127,22 +128,21 @@ public class Client {
 						message = st.nextToken();
 						
 						switch (num) {
-						case 100:
+						case 100: //Login
 							makeRoom.ta_chatting.append(message);
-						case 200:
+						case 200: //Ready for Game
 							st = new StringTokenizer(message,"#");
 							String id = st.nextToken();
 							if(st.hasMoreTokens()) {
 								String note = st.nextToken();	
-								System.out.println("note : "+note);
+								//System.out.println("note : "+note);
 							}
 							people++;
 							makeRoom.lb_userName1.setText(id);
 							System.out.println(""+people);
 							break;
-						case 400:
-							makeRoom.ta_chatting.append(message);
-							System.out.println(message);
+						case 400:	// chat
+							makeRoom.ta_chatting.append(message+" \n");
 						}
 					}
 				}
