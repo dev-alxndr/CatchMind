@@ -208,9 +208,7 @@ public class MakeRoom2 extends JFrame implements ActionListener, KeyListener{
 			dispose();
 			setVisible(false);
 			Login login;
-		}
-		
-		
+		}	
 	}
 
 	@Override
@@ -225,8 +223,7 @@ public class MakeRoom2 extends JFrame implements ActionListener, KeyListener{
 			String chat = "";
 			chat = tf_msg.getText();
 			
-			if(!chat.equals(""))
-			{
+			if(!chat.equals("")) {
 //				client.send_msg(chat);
 				ta_chatlog.append(chat + "\n");
 				tf_msg.setText("");
