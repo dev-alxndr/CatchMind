@@ -6,6 +6,7 @@ import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.net.Socket;
 import java.util.Scanner;
+import java.util.StringTokenizer;
 
 import gui.play.Play;
 
@@ -85,6 +86,7 @@ class SendStr {
 class GetStr extends Thread {		// 클라이언트는 서버로 부터 정보를 받아서 그린다.
 	private Socket socket;
 	private BufferedReader br;
+	private StringTokenizer st;
 
 	GetStr(Socket socket) {
 		this.socket = socket;
@@ -99,10 +101,20 @@ class GetStr extends Thread {		// 클라이언트는 서버로 부터 정보를 
 	@Override
 	public void run() {
 		String msg= "";
+		int num = 0;
+		String message = "";
 		try {
 			while(true) {
 				if ((msg = br.readLine()) != null) {
-					System.out.println(msg);
+					st = new StringTokenizer(msg,"#");						
+					num = Integer.parseInt(st.nextToken());
+					
+					message = st.nextToken();
+					
+					switch(num) {
+					case 300:
+						break;
+					}
 				}
 			}
 			
