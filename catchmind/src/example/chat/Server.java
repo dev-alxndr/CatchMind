@@ -50,7 +50,6 @@ public class Server {
 
 				RunServer runServer = new RunServer(socket, userInfoMap);
 			}
-
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -64,7 +63,7 @@ public class Server {
 
 class RunServer {
 	private Socket socket;
-	private HashMap<String, Object> map;
+	//private HashMap<String, Object> map;
 	private String nick = "";
 	private PrintWriter pw;
 	private BufferedReader br;
@@ -72,7 +71,7 @@ class RunServer {
 	
 	RunServer(Socket socket, UserInfoMap userInfoMap) {
 		try {
-			this.map = map;// 사용자 객체를 담을 HashMap
+			//this.map = map;// 사용자 객체를 담을 HashMap
 			this.socket = socket;
 			this.userInfoMap = userInfoMap;
 			
@@ -93,11 +92,9 @@ class RunServer {
 	}
 
 	public void join_member(PrintWriter writer, String nick) {
-		synchronized (map) {
-			map.put(nick, writer);
-		}
-		if(map.size() >= 4) {
-			
+		userInfoMap.add(nick, writer);
+		if(userInfoMap.size() >= 4) {
+			System.out.println("over 4");
 		}
 	}
 
@@ -152,12 +149,16 @@ class RunServer {
 					}
 				}
 			} catch (IOException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			} finally {
-				synchronized (map) {
-					map.remove(nick);
-				}
+				UserInfo exitUser = userInfoMap.getUser(nick);
+				userInfoMap.remove(nick);
+				if (exitUser.host) {
+                    if (userInfoMap.size() >= 1) {
+                        userInfoMap.getRandomUser().host = true;
+                    }
+                }
+				
 				try {
 					if (socket != null) {
 						socket.close();
@@ -199,7 +200,7 @@ class RunServer {
 			st = new StringTokenizer(msg, ",");
 			String id = st.nextToken();
 			String password = st.nextToken();
-			System.out.println(id + pw);
+			System.out.println(id + password);
 			int result = db.do_login(id, password);
 				if(result == 1) {	
 					pw.println("100#"+result); // 1 = sucess
@@ -213,15 +214,15 @@ class RunServer {
 		
 		// 모든 사용자에게 전파
 		public void sendAll(String str) {
-			synchronized (map) {
-				Collection<Object> collection = map.values();
-				Iterator<?> iter = collection.iterator();
-				while (iter.hasNext()) {
-					pw = (PrintWriter) iter.next();
-					pw.println(str);
-					pw.flush();
-				}
-			}
+			Iterator it = userInfoMap.get().keySet().iterator();
+	        while (it.hasNext()) {
+	            try {
+	                PrintWriter out = (PrintWriter) userInfoMap.get().get(it.next()).pw;
+	                out.println(str);
+	                out.flush();
+	            } catch (Exception e) {
+	            }
+	        } // while
 		}
 	}
 }
