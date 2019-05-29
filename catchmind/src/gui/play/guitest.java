@@ -1,34 +1,26 @@
 package gui.play;
 
 import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.EventQueue;
-
-import javax.swing.JFrame;
-import javax.swing.JPanel;
-import javax.swing.border.EmptyBorder;
-import javax.swing.JButton;
 import java.awt.FlowLayout;
-import java.awt.event.ActionListener;
-import java.awt.event.ActionEvent;
-import javax.swing.BoxLayout;
-import java.awt.CardLayout;
-import javax.swing.JLabel;
 import java.awt.GridLayout;
-import javax.swing.JTextField;
-import javax.swing.JTextArea;
-import java.awt.Color;
-import javax.swing.border.LineBorder;
-import java.awt.Component;
-import javax.swing.JScrollPane;
-import java.awt.GridBagLayout;
-import java.awt.GridBagConstraints;
-import javax.swing.JScrollBar;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
-public class guitest extends JFrame {
+import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.JTextArea;
+import javax.swing.JTextField;
+import javax.swing.border.LineBorder;
+
+public class guitest extends JFrame{
 
 	private JPanel p_border;
-	private JTextField textField;
+	private JTextField tf_msg;
 
 	/**
 	 * Launch the application.
@@ -111,6 +103,7 @@ public class guitest extends JFrame {
 		p_word.setLayout(new BorderLayout(0, 0));
 		
 		JLabel lb_answer = new JLabel("정답 : ");
+		lb_answer.setPreferredSize(new Dimension(43, 30));
 		p_word.add(lb_answer, BorderLayout.NORTH);
 		
 		JPanel p_drawCanvas = new JPanel();
@@ -134,7 +127,7 @@ public class guitest extends JFrame {
 		
 		JTextArea ta_chatlog = new JTextArea();
 		ta_chatlog.setPreferredSize(new Dimension(4, 140));
-		ta_chatlog.setColumns(102);
+		ta_chatlog.setColumns(80);
 		p_chatlog.add(ta_chatlog);
 		
 		JPanel p_chatsend = new JPanel();
@@ -143,26 +136,24 @@ public class guitest extends JFrame {
 		p_chatsend.setBorder(new LineBorder(new Color(0, 0, 0)));
 		p_chat.add(p_chatsend);
 		
-		textField = new JTextField();
-		p_chatsend.add(textField);
-		textField.setColumns(55);
+		tf_msg = new JTextField();
+		p_chatsend.add(tf_msg);
+		tf_msg.setColumns(55);
 		
-		JButton btnNewButton_1 = new JButton("보내기");
-		p_chatsend.add(btnNewButton_1);
-		
-		JPanel p_south = new JPanel();
-		p_south.setBorder(new LineBorder(new Color(0, 0, 0)));
-		p_south.setPreferredSize(new Dimension(100, 100));
-		p_border.add(p_south, BorderLayout.SOUTH);
-		p_south.setLayout(new BorderLayout(0, 0));
+		JButton btn_send = new JButton("보내기");
+		p_chatsend.add(btn_send);
 		
 		JPanel p_north = new JPanel();
 		p_north.setBorder(new LineBorder(new Color(0, 0, 0)));
-		p_north.setPreferredSize(new Dimension(100, 100));
+		p_north.setPreferredSize(new Dimension(100, 50));
 		p_border.add(p_north, BorderLayout.NORTH);
 		p_north.setLayout(new BorderLayout(0, 0));
 		
-		JButton btnNewButton = new JButton("로그아웃");
-		p_north.add(btnNewButton);
+		JPanel p_btnbar = new JPanel();
+		p_north.add(p_btnbar, BorderLayout.EAST);
+		p_btnbar.setLayout(new BorderLayout(0, 0));
+		
+		JButton btn_logout = new JButton("로그아웃");
+		p_btnbar.add(btn_logout);
 	}
 }
