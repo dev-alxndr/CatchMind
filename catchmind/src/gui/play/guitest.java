@@ -16,6 +16,7 @@ import javax.swing.JPanel;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.border.LineBorder;
+import java.awt.GridBagLayout;
 
 public class guitest extends JFrame{
 
@@ -46,6 +47,16 @@ public class guitest extends JFrame{
 		setBounds(100, 100, 1000, 1000);
 		setResizable(false);
 		setLocationRelativeTo(null);
+		getContentPane().setLayout(new BorderLayout(0, 0));
+		
+		JPanel panel = new JPanel();
+		panel.setBackground(Color.PINK);
+		getContentPane().add(panel);
+		panel.setLayout(new BorderLayout(0, 0));
+		
+		JPanel panel_3 = new JPanel();
+		getContentPane().add(panel_3, BorderLayout.SOUTH);
+		/*
 		p_border = new JPanel();
 		p_border.setBorder(new LineBorder(new Color(0, 0, 0)));
 		setContentPane(p_border);
@@ -154,6 +165,6 @@ public class guitest extends JFrame{
 		p_btnbar.setLayout(new BorderLayout(0, 0));
 		
 		JButton btn_logout = new JButton("로그아웃");
-		p_btnbar.add(btn_logout);
+		p_btnbar.add(btn_logout);*/
 	}
 }

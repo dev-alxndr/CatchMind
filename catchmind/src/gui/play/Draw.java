@@ -1,6 +1,7 @@
 package gui.play;
 
 import java.awt.BasicStroke;
+import java.awt.BorderLayout;
 import java.awt.Canvas;
 import java.awt.Color;
 import java.awt.FlowLayout;
@@ -16,6 +17,7 @@ import java.awt.event.MouseMotionListener;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
+import javax.swing.border.LineBorder;
 
 
 
@@ -29,14 +31,22 @@ public class Draw extends JFrame implements ActionListener, MouseMotionListener,
 		draw.display();
 	}
 	
-	JPanel p_layout, p_drawCanvas, p_btnbar;
-	JButton btn_clear, btn_Black, btn_Red, btn_Green, btn_Blue, btn_Yellow, btn_White;
+	JPanel p_layout, p_drawCanvas, p_btnBar, p_colorBar, p_sizeBar;
+	JButton btn_clear, btn_Black, btn_Red, btn_Green, btn_Blue, btn_Yellow, btn_White, btn_Thin, btn_Normal, btn_Thick;
 	MakeCanvas makeCanvas;
 
 	Draw() {
-		p_layout = new JPanel(new GridLayout(2,1));
-		p_drawCanvas = new JPanel();
-		p_btnbar = new JPanel();
+
+		p_drawCanvas = new JPanel(new FlowLayout());
+		p_btnBar = new JPanel(new GridLayout(2, 1));
+		p_colorBar = new JPanel();
+		p_sizeBar = new JPanel();
+		
+
+		p_drawCanvas.setBorder(new LineBorder(Color.black));
+		p_btnBar.setBorder(new LineBorder(Color.BLACK));
+		p_colorBar.setBorder(new LineBorder(Color.black));
+		p_sizeBar.setBorder(new LineBorder(Color.black));
 		
 		btn_Red = new JButton("빨간색");
 		btn_Green = new JButton("초록색");
@@ -44,12 +54,15 @@ public class Draw extends JFrame implements ActionListener, MouseMotionListener,
 		btn_Yellow = new JButton("노란색");
 		btn_Black = new JButton("검정색");
 		btn_White = new JButton("지우개");
-		
 		btn_clear = new JButton("초기화");
 		
+		btn_Thin = new JButton("얇게");
+		btn_Normal = new JButton("중간");
+		btn_Thick = new JButton("두껍게");
 		
 		makeCanvas = new MakeCanvas();
 		makeCanvas.setVariable(check, f_x, f_y);
+		
 		makeCanvas.addMouseMotionListener(this);
 		makeCanvas.addMouseListener(this);
 		
@@ -57,17 +70,26 @@ public class Draw extends JFrame implements ActionListener, MouseMotionListener,
 		makeCanvas.setVisible(true);
 		makeCanvas.setBackground(Color.WHITE);
 		
-		p_layout.add(p_drawCanvas);
-		p_layout.add(p_btnbar);
-		
 		p_drawCanvas.add(makeCanvas);
-		p_btnbar.add(btn_Red);
-		p_btnbar.add(btn_Green);
-		p_btnbar.add(btn_Blue);
-		p_btnbar.add(btn_Yellow);
-		p_btnbar.add(btn_Black);
-		p_btnbar.add(btn_White);
-		p_btnbar.add(btn_clear);
+		
+		p_btnBar.add(p_colorBar);
+		p_btnBar.add(p_sizeBar);
+		
+		p_colorBar.add(btn_Red);
+		p_colorBar.add(btn_Green);
+		p_colorBar.add(btn_Blue);
+		p_colorBar.add(btn_Yellow);
+		p_colorBar.add(btn_Black);
+		p_colorBar.add(btn_White);
+		p_colorBar.add(btn_clear);
+		
+		p_sizeBar.add(btn_Thin);
+		p_sizeBar.add(btn_Normal);
+		p_sizeBar.add(btn_Thick);
+		
+		add(p_drawCanvas,BorderLayout.CENTER);
+		add(p_btnBar, BorderLayout.SOUTH);
+		
 		
 		btn_Red.addActionListener(this);
 		btn_Green.addActionListener(this);
@@ -77,16 +99,16 @@ public class Draw extends JFrame implements ActionListener, MouseMotionListener,
 		btn_White.addActionListener(this);
 		btn_clear.addActionListener(this);
 		
-		add(p_layout);
+		btn_Thin.addActionListener(this);
+		btn_Normal.addActionListener(this);
+		btn_Thick.addActionListener(this);
 		
-		//라벨에 layout종류 넣고 캔버스 만들기 (메인에서 되면 붙이기)
 	}
 	public void display() {
 		setSize(700, 700);
 		setVisible(true);
-		setLayout(new FlowLayout());
+		setLayout(new BorderLayout());
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-		
 	}
 
 	@Override
@@ -114,11 +136,13 @@ public class Draw extends JFrame implements ActionListener, MouseMotionListener,
 	public void actionPerformed(ActionEvent e) {
 		Graphics g = makeCanvas.getGraphics();
 		Graphics2D g2d = (Graphics2D)g;
-				
+		
+		//초기화
 		if(e.getSource() == btn_clear) {
 			g.clearRect(0, 0, 600, 600);
 		}
 		
+		//색상 바꾸기
 		if(e.getSource() == btn_Red) {
 			makeCanvas.sc = Color.RED;
 		}
@@ -137,10 +161,20 @@ public class Draw extends JFrame implements ActionListener, MouseMotionListener,
 		if(e.getSource() == btn_White) {
 			makeCanvas.sc = Color.WHITE;
 		}
+		
+		//굵기 바꾸기
+		if(e.getSource() == btn_Thin) {
+			makeCanvas.pen_size = 1;
+		}
+		if(e.getSource() == btn_Normal) {
+			makeCanvas.pen_size = 3;
+		}
+		if(e.getSource() == btn_Thick) {
+			makeCanvas.pen_size = 5;
+		}
 	}
 	@Override
-	public void mouseClicked(MouseEvent e) {
-		// TODO Auto-generated method stub
+	public void mouseClicked(MouseEvent e) { 
 		
 	}
 	@Override
@@ -151,7 +185,6 @@ public class Draw extends JFrame implements ActionListener, MouseMotionListener,
 			makeCanvas.pre_x = e.getX();
 			makeCanvas.pre_y = e.getY();
 		}
-		
 	}
 	@Override
 	public void mouseReleased(MouseEvent e) {
@@ -160,12 +193,10 @@ public class Draw extends JFrame implements ActionListener, MouseMotionListener,
 	}
 	@Override
 	public void mouseEntered(MouseEvent e) {
-		// TODO Auto-generated method stub
 		
 	}
 	@Override
 	public void mouseExited(MouseEvent e) {
-		// TODO Auto-generated method stub
 		
 	}
 }
