@@ -36,12 +36,13 @@ public class Draw extends JFrame implements ActionListener, MouseMotionListener,
 		p_btnbar = new JPanel();
 		btn_clear = new JButton("지우기");
 		btn_clear.addActionListener(this);
-		makeCanvas = new MakeCanvas(check, f_x, f_y);
+		makeCanvas = new MakeCanvas();
+		makeCanvas.setVariable(check, f_x, f_y);
 		makeCanvas.addMouseMotionListener(this);
 		makeCanvas.addMouseListener(this);
 		
 		
-		makeCanvas.setSize(300,300);
+		makeCanvas.setSize(500,500);
 		makeCanvas.setVisible(true);
 		makeCanvas.setBackground(Color.WHITE);
 		
@@ -86,8 +87,10 @@ public class Draw extends JFrame implements ActionListener, MouseMotionListener,
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		// TODO Auto-generated method stub
-		
+		if(e.getSource() == btn_clear) {
+			Graphics g = makeCanvas.getGraphics();
+			g.clearRect(0, 0, 600, 600);
+		}
 	}
 	@Override
 	public void mouseClicked(MouseEvent e) {
@@ -126,7 +129,10 @@ class MakeCanvas extends Canvas	//스케치북
 	int x= 0, y = 0;
 	int pre_x = x, pre_y =y;
 	boolean check = true;
-	public MakeCanvas(boolean check, int f_x, int f_y) {
+	public MakeCanvas() {
+		
+	}
+	public void setVariable(boolean check, int f_x, int f_y) {
 		this.check = check;
 		this.x = f_x;
 		this.y = f_y;
@@ -134,9 +140,11 @@ class MakeCanvas extends Canvas	//스케치북
 	public void paint(Graphics g)
 	{
 		g.setColor(Color.black);	//연필 색
+//		g.set
 		//g.fillRect(x, y, 1, 1);	//채워진 동그라미
 		if(check) {
 			g.drawLine(pre_x, pre_y, x, y);
+			
 		}else {
 			pre_x = x;
 			pre_y = y;
