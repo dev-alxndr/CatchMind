@@ -113,6 +113,8 @@ public class Login extends JFrame implements ActionListener {
 		Login login = new Login();
 		Client client = new Client(login);
 		client.setClient(client);
+		
+		
 	}
 }
 

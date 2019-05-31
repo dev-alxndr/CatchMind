@@ -31,10 +31,14 @@ import gui.user.Login;
 //}
 public class MakeRoom2 extends JFrame implements ActionListener, KeyListener{
 	public static void main(String[] args) {
+		System.out.println("gd");
 		MakeRoom2 mr = new MakeRoom2();
 		mr.setVisible(true);
 	}
 	Client client;
+	MakeCanvas mc;
+	Draw draw;
+	
 	JPanel p_border, p_east, p_west, p_south, p_north, p_center, p_user1, p_user2, p_user3, p_user4;
 	JPanel p_word, p_drawCanvas, p_chat, p_chatlog, p_chatsend, p_btnbar;
 	JLabel lb_user1, lb_user2, lb_user3, lb_user4, lb_answer;
@@ -50,7 +54,7 @@ public class MakeRoom2 extends JFrame implements ActionListener, KeyListener{
 	public MakeRoom2(){
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 1000, 1000);
-		setResizable(false);
+//		setResizable(false);
 		setLocationRelativeTo(null);
 		p_border = new JPanel();
 		p_border.setBorder(new LineBorder(new Color(0, 0, 0)));
@@ -82,7 +86,8 @@ public class MakeRoom2 extends JFrame implements ActionListener, KeyListener{
 		btn_logout = new JButton("로그아웃");
 		btn_send = new JButton("보내기");
 		
-		
+		Draw draw = new Draw();
+//		draw.setSize(900,900);
 		
 		//큰 테두리 동 서 북 중앙
 		p_border.add(p_east, BorderLayout.EAST);
@@ -131,6 +136,8 @@ public class MakeRoom2 extends JFrame implements ActionListener, KeyListener{
 		p_center.setLayout(new BorderLayout(0, 0));
 		p_center.add(p_word, BorderLayout.NORTH);
 		p_center.add(p_drawCanvas, BorderLayout.CENTER);
+
+		p_center.add(draw);
 		p_center.add(p_chat, BorderLayout.SOUTH);
 
 		p_word.setBorder(new LineBorder(new Color(0, 0, 0)));

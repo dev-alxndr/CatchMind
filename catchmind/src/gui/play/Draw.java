@@ -21,16 +21,16 @@ import javax.swing.border.LineBorder;
 
 
 
-public class Draw extends JFrame implements ActionListener, MouseMotionListener, MouseListener{
+public class Draw extends JPanel implements ActionListener, MouseMotionListener, MouseListener{
 	public boolean check = true;
 	boolean first = true;
 	int f_x =0 ;
 	int f_y = 0;
-	public static void main(String[] args) {
-		Draw draw = new Draw();
-		draw.display();
-	}
-	
+//	public static void main(String[] args) {
+//		Draw draw = new Draw();
+//		draw.display();
+//	}
+//	
 	JPanel p_layout, p_drawCanvas, p_btnBar, p_colorBar, p_sizeBar;
 	JButton btn_clear, btn_Black, btn_Red, btn_Green, btn_Blue, btn_Yellow, btn_White, btn_Thin, btn_Normal, btn_Thick;
 	MakeCanvas makeCanvas;
@@ -66,7 +66,7 @@ public class Draw extends JFrame implements ActionListener, MouseMotionListener,
 		makeCanvas.addMouseMotionListener(this);
 		makeCanvas.addMouseListener(this);
 		
-		makeCanvas.setSize(500,500);
+		makeCanvas.setSize(780,550);
 		makeCanvas.setVisible(true);
 		makeCanvas.setBackground(Color.WHITE);
 		
@@ -105,10 +105,10 @@ public class Draw extends JFrame implements ActionListener, MouseMotionListener,
 		
 	}
 	public void display() {
-		setSize(700, 700);
+//		setSize(700, 700);
 		setVisible(true);
 		setLayout(new BorderLayout());
-		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+//		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 	}
 
 	@Override
@@ -139,7 +139,7 @@ public class Draw extends JFrame implements ActionListener, MouseMotionListener,
 		
 		//초기화
 		if(e.getSource() == btn_clear) {
-			g.clearRect(0, 0, 600, 600);
+			g.clearRect(0, 0, 900, 900);
 		}
 		
 		//색상 바꾸기
@@ -217,7 +217,7 @@ class MakeCanvas extends Canvas	//스케치북
 		this.check = check;
 		this.x = f_x;
 		this.y = f_y;
-		this.sc = sc;
+//		this.sc = sc;
 	}
 	public void paint(Graphics g)
 	{
