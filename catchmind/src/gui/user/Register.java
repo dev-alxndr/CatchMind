@@ -96,6 +96,7 @@ public class Register extends JFrame implements ActionListener{
 			System.out.println(reg_id +","+ reg_pw +","+ reg_nick);
 			
 			Notice notice = new Notice();
+			int a = client.do_signUp(reg_id, reg_pw, reg_nick);
 			
 			//아이디, 패스워드, 닉네임 값 확인
 			if(reg_id.equals("") || reg_pw.equals("") || reg_nick.equals("")){

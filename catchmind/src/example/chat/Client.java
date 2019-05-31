@@ -34,7 +34,7 @@ public class Client {
 	
 	public void runClient() {
 		try {
-			Socket socket = new Socket("192.168.0.6", PORT);
+			Socket socket = new Socket("localhost", PORT);
 
 			pw = new PrintWriter(socket.getOutputStream());
 			
@@ -65,6 +65,15 @@ public class Client {
 		pw.println(str);
 		pw.flush();
 	}
+	public int do_signUp(String reg_id, String reg_pw, String reg_nick) {
+		String str = "110#"+reg_id+","+reg_pw+","+reg_nick;
+		int  a = go_signUp(str);
+		
+		
+		
+		return a;
+	}
+	
 
 	class SendStr {
 		private Socket socket;
@@ -99,7 +108,6 @@ public class Client {
 
 			return "";
 		}
-
 	}
 
 	class GetStr extends Thread { // 클라이언트는 서버로 부터 정보를 받아서 그린다.
@@ -117,6 +125,14 @@ public class Client {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
+		}
+		
+		public int go_signUp(String str) {
+			pw.println(str);
+			pw.flush();
+			
+			int a = 0;
+			return a ;
 		}
 
 		@Override
@@ -175,4 +191,6 @@ public class Client {
 		}
 
 	}
+
+	
 }

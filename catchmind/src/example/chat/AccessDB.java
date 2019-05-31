@@ -5,9 +5,6 @@ import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-
-
-
 public class AccessDB {
 	ResultSet rs;
 	Statement stmt;
@@ -40,7 +37,6 @@ public class AccessDB {
 			
 			conn = DriverManager.getConnection(url, "root", "1234");
 			
-			// statement �������
 			stmt = conn.createStatement();
 			rs = stmt.executeQuery("SELECT * FROM user");
 			
