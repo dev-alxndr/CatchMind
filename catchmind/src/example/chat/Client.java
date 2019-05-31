@@ -192,7 +192,7 @@ public class Client {
 							break;
 						case 400:	// chat
 							makeRoom.ta_chatting.append(message+" \n");
-							makeRoom.tf_msg.setText("");
+							
 							break;
 						}
 					}
