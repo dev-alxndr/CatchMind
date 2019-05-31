@@ -187,6 +187,7 @@ public class Server {
 				String nick = st.nextToken();
 				String msg = "";
 				int result = db.set_userInfo(id, password, nick);
+				System.out.println("set_userInfo = "+ result);
 				if(result == 1) {
 					msg = "110#"+result;
 					pw.println(msg);

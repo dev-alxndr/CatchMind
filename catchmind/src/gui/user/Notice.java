@@ -13,13 +13,13 @@ public class Notice extends JFrame implements ActionListener{
 	JButton btnclose;
 
 	//실패시 라벨
-	void text(String text) {
+	public void text(String text) {
 		lbnotice = new JLabel(text);
 		add(lbnotice);
 	}
 	
 	//로그인 실패 화면
-	void display(String title) {
+	public void display(String title) {
 		btnclose = new JButton("닫기");
 		btnclose.addActionListener(this);
 		add(btnclose);

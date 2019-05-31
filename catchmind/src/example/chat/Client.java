@@ -9,6 +9,8 @@ import java.util.Scanner;
 import java.util.StringTokenizer;
 import gui.play.MakeRoom;
 import gui.user.Login;
+import gui.user.Notice;
+import gui.user.Register;
 
 
 public class Client {
@@ -16,14 +18,19 @@ public class Client {
 	private Login login;
 	private PrintWriter pw;
 	String nick;
+	SendStr ss;
 	private Client client;
+	private Register register;
+	
 	public void setLogin(Login login) {
 		this.login = login;
 	}
 	public void setClient(Client client) {
 		this.client = client;
 	}
-	
+	public void setRegister(Register register) {
+		this.register = register;
+	}
 	
 	public Client(Login login) {
 		this.login = login;
@@ -40,7 +47,7 @@ public class Client {
 			
 			GetStr gs = new GetStr(socket); // 서버로 부터 데이터를 받기 위한 쓰레드
 			gs.start();
-			SendStr ss = new SendStr(socket, nick); // 서버로 채팅을 보내기 위한클래
+			ss = new SendStr(socket, nick); // 서버로 채팅을 보내기 위한클래
 			System.out.println("Server Ready");
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
@@ -59,37 +66,38 @@ public class Client {
 		pw.println(msg);
 		pw.flush();
 	}
+	
+	
 	public void do_login(String id, String password){
 		String str = "100#"+id+","+password;
 		nick = id;
 		pw.println(str);
 		pw.flush();
 	}
-	public int do_signUp(String reg_id, String reg_pw, String reg_nick) {
+
+	
+	
+	public void do_signUp(String reg_id, String reg_pw, String reg_nick) {
 		String str = "110#"+reg_id+","+reg_pw+","+reg_nick;
-		int  a = go_signUp(str);
-		
-		
-		
-		return a;
+		pw.println(str);
+		pw.flush();
 	}
 	
+	public int go_signUp(String str) {
+		return 0; 
+		
+	}
 
 	class SendStr {
 		private Socket socket;
-		//private PrintWriter pw;
 		private String nick;
-		// private Play play;
+
 
 		SendStr(Socket socket, String nick) {
 			this.socket = socket;
 			this.nick = nick;
 
 		}
-		
-		
-	
-		
 		public void go_chat() {
 			BufferedReader keyboard = new BufferedReader(new InputStreamReader(System.in)); // 키보드 입력을 위한 버
 			String line = "";
@@ -99,7 +107,7 @@ public class Client {
 					pw.flush();
 				}
 			} catch (IOException e) {
-				// TODO Auto-generated catch block
+
 				e.printStackTrace();
 			}
 		}
@@ -126,15 +134,6 @@ public class Client {
 				e.printStackTrace();
 			}
 		}
-		
-		public int go_signUp(String str) {
-			pw.println(str);
-			pw.flush();
-			
-			int a = 0;
-			return a ;
-		}
-
 		@Override
 		public void run() {
 			String msg = "";
@@ -150,7 +149,6 @@ public class Client {
 						
 						switch (num) {
 						case 100: //Login
-							//makeRoom.ta_chatting.append(message);
 							if(message.equals("1")) {
 								login.setVisible(false);
 								MakeRoom mr = new MakeRoom();
@@ -163,6 +161,15 @@ public class Client {
 							}else {
 								System.out.println(message + "/ denied");
 							}
+							
+							break;
+						case 110:	//check SignUp
+							int check = Integer.parseInt(message);
+							
+							check = show_confirm(check);
+							System.out.println(check+ "///reg");
+							register.chk = check;
+							login.setVisible(true);
 							
 							break;
 						case 200: //Ready for Game
@@ -190,6 +197,19 @@ public class Client {
 			}
 		}
 
+	}
+	public int show_confirm(int chk) {
+		Notice notice = new Notice();
+		if(chk == 1) {
+			notice.text("회원가입에 성공하셨습니다!!");
+			notice.display("회원가입 안내");
+			notice.dispose();
+		}else {
+			System.out.println(chk);
+			notice.text("회원가입에 실패했습니다!!");
+			notice.display("회원가입 안내");
+			notice.dispose();
+		}
 	}
 
 	

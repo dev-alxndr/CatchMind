@@ -105,6 +105,7 @@ public class Login extends JFrame implements ActionListener {
 
 			// 회원가입 화면으로 이동
 			Register reg = new Register(client, this);
+			client.setRegister(reg);
 			reg.display();
 			this.setVisible(false);
 		}
