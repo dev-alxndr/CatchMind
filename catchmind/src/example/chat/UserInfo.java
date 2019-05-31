@@ -46,7 +46,7 @@ public class UserInfo {
  */
 class UserInfoMap {
     HashMap<String, UserInfo> clients;
-
+ 
     /**
      * Clients라는 HashMap을 초기화한다.
      */
