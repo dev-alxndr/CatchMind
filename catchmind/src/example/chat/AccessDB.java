@@ -2,6 +2,7 @@ package example.chat;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -9,26 +10,81 @@ import java.sql.Statement;
 
 
 public class AccessDB {
-	ResultSet rs;
-	Statement stmt;
+	ResultSet rs = null;
+	Statement stmt = null;
+	Connection conn = null;
+	PreparedStatement pstm = null; 
 	
-	
+	String url = "";
 	public AccessDB() {
+		try {
+			Class.forName("com.mysql.cj.jdbc.Driver");
+			url =  "jdbc:mysql://localhost:3306/catchmind?serverTimezone=Asia/Seoul";
+			System.out.println("Connected DB");
+		} catch (ClassNotFoundException e) {
+			e.printStackTrace();
+		}
+	}
+	
+	public void closeDatabases() {
+		try {
+			if(conn != null) {
+				conn.close();
+			}
+			if(rs != null) {
+				rs.close();
+			}
+			if(stmt != null) {
+				stmt.close();
+			}
+			if(pstm != null) {
+				pstm.close();
+			}
+			
+		}catch(SQLException e) {
+			System.out.println("error : "+ e.getStackTrace());
+		}
 		
 	}
 	
 	// 로그인 하기
 	int do_login(String id, String pw) {
-		System.out.println("do_login ="+id +"/" +pw);
+		int chk = 0;
+		String password= "";
 		
-		return 1; // success = 1 / failed = 0;
+		try {
+			conn = DriverManager.getConnection(url, "root", "1234");
+
+			String sql = "select * from user where id = ?";
+			pstm = conn.prepareStatement(sql);
+			pstm.setString(1 , id);
+			rs = pstm.executeQuery();
+			while(rs.next()) {
+				id = rs.getString("id");
+				password = rs.getString("password");
+			}
+			System.out.println(id);
+			if(pw.equals(password)) {
+				chk = 1;
+			}else {
+				chk = 0;
+			}
+		} catch (SQLException e) {
+			e.getStackTrace();
+			closeDatabases();
+		} catch(Exception e1) {
+			e1.getStackTrace();
+		}
+		return chk;
 	}
 
-	int set_userInfo(String id, String password, String nick) {
+	public int set_userInfo(String id, String password, String nick) {
 		System.out.println("ser_userinfo = "+id+"/"+password+"/"+nick);
 		
 		return 1;
 	}
+	
+	
 	public void dbConn() throws SQLException {
 		String id = null;
 		String password = null;

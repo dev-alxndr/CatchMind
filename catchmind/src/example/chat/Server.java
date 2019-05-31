@@ -74,7 +74,7 @@ public class Server {
 				this.socket = socket;
 				this.userInfoMap = userInfoMap;
 				
-//				br = new BufferedReader(new InputStreamReader(socket.getInputStream()));
+				//br = new BufferedReader(new InputStreamReader(socket.getInputStream()));
 //
 //				nick = br.readLine();
 //				System.out.println(nick + "접속");
@@ -112,8 +112,8 @@ public class Server {
 			
 			public Receiver(Socket socket) {
 				this.socket = socket;
+				db = new AccessDB();	// DB 생성
 				
-				db = new AccessDB();
 				try {
 					br = new BufferedReader(new InputStreamReader(socket.getInputStream()));
 				} catch (IOException e) {
@@ -205,6 +205,7 @@ public class Server {
 				st = new StringTokenizer(msg, ",");
 				String id = st.nextToken();
 				String password = st.nextToken();
+				
 				int result = db.do_login(id, password);
 					if(result == 1) {	
 						pw.println("100#"+result); // 1 = sucess

@@ -70,6 +70,7 @@ public class Client {
 	
 	public void do_login(String id, String password){
 		String str = "100#"+id+","+password;
+		System.out.println(str);
 		nick = id;
 		pw.println(str);
 		pw.flush();
@@ -98,19 +99,19 @@ public class Client {
 			this.nick = nick;
 
 		}
-		public void go_chat() {
-			BufferedReader keyboard = new BufferedReader(new InputStreamReader(System.in)); // 키보드 입력을 위한 버
-			String line = "";
-			try {
-				while ((line = keyboard.readLine()) != null) {
-					pw.println(line);
-					pw.flush();
-				}
-			} catch (IOException e) {
-
-				e.printStackTrace();
-			}
-		}
+//		public void go_chat() {
+//			BufferedReader keyboard = new BufferedReader(new InputStreamReader(System.in)); // 키보드 입력을 위한 버
+//			String line = "";
+//			try {
+//				while ((line = keyboard.readLine()) != null) {
+//					pw.println(line);
+//					pw.flush();
+//				}
+//			} catch (IOException e) {
+//
+//				e.printStackTrace();
+//			}
+//		}
 
 		public String user_draw() {// 사용자가 그림을 그릴때 서버로 좌표값을 전송하는 메소드
 
