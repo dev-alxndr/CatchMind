@@ -164,13 +164,19 @@ public class Client {
 							
 							break;
 						case 110:	//check SignUp
+							Notice notice = new Notice();
 							int check = Integer.parseInt(message);
 							
-							check = show_confirm(check);
-							System.out.println(check+ "///reg");
-							register.chk = check;
-							login.setVisible(true);
 							
+							if(check == 1) {
+								login.setVisible(true);
+								register.setVisible(false);
+								notice.text("로그인 성공");;
+								notice.display("성공");
+							}else {
+								notice.text("로그인 ㅗㅗ");;
+								notice.display("성공");
+							}
 							break;
 						case 200: //Ready for Game
 							st = new StringTokenizer(message,"#");
@@ -198,19 +204,5 @@ public class Client {
 		}
 
 	}
-	public int show_confirm(int chk) {
-		Notice notice = new Notice();
-		if(chk == 1) {
-			notice.text("회원가입에 성공하셨습니다!!");
-			notice.display("회원가입 안내");
-			notice.dispose();
-		}else {
-			System.out.println(chk);
-			notice.text("회원가입에 실패했습니다!!");
-			notice.display("회원가입 안내");
-			notice.dispose();
-		}
-	}
-
 	
 }

@@ -94,7 +94,6 @@ public class Register extends JFrame implements ActionListener{
 			reg_id = tfid.getText();
 			reg_pw = tfpw.getText();
 			reg_nick = tfnick.getText();
-			System.out.println(reg_id +","+ reg_pw +","+ reg_nick);
 			
 			Notice notice = new Notice();
 			
@@ -107,23 +106,11 @@ public class Register extends JFrame implements ActionListener{
 			//회원가입 성공시
 			if(!reg_id.equals("") && !reg_pw.equals("") && !reg_nick.equals("")) {
 				client.do_signUp(reg_id, reg_pw, reg_nick);
-				
-				if(chk == 1) {
-					notice.text("회원가입에 성공하셨습니다!!");
-					notice.display("회원가입 안내");
-					dispose();
-				}else {
-					System.out.println(chk);
-					notice.text("회원가입에 실패했습니다!!");
-					notice.display("회원가입 안내");
-					dispose();
-				}
 			}
 		}
 		
 		//돌아가기 버튼을 누를 시
 		if(e.getSource() == btnback) {
-			System.out.println("[register]돌아가기 버튼");
 			login.tfid.setText("");
 			login.tfpw.setText("");
 			login.setVisible(true);
