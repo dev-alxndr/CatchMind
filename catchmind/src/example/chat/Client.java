@@ -8,6 +8,7 @@ import java.net.Socket;
 import java.util.Scanner;
 import java.util.StringTokenizer;
 import gui.play.MakeRoom;
+import gui.play.MakeRoom2;
 import gui.user.Login;
 import gui.user.Notice;
 import gui.user.Register;
@@ -123,8 +124,7 @@ public class Client {
 		private Socket socket;
 		private BufferedReader br;
 		private StringTokenizer st;
-		int people = 0;
-		private MakeRoom makeRoom;
+		private MakeRoom2 makeRoom;
 		
 		GetStr(Socket socket) {
 			this.socket = socket;
@@ -147,16 +147,16 @@ public class Client {
 						num = Integer.parseInt(st.nextToken());
 						
 						message = st.nextToken();
-						
+						System.out.println(message + "......");
 						switch (num) {
 						case 100: //Login
 							if(message.equals("1")) {
 								login.setVisible(false);
-								MakeRoom mr = new MakeRoom();
+								MakeRoom2 mr = new MakeRoom2();
 								this.makeRoom = mr;
 								String str = "200#"+nick;
-								mr.set_client(client);
-								mr.display();
+								makeRoom.set_client(client);
+								makeRoom.display();
 								pw.println(str);
 								pw.flush();
 							}else {
@@ -167,32 +167,30 @@ public class Client {
 						case 110:	//check SignUp
 							Notice notice = new Notice();
 							int check = Integer.parseInt(message);
-							
-							
 							if(check == 1) {
 								login.setVisible(true);
 								register.setVisible(false);
-								notice.text("로그인 성공");;
+								notice.text("회원가입 성공");
 								notice.display("성공");
 							}else {
-								notice.text("로그인 ㅗㅗ");;
-								notice.display("성공");
+								notice.text("회원가입 실패");
+								notice.display("실패");
 							}
 							break;
 						case 200: //Ready for Game
-							st = new StringTokenizer(message,"#");
-							System.out.println(message);
+							st = new StringTokenizer(message,"*");
+							String seat = st.nextToken();
+							System.out.println(seat +"-11");
 							String id = st.nextToken();
-							if(st.hasMoreTokens()) {
-								String note = st.nextToken();	
-								//System.out.println("note : "+note);
-							}
-							people++;
-							makeRoom.lb_userName1.setText(id);
+							System.out.println(id + "--2");
+							String msg1 = st.nextToken();
+							System.out.println(msg1+"--3" );
+							
+							appendChat((id+msg1));
+							//makeRoom.lb_userName1.setText(id);
 							break;
 						case 400:	// chat
-							makeRoom.ta_chatting.append(message+" \n");
-							
+							appendChat(message);
 							break;
 						}
 					}
@@ -204,6 +202,9 @@ public class Client {
 			}
 		}
 
+		public void appendChat(String str) {
+			makeRoom.ta_chatlog.append(str+" \n");			
+		}
 	}
 	
 }

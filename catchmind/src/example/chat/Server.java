@@ -17,6 +17,7 @@ import java.util.StringTokenizer;
 
 
 public class Server {
+	private AccessDB db;
 	private static final int PORT = 12345;
 	private ServerSocket ss;
 	private String nick = null;
@@ -42,7 +43,7 @@ public class Server {
 			ss = new ServerSocket(PORT);
 			System.out.println("Server Running....");
 			//HashMap<String, Object> map = new HashMap<String, Object>();
-			
+			db = new AccessDB();	// DB 생성
 			while (true) {
 				System.out.println("waiting....");
 				Socket socket = ss.accept(); // socket은 클라이언트마다 새로 생
@@ -108,11 +109,10 @@ public class Server {
 			private Socket socket;
 			private BufferedReader br;
 			private StringTokenizer st;
-			private AccessDB db;
 			
 			public Receiver(Socket socket) {
 				this.socket = socket;
-				db = new AccessDB();	// DB 생성
+				
 				
 				try {
 					br = new BufferedReader(new InputStreamReader(socket.getInputStream()));
@@ -170,10 +170,10 @@ public class Server {
 					}
 				}
 			}
-			
-			void readyForGame(String nick) {
-				String message = "200#"+nick+"#님이 입장하셨습니다.";
+			void readyForGame(String nick) { //사용자의 자리 지정이 필요
 				join_member(pw, nick); // HashMap에 저장
+				int seat = userInfoMap.size();
+				String message = "200#"+seat+"*"+nick+"*님이 입장하셨습니다.";
 				//pw.println(message);
 				//pw.flush();
 				sendAll(message);

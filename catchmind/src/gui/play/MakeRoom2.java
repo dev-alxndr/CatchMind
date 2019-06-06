@@ -30,21 +30,21 @@ import gui.user.Login;
 //
 //}
 public class MakeRoom2 extends JFrame implements ActionListener, KeyListener{
-	public static void main(String[] args) {
-		System.out.println("gd");
-		MakeRoom2 mr = new MakeRoom2();
-		mr.setVisible(true);
-	}
+//	public static void main(String[] args) {
+//		System.out.println("gd");
+//		MakeRoom2 mr = new MakeRoom2();
+//		mr.setVisible(true);
+//	}
 	Client client;
 	MakeCanvas mc;
 	Draw draw;
 	
-	JPanel p_border, p_east, p_west, p_south, p_north, p_center, p_user1, p_user2, p_user3, p_user4;
-	JPanel p_word, p_drawCanvas, p_chat, p_chatlog, p_chatsend, p_btnbar;
-	JLabel lb_user1, lb_user2, lb_user3, lb_user4, lb_answer;
-	JTextField tf_msg;
-	JButton btn_send, btn_logout;
-	JTextArea ta_chatlog;
+	public JPanel p_border, p_east, p_west, p_south, p_north, p_center, p_user1, p_user2, p_user3, p_user4;
+	public JPanel p_word, p_drawCanvas, p_chat, p_chatlog, p_chatsend, p_btnbar;
+	public JLabel lb_user1, lb_user2, lb_user3, lb_user4, lb_answer;
+	public JTextField tf_msg;
+	public JButton btn_send, btn_logout;
+	public JTextArea ta_chatlog;
 	
 	public void set_client(Client client) {
 		this.client = client;
