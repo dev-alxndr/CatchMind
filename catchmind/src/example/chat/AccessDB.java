@@ -80,8 +80,25 @@ public class AccessDB {
 
 	public int set_userInfo(String id, String password, String nick) {
 		System.out.println("ser_userinfo = "+id+"/"+password+"/"+nick);
-		
-		return 1;
+		int chk = 0;
+		try {
+			conn = DriverManager.getConnection(url, "root", "1234");
+
+			String sql = "insert into user(id, password, nick, score) values(?, ?, ?, ?)";
+			pstm = conn.prepareStatement(sql);
+			pstm.setString(1 , id);
+			pstm.setString(2, password);
+			pstm.setString(3, nick);
+			pstm.setInt(4, 0);
+			chk = pstm.executeUpdate();
+		} catch (SQLException e) {
+			e.getStackTrace();
+			closeDatabases();
+		} catch(Exception e1) {
+			e1.getStackTrace();
+		}
+		return chk;
+
 	}
 	
 	

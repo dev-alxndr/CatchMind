@@ -49,7 +49,7 @@ public class Client {
 			GetStr gs = new GetStr(socket); // 서버로 부터 데이터를 받기 위한 쓰레드
 			gs.start();
 			ss = new SendStr(socket, nick); // 서버로 채팅을 보내기 위한클래
-			System.out.println("Server Ready");
+			System.out.println("Success Connect");
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -87,7 +87,6 @@ public class Client {
 	
 	public int go_signUp(String str) {
 		return 0; 
-		
 	}
 
 	class SendStr {
@@ -126,6 +125,7 @@ public class Client {
 		private StringTokenizer st;
 		private MakeRoom2 makeRoom;
 		
+		
 		GetStr(Socket socket) {
 			this.socket = socket;
 			try {
@@ -137,6 +137,7 @@ public class Client {
 		}
 		@Override
 		public void run() {
+			
 			String msg = "";
 			int num = 0;
 			String message = "";
@@ -147,27 +148,27 @@ public class Client {
 						num = Integer.parseInt(st.nextToken());
 						
 						message = st.nextToken();
-						System.out.println(message + "......");
+						
 						switch (num) {
 						case 100: //Login
 							if(message.equals("1")) {
 								login.setVisible(false);
-								MakeRoom2 mr = new MakeRoom2();
-								this.makeRoom = mr;
 								String str = "200#"+nick;
-								makeRoom.set_client(client);
-								makeRoom.display();
 								pw.println(str);
 								pw.flush();
 							}else {
-								System.out.println(message + "/ denied");
+								Notice notice = new Notice();
+								
+								notice.text("로그인 실패");
+								notice.display("Failed");
 							}
 							
 							break;
 						case 110:	//check SignUp
-							Notice notice = new Notice();
 							int check = Integer.parseInt(message);
+							Notice notice = new Notice();
 							if(check == 1) {
+								
 								login.setVisible(true);
 								register.setVisible(false);
 								notice.text("회원가입 성공");
@@ -178,16 +179,19 @@ public class Client {
 							}
 							break;
 						case 200: //Ready for Game
+							makeRoom = new MakeRoom2();								
+							makeRoom.set_client(client);
+							makeRoom.display();
 							st = new StringTokenizer(message,"*");
 							String seat = st.nextToken();
-							System.out.println(seat +"-11");
+							
 							String id = st.nextToken();
-							System.out.println(id + "--2");
+							
 							String msg1 = st.nextToken();
-							System.out.println(msg1+"--3" );
+							
 							
 							appendChat((id+msg1));
-							//makeRoom.lb_userName1.setText(id);
+							makeRoom.lb_user1.setText(id);
 							break;
 						case 400:	// chat
 							appendChat(message);
