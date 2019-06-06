@@ -4,7 +4,6 @@ public class Word {
 
 	public static void main(String[] args) {
 		Word wd = new Word();
-		wd.makeWordArray();
 	}
 	
 	String wordList[] = {
@@ -15,8 +14,7 @@ public class Word {
 			"소방관", "가수", "악기", "노래", "용지", "동아리", "코끼리", "광산", "완두콩", "산책"};		//41 ~ 50번
 	String[] wordQuiz = new String[50];
 
-	
-	void makeWordArray() {
+	Word() {
 		int[] rNum = new int[50];
 		
 		//랜덤수 생성
@@ -32,11 +30,10 @@ public class Word {
 			this.wordQuiz[i] = this.wordList[rNum[i]];
 		}
 		
-		
 		//확인 출력
 		for(int i = 0; i<rNum.length; i++) {
 			System.out.println("wordQuiz[" +i+"] = " + this.wordQuiz[i] + "\trNum[" + i + "] = " +rNum[i]);
 		}
-		
 	}
+
 }
