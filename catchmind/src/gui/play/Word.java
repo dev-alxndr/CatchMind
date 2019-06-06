@@ -18,9 +18,21 @@ public class Word {
 
 	void wordprint() {
 		int[] rNum = new int[50];
+		
+		//랜덤수 생성
 		for(int i=0; i<rNum.length; i++) {
 			rNum[i] = (int)(Math.random()*50)+0;
+			
+			//중복 제거
+			for(int j=0; j<i; j++) {
+				if(rNum[j] == rNum[i]) {
+					i--;
+					break;
+				}
+			}
+			
 		}
+		
 		
 		//확인 출력
 		for(int i = 0; i<rNum.length; i++) {
