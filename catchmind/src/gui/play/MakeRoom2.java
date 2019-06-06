@@ -31,7 +31,6 @@ import gui.user.Login;
 //}
 public class MakeRoom2 extends JFrame implements ActionListener, KeyListener{
 //	public static void main(String[] args) {
-//		System.out.println("gd");
 //		MakeRoom2 mr = new MakeRoom2();
 //		mr.setVisible(true);
 //	}
@@ -52,10 +51,10 @@ public class MakeRoom2 extends JFrame implements ActionListener, KeyListener{
 	//삭제할 버튼(자리 확인용)
 	JButton btn1 = new JButton("자리 확인용 버튼");
 	public MakeRoom2(){
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		//setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 1000, 1000);
 //		setResizable(false);
-		setLocationRelativeTo(null);
+		//setLocationRelativeTo(null);
 		p_border = new JPanel();
 		p_border.setBorder(new LineBorder(new Color(0, 0, 0)));
 		setContentPane(p_border);
@@ -214,7 +213,7 @@ public class MakeRoom2 extends JFrame implements ActionListener, KeyListener{
 		{
 			dispose();
 			setVisible(false);
-			Login login;
+			//Login login;
 		}	
 	}
 

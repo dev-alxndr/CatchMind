@@ -26,17 +26,7 @@ public class Server {
 	public Server() { 
 		userInfoMap = new UserInfoMap();	
 	}
-/*
- *  while (it.hasNext()) {
-            try {
-                PrintWriter out = (PrintWriter) userInfoMap.get().get(it.next()).pw;
-                out.println(msg);
-                out.flush();
-            } catch (Exception e) {
-            }
-        } // while
- * */
-	// 클라이언트 접수 대기....
+
 	public void Connection() {
 		
 		try {
@@ -48,7 +38,7 @@ public class Server {
 				System.out.println("waiting....");
 				Socket socket = ss.accept(); // socket은 클라이언트마다 새로 생
 
-				RunServer runServer = new RunServer(socket, userInfoMap);
+				RunServer runServer = new RunServer(socket);
 			}
 		} catch (IOException e) {
 			e.printStackTrace();
@@ -66,14 +56,14 @@ public class Server {
 		private String nick = "";
 		private PrintWriter pw;
 		private BufferedReader br;
-		private UserInfoMap userInfoMap;
+		//UserInfoMap userInfoMap;
 		
 		
-		RunServer(Socket socket, UserInfoMap userInfoMap) {
+		RunServer(Socket socket) {
 			try {
 				//this.map = map;// 사용자 객체를 담을 HashMap
 				this.socket = socket;
-				this.userInfoMap = userInfoMap;
+				//
 				
 				//br = new BufferedReader(new InputStreamReader(socket.getInputStream()));
 //
@@ -95,7 +85,6 @@ public class Server {
 			
 			if(userInfoMap.size() < 4) {
 				userInfoMap.add(nick, writer);
-				
 			}else {				
 				System.out.println("over 4");
 			}
@@ -112,8 +101,7 @@ public class Server {
 			
 			public Receiver(Socket socket) {
 				this.socket = socket;
-				
-				
+
 				try {
 					br = new BufferedReader(new InputStreamReader(socket.getInputStream()));
 				} catch (IOException e) {
@@ -174,8 +162,7 @@ public class Server {
 				join_member(pw, nick); // HashMap에 저장
 				int seat = userInfoMap.size();
 				String message = "200#"+seat+"*"+nick+"*님이 입장하셨습니다.";
-				//pw.println(message);
-				//pw.flush();
+				
 				sendAll(message);
 			}
 			
@@ -187,7 +174,7 @@ public class Server {
 				String nick = st.nextToken();
 				String msg = "";
 				int result = db.set_userInfo(id, password, nick);
-				System.out.println("set_userInfo = "+ result);
+				
 				if(result == 1) {
 					msg = "110#"+result;
 					pw.println(msg);
