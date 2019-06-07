@@ -4,7 +4,10 @@ public class Word {
 
 	public static void main(String[] args) {
 		Word wd = new Word();
+		System.out.println(wd.getWord());
+		
 	}
+	
 	
 	String wordList[] = {
 			"사자", "비둘기","화광암", "고양이", "강아지", "얼룩말", "아지랑이", "기린", "물고기", "사과", 	// 0 ~ 10번
@@ -13,27 +16,23 @@ public class Word {
 			"원숭이", "공부", "선생님", "다이아몬드", "그물", "등급","호랑이", "사람", "축구", "파리",		//31 ~ 40번
 			"소방관", "가수", "악기", "노래", "용지", "동아리", "코끼리", "광산", "완두콩", "산책"};		//41 ~ 50번
 	String[] wordQuiz = new String[50];
-
+	String[] alreadyWord = new String[50]; 
+	
 	Word() {
-		int[] rNum = new int[50];
 		
-		//랜덤수 생성
-		for(int i=0; i<rNum.length; i++) {
-			rNum[i] = (int)(Math.random()*50)+0;
-			//중복 제거
-			for(int j=0; j<i; j++) {
-				if(rNum[j] == rNum[i]) {
-					i--;
-					break;
-				}
-			}
-			this.wordQuiz[i] = this.wordList[rNum[i]];
-		}
+	}
+	
+	public String getWord(){
+		String word = null;
+		int rnum, i;
 		
-		//확인 출력
-		for(int i = 0; i<rNum.length; i++) {
-			System.out.println("wordQuiz[" +i+"] = " + this.wordQuiz[i] + "\trNum[" + i + "] = " +rNum[i]);
-		}
+		//문자 넣기
+		rnum = (int)(Math.random()*50)+0;
+		word = wordList[rnum];
+		
+		
+		
+		return word;
 	}
 
 }
