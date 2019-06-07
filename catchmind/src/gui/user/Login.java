@@ -84,6 +84,7 @@ public class Login extends JFrame implements ActionListener {
 	public void actionPerformed(ActionEvent e) {
 		// 로그인 버튼을 눌렀을 시
 		if (e.getSource() == btnlogin) {
+			
 			System.out.println("[login]로그인 버튼이에요");
 			id = tfid.getText();
 			pw = tfpw.getText();
