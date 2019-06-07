@@ -30,10 +30,10 @@ import gui.user.Login;
 //
 //}
 public class MakeRoom2 extends JFrame implements ActionListener, KeyListener{
-//	public static void main(String[] args) {
-//		MakeRoom2 mr = new MakeRoom2();
-//		mr.setVisible(true);
-//	}
+	public static void main(String[] args) {
+		MakeRoom2 mr = new MakeRoom2();
+		mr.setVisible(true);
+	}
 	Client client;
 	MakeCanvas mc;
 	Draw draw;
@@ -56,8 +56,10 @@ public class MakeRoom2 extends JFrame implements ActionListener, KeyListener{
 //		setResizable(false);
 		//setLocationRelativeTo(null);
 		p_border = new JPanel();
+
 		p_border.setBorder(new LineBorder(new Color(0, 0, 0)));
-		setContentPane(p_border);
+		//setContentPane(p_border);
+		add(p_border);
 		p_border.setLayout(new BorderLayout(0, 0));
 		
 		p_east = new JPanel();
@@ -85,7 +87,7 @@ public class MakeRoom2 extends JFrame implements ActionListener, KeyListener{
 		btn_logout = new JButton("로그아웃");
 		btn_send = new JButton("보내기");
 		
-		Draw draw = new Draw();
+		draw = new Draw();
 //		draw.setSize(900,900);
 		
 		//큰 테두리 동 서 북 중앙
@@ -131,7 +133,7 @@ public class MakeRoom2 extends JFrame implements ActionListener, KeyListener{
 		
 		//중앙
 		p_center.setBorder(new LineBorder(new Color(0, 0, 0)));
-		p_center.setPreferredSize(new Dimension(100, 100));
+		p_center.setPreferredSize(new Dimension(900, 900));
 		p_center.setLayout(new BorderLayout(0, 0));
 		p_center.add(p_word, BorderLayout.NORTH);
 		p_center.add(p_drawCanvas, BorderLayout.CENTER);
@@ -181,7 +183,7 @@ public class MakeRoom2 extends JFrame implements ActionListener, KeyListener{
 		setVisible(true);
 		setLayout(new FlowLayout());
 		setTitle("놓지마! 정신줄!!");
-		setSize(1500,1500);
+		setSize(1200,1000);
 		setLocationRelativeTo(null);
 		setResizable(true);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
