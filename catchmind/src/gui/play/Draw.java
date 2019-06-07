@@ -19,6 +19,10 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.LineBorder;
 
+import example.chat.Client;
+
+
+
 
 
 public class Draw extends JPanel implements ActionListener, MouseMotionListener, MouseListener{
@@ -26,6 +30,9 @@ public class Draw extends JPanel implements ActionListener, MouseMotionListener,
 	boolean first = true;
 	int f_x =0 ;
 	int f_y = 0;
+	private Client client;
+	public Graphics graphic;
+	
 //	public static void main(String[] args) {
 //		Draw draw = new Draw();
 //		draw.display();
@@ -35,8 +42,9 @@ public class Draw extends JPanel implements ActionListener, MouseMotionListener,
 	JButton btn_clear, btn_Black, btn_Red, btn_Green, btn_Blue, btn_Yellow, btn_White, btn_Thin, btn_Normal, btn_Thick;
 	MakeCanvas makeCanvas;
 
-	Draw() {
-
+	Draw(Client client) {
+		this.client = client;
+		
 		p_drawCanvas = new JPanel(new FlowLayout());
 		p_btnBar = new JPanel(new GridLayout(2, 1));
 		p_colorBar = new JPanel();
@@ -63,8 +71,12 @@ public class Draw extends JPanel implements ActionListener, MouseMotionListener,
 		makeCanvas = new MakeCanvas();
 		makeCanvas.setVariable(check, f_x, f_y);
 		
+		client.set_MakeCanvas(makeCanvas);
+		
+		
 		makeCanvas.addMouseMotionListener(this);
 		makeCanvas.addMouseListener(this);
+		
 		
 		makeCanvas.setSize(780,550);
 		makeCanvas.setVisible(true);
@@ -111,12 +123,14 @@ public class Draw extends JPanel implements ActionListener, MouseMotionListener,
 //		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 	}
 
+
+	
 	@Override
 	public void mouseDragged(MouseEvent e) {
 		makeCanvas.x = e.getX();
 		makeCanvas.y = e.getY();
-		System.out.println(makeCanvas.x + "/ " + makeCanvas.y);
-		makeCanvas.repaint();
+		makeCanvas.repaint();	
+		client.user_draw(e.getX(), e.getY());
 	}
 
 	@Override
@@ -127,39 +141,39 @@ public class Draw extends JPanel implements ActionListener, MouseMotionListener,
 			makeCanvas.pre_x = e.getX();
 			makeCanvas.pre_y = e.getY();
 		}
-		
-		
 	}
 	
-
+	
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		Graphics g = makeCanvas.getGraphics();
-		Graphics2D g2d = (Graphics2D)g;
+		
+		graphic = makeCanvas.getGraphics();
+		Graphics2D g2d = (Graphics2D)graphic;
 		
 		//초기화
 		if(e.getSource() == btn_clear) {
-			g.clearRect(0, 0, 900, 900);
+			graphic.clearRect(0, 0, 900, 900);
+			client.canvas_Clear();
 		}
 		
 		//색상 바꾸기
 		if(e.getSource() == btn_Red) {
-			makeCanvas.sc = Color.RED;
+			makeCanvas.color = Color.RED;
 		}
 		if(e.getSource() == btn_Green) {
-			makeCanvas.sc = Color.GREEN;
+			makeCanvas.color = Color.GREEN;
 		}
 		if(e.getSource() == btn_Blue) {
-			makeCanvas.sc = Color.BLUE;
+			makeCanvas.color = Color.BLUE;
 		}
 		if(e.getSource() == btn_Yellow) {
-			makeCanvas.sc = Color.YELLOW;
+			makeCanvas.color = Color.YELLOW;
 		}
 		if(e.getSource() == btn_Black) {
-			makeCanvas.sc = Color.BLACK;
+			makeCanvas.color = Color.BLACK;
 		}
 		if(e.getSource() == btn_White) {
-			makeCanvas.sc = Color.WHITE;
+			makeCanvas.color = Color.WHITE;
 		}
 		
 		//굵기 바꾸기
@@ -189,7 +203,7 @@ public class Draw extends JPanel implements ActionListener, MouseMotionListener,
 	@Override
 	public void mouseReleased(MouseEvent e) {
 		check = false;
-		System.out.println(check);
+	
 	}
 	@Override
 	public void mouseEntered(MouseEvent e) {
@@ -201,42 +215,3 @@ public class Draw extends JPanel implements ActionListener, MouseMotionListener,
 	}
 }
 
-class MakeCanvas extends Canvas	//스케치북
-{
-	int x= 0, y = 0;
-	int pre_x = x, pre_y = y;
-	boolean check = true;
-	Color sc = Color.black;
-	int pen_size = 3;
-	
-	public MakeCanvas() {
-		
-	}
-	
-	public void setVariable(boolean check, int f_x, int f_y) {
-		this.check = check;
-		this.x = f_x;
-		this.y = f_y;
-//		this.sc = sc;
-	}
-	public void paint(Graphics g)
-	{
-		Graphics2D g2d = (Graphics2D)g;
-		g2d.setStroke(new BasicStroke(pen_size));	//선 굵기 조절
-		
-		g2d.setColor(sc);
-		if(check) {
-			g.drawLine(pre_x, pre_y, x, y);
-		}else {
-			pre_x = x;
-			pre_y = y;
-		}
-		pre_x = x ;
-		pre_y = y;
-	}
-	public void update(Graphics g)
-	{
-		paint(g);
-	}
-
-}
