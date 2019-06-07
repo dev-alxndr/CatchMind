@@ -30,10 +30,10 @@ import gui.user.Login;
 //
 //}
 public class MakeRoom2 extends JFrame implements ActionListener, KeyListener{
-	public static void main(String[] args) {
-		MakeRoom2 mr = new MakeRoom2();
-		mr.setVisible(true);
-	}
+//	public static void main(String[] args) {
+//		MakeRoom2 mr = new MakeRoom2();
+//		mr.setVisible(true);
+//	}
 	Client client;
 	MakeCanvas mc;
 	Draw draw;
@@ -45,20 +45,21 @@ public class MakeRoom2 extends JFrame implements ActionListener, KeyListener{
 	public JButton btn_send, btn_logout;
 	public JTextArea ta_chatlog;
 	
-	public void set_client(Client client) {
-		this.client = client;
-	}
+	
 	//삭제할 버튼(자리 확인용)
 	JButton btn1 = new JButton("자리 확인용 버튼");
-	public MakeRoom2(){
-		//setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+	public MakeRoom2(Client client){
+		this.client = client;
+		draw = new Draw(client);
+		System.out.println("Set Draw");
+		client.set_Draw(draw);
+
 		setBounds(100, 100, 1000, 1000);
-//		setResizable(false);
-		//setLocationRelativeTo(null);
+
 		p_border = new JPanel();
 
 		p_border.setBorder(new LineBorder(new Color(0, 0, 0)));
-		//setContentPane(p_border);
+
 		add(p_border);
 		p_border.setLayout(new BorderLayout(0, 0));
 		
@@ -87,7 +88,7 @@ public class MakeRoom2 extends JFrame implements ActionListener, KeyListener{
 		btn_logout = new JButton("로그아웃");
 		btn_send = new JButton("보내기");
 		
-		draw = new Draw();
+		
 //		draw.setSize(900,900);
 		
 		//큰 테두리 동 서 북 중앙
@@ -233,8 +234,9 @@ public class MakeRoom2 extends JFrame implements ActionListener, KeyListener{
 			
 			if(!chat.equals("")) {
 //				client.send_msg(chat);
-				ta_chatlog.append(chat + "\n");
+				
 				tf_msg.setText("");
+				client.send_msg(chat);
 			}
 			else if(chat.equals("")) {
 				

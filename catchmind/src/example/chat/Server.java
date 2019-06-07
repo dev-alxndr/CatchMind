@@ -131,8 +131,11 @@ public class Server {
 								case 200:
 									readyForGame(message);
 									break;
-								case 300:									
+								case 300:
+									do_draw(message);
 									break;
+								case 350:
+									sendAll("350#"+message);
 								case 400:
 									sendAll("400#"+message);
 							}
@@ -159,11 +162,21 @@ public class Server {
 				}
 			}
 			void readyForGame(String nick) { //사용자의 자리 지정이 필요
+				pw.println("200#-");
+				pw.flush();
+				
 				join_member(pw, nick); // HashMap에 저장
 				int seat = userInfoMap.size();
-				String message = "200#"+seat+"*"+nick+"*님이 입장하셨습니다.";
+				String message = "201#"+seat+"*"+nick+"*님이 입장하셨습니다.";
 				
 				sendAll(message);
+			}
+			
+			
+			void do_draw(String message) {
+				
+				String msg = "300#"+message;			
+				sendAll(msg);
 			}
 			
 			
@@ -210,7 +223,7 @@ public class Server {
 		        while (it.hasNext()) {
 		            try {
 		                PrintWriter out = (PrintWriter) userInfoMap.get().get(it.next()).pw;
-		                out.println(str);
+		                out.println(str); // 
 		                out.flush();
 		            } catch (Exception e) {
 		            }

@@ -7,6 +7,9 @@ import java.io.PrintWriter;
 import java.net.Socket;
 import java.util.Scanner;
 import java.util.StringTokenizer;
+
+import gui.play.Draw;
+import gui.play.MakeCanvas;
 import gui.play.MakeRoom;
 import gui.play.MakeRoom2;
 import gui.user.Login;
@@ -16,12 +19,15 @@ import gui.user.Register;
 
 public class Client {
 	private static final int PORT = 12345;
-	private Login login;
 	private PrintWriter pw;
 	String nick;
 	SendStr ss;
+	private Login login;
 	private Client client;
 	private Register register;
+	private Draw draw;
+	private MakeCanvas mc;
+	
 	
 	public void setLogin(Login login) {
 		this.login = login;
@@ -32,6 +38,14 @@ public class Client {
 	public void setRegister(Register register) {
 		this.register = register;
 	}
+	public void set_Draw(Draw draw) {
+		System.out.println(draw);
+		this.draw = draw;
+	}
+	public void set_MakeCanvas(MakeCanvas mc) {
+		this.mc = mc;
+	}
+	
 	
 	public Client(Login login) {
 		this.login = login;
@@ -71,12 +85,17 @@ public class Client {
 	
 	public void do_login(String id, String password){
 		String str = "100#"+id+","+password;
-		System.out.println(str);
+
 		nick = id;
 		pw.println(str);
 		pw.flush();
 	}
 
+	public void canvas_Clear() {
+		String str = "350#-";
+		pw.println(str);
+		pw.flush();
+	}
 	
 	
 	public void do_signUp(String reg_id, String reg_pw, String reg_nick) {
@@ -85,10 +104,18 @@ public class Client {
 		pw.flush();
 	}
 	
+	public void user_draw(int x , int y) {// 사용자가 그림을 그릴때 서버로 좌표값을 전송하는 메소드
+		String msg = "300#"+x+"*"+y;
+		pw.println(msg);
+		pw.flush();
+	}
+	
 	public int go_signUp(String str) {
 		return 0; 
 	}
 
+
+	
 	class SendStr {
 		private Socket socket;
 		private String nick;
@@ -113,10 +140,7 @@ public class Client {
 //			}
 //		}
 
-		public String user_draw() {// 사용자가 그림을 그릴때 서버로 좌표값을 전송하는 메소드
-
-			return "";
-		}
+	
 	}
 
 	class GetStr extends Thread { // 클라이언트는 서버로 부터 정보를 받아서 그린다.
@@ -179,9 +203,11 @@ public class Client {
 							}
 							break;
 						case 200: //Ready for Game
-							makeRoom = new MakeRoom2();								
-							makeRoom.set_client(client);
+							makeRoom = new MakeRoom2(client);								
+					
 							makeRoom.display();
+							break;
+						case 201 : // set Seat
 							st = new StringTokenizer(message,"*");
 							int seat = Integer.parseInt(st.nextToken());
 							
@@ -201,6 +227,18 @@ public class Client {
 								makeRoom.lb_user4.setText(id);
 							}
 							break;
+						case 300:
+							st = new StringTokenizer(message, "*");
+							int x = Integer.parseInt(st.nextToken());
+							int y = Integer.parseInt(st.nextToken());
+							
+							mc.x = x;
+							mc.y = y;
+							mc.repaint();
+							break;
+						case 350:
+							draw.graphic = mc.getGraphics();
+							draw.graphic.clearRect(0, 0, 900, 900);
 						case 400:	// chat
 							appendChat(message);
 							break;
