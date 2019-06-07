@@ -1,5 +1,5 @@
-package gui.play;
 
+package gui.play;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
