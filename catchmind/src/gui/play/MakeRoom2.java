@@ -51,7 +51,6 @@ public class MakeRoom2 extends JFrame implements ActionListener, KeyListener{
 	public MakeRoom2(Client client){
 		this.client = client;
 		draw = new Draw(client);
-		System.out.println("Set Draw");
 		client.set_Draw(draw);
 
 		setBounds(100, 100, 1000, 1000);

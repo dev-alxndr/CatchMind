@@ -13,8 +13,8 @@ public class MakeCanvas extends Canvas	//스케치북
 	public int x= 0, y = 0;
 	int pre_x = x, pre_y = y;
 	boolean check = true;
-	Color color = Color.black;
-	int pen_size = 3;
+	public Color color = Color.black;
+	public int pen_size = 3;
 	Client client;
 
 	public MakeCanvas() {

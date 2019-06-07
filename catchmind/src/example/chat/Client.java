@@ -7,7 +7,7 @@ import java.io.PrintWriter;
 import java.net.Socket;
 import java.util.Scanner;
 import java.util.StringTokenizer;
-
+import java.awt.Color;
 import gui.play.Draw;
 import gui.play.MakeCanvas;
 import gui.play.MakeRoom;
@@ -96,6 +96,19 @@ public class Client {
 		pw.println(str);
 		pw.flush();
 	}
+	
+	
+	public void set_Color(String colors) {
+		String str = "320#"+colors;
+		pw.println(str);
+		pw.flush();
+	}
+	
+	public void set_penSize(int pen_size) {
+		pw.println("330#"+pen_size);
+		pw.flush();
+	}
+	
 	
 	
 	public void do_signUp(String reg_id, String reg_pw, String reg_nick) {
@@ -236,6 +249,18 @@ public class Client {
 							mc.y = y;
 							mc.repaint();
 							break;
+						case 320:
+							st = new StringTokenizer(message, "*");
+							int r = Integer.parseInt(st.nextToken());
+							int g = Integer.parseInt(st.nextToken());
+							int b = Integer.parseInt(st.nextToken());
+
+							mc.color = new Color(r,g,b);
+							break;
+						case 330:
+							int pensize = Integer.parseInt(message);
+							mc.pen_size = pensize;
+							break;
 						case 350:
 							draw.graphic = mc.getGraphics();
 							draw.graphic.clearRect(0, 0, 900, 900);
@@ -256,5 +281,7 @@ public class Client {
 			makeRoom.ta_chatlog.append(str+" \n");			
 		}
 	}
+
+	
 	
 }

@@ -32,6 +32,9 @@ public class Draw extends JPanel implements ActionListener, MouseMotionListener,
 	int f_y = 0;
 	private Client client;
 	public Graphics graphic;
+	public int pen_size = 3;
+	public int r,g,b = 0;
+	
 	
 //	public static void main(String[] args) {
 //		Draw draw = new Draw();
@@ -146,7 +149,8 @@ public class Draw extends JPanel implements ActionListener, MouseMotionListener,
 	
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		
+		String colors = "";
+		String penSize;
 		graphic = makeCanvas.getGraphics();
 		Graphics2D g2d = (Graphics2D)graphic;
 		
@@ -158,34 +162,52 @@ public class Draw extends JPanel implements ActionListener, MouseMotionListener,
 		
 		//색상 바꾸기
 		if(e.getSource() == btn_Red) {
-			makeCanvas.color = Color.RED;
+			r = 255;
+			g = 0;
+			b = 0;
 		}
 		if(e.getSource() == btn_Green) {
-			makeCanvas.color = Color.GREEN;
+			r = 0;
+			g = 255;
+			b = 0;
 		}
 		if(e.getSource() == btn_Blue) {
-			makeCanvas.color = Color.BLUE;
+			r = 0;
+			g = 0;
+			b = 255;
 		}
 		if(e.getSource() == btn_Yellow) {
-			makeCanvas.color = Color.YELLOW;
+			r = 239;
+			g = 234;
+			b = 16;
 		}
 		if(e.getSource() == btn_Black) {
-			makeCanvas.color = Color.BLACK;
+			r = 0;
+			g = 0;
+			b = 0;
 		}
 		if(e.getSource() == btn_White) {
-			makeCanvas.color = Color.WHITE;
+			r = 255;
+			g = 255;
+			b = 255;
 		}
+		makeCanvas.color = new Color(r,g,b);
+		colors = ""+r+"*"+g+"*"+b;
+		client.set_Color(colors);
 		
 		//굵기 바꾸기
 		if(e.getSource() == btn_Thin) {
-			makeCanvas.pen_size = 1;
+			pen_size = 3;
 		}
 		if(e.getSource() == btn_Normal) {
-			makeCanvas.pen_size = 3;
+			pen_size = 5;
 		}
 		if(e.getSource() == btn_Thick) {
-			makeCanvas.pen_size = 5;
+			pen_size = 10;
 		}
+		
+		client.set_penSize(pen_size);	// 메소드가 필요함. 하지만 귀찮
+		
 	}
 	@Override
 	public void mouseClicked(MouseEvent e) { 
