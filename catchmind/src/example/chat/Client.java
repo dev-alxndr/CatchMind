@@ -183,7 +183,7 @@ public class Client {
 							makeRoom.set_client(client);
 							makeRoom.display();
 							st = new StringTokenizer(message,"*");
-							String seat = st.nextToken();
+							int seat = Integer.parseInt(st.nextToken());
 							
 							String id = st.nextToken();
 							
@@ -191,7 +191,15 @@ public class Client {
 							
 							
 							appendChat((id+msg1));
-							makeRoom.lb_user1.setText(id);
+							if(seat == 1) {
+								makeRoom.lb_user1.setText(id);								
+							}else if(seat == 2) {
+								makeRoom.lb_user2.setText(id);
+							}else if(seat == 3) {
+								makeRoom.lb_user3.setText(id);
+							}else if(seat == 4) {
+								makeRoom.lb_user4.setText(id);
+							}
 							break;
 						case 400:	// chat
 							appendChat(message);
