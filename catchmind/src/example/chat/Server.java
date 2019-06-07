@@ -134,10 +134,18 @@ public class Server {
 								case 300:
 									do_draw(message);
 									break;
+								case 320:
+									set_Colors(message);
+									break;
+								case 330:
+									set_penSize(message);
+									break;
 								case 350:
 									sendAll("350#"+message);
+									break;
 								case 400:
 									sendAll("400#"+message);
+									break;
 							}
 						}
 					}
@@ -160,7 +168,9 @@ public class Server {
 						e.printStackTrace();
 					}
 				}
-			}
+
+
+		}
 			void readyForGame(String nick) { //사용자의 자리 지정이 필요
 				pw.println("200#-");
 				pw.flush();
@@ -179,6 +189,14 @@ public class Server {
 				sendAll(msg);
 			}
 			
+			
+			void set_Colors(String message) {
+				sendAll("320#"+message);
+			}
+			private void set_penSize(String message) {
+				sendAll("330#"+message);
+				
+			}
 			
 			void set_userInfo(String message) {	// 회원가입 메소드
 				st = new StringTokenizer(message, ",");
