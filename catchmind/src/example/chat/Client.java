@@ -109,6 +109,11 @@ public class Client {
 		pw.flush();
 	}
 	
+	public void set_FirstXY(int x, int y) {
+		pw.println("311#"+x+"*"+y);
+		pw.flush();
+	}
+	
 	
 	
 	public void do_signUp(String reg_id, String reg_pw, String reg_nick) {

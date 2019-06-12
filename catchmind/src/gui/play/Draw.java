@@ -28,8 +28,6 @@ import example.chat.Client;
 public class Draw extends JPanel implements ActionListener, MouseMotionListener, MouseListener{
 	public boolean check = true;
 	boolean first = true;
-	int f_x =0 ;
-	int f_y = 0;
 	private Client client;
 	public Graphics graphic;
 	public int pen_size = 3;
@@ -72,7 +70,7 @@ public class Draw extends JPanel implements ActionListener, MouseMotionListener,
 		btn_Thick = new JButton("두껍게");
 		
 		makeCanvas = new MakeCanvas();
-		makeCanvas.setVariable(check, f_x, f_y);
+		//makeCanvas.setVariable(check, f_x, f_y);
 		
 		client.set_MakeCanvas(makeCanvas);
 		
@@ -128,23 +126,6 @@ public class Draw extends JPanel implements ActionListener, MouseMotionListener,
 
 
 	
-	@Override
-	public void mouseDragged(MouseEvent e) {
-		makeCanvas.x = e.getX();
-		makeCanvas.y = e.getY();
-		makeCanvas.repaint();	
-		client.user_draw(e.getX(), e.getY());
-	}
-
-	@Override
-	public void mouseMoved(MouseEvent e) {
-		f_x = e.getX();
-		f_y = e.getY();
-		if(!check) {
-			makeCanvas.pre_x = e.getX();
-			makeCanvas.pre_y = e.getY();
-		}
-	}
 	
 	
 	@Override
@@ -210,9 +191,27 @@ public class Draw extends JPanel implements ActionListener, MouseMotionListener,
 		
 	}
 	@Override
+	public void mouseDragged(MouseEvent e) {
+		makeCanvas.x = e.getX();
+		makeCanvas.y = e.getY();
+		makeCanvas.repaint();	
+		client.user_draw(e.getX(), e.getY());
+	}
+
+	@Override
+	public void mouseMoved(MouseEvent e) {
+		if(!check) {
+			System.out.println(!check);
+			makeCanvas.pre_x = e.getX();
+			makeCanvas.pre_y = e.getY();
+		}
+	}
+	
+	@Override
 	public void mouseClicked(MouseEvent e) { 
 		
 	}
+	
 	@Override
 	public void mousePressed(MouseEvent e) {
 		check = true;
@@ -220,11 +219,17 @@ public class Draw extends JPanel implements ActionListener, MouseMotionListener,
 			first = false;
 			makeCanvas.pre_x = e.getX();
 			makeCanvas.pre_y = e.getY();
+			System.out.println("pre_x = "+e.getX()+"/pre_y = "+e.getY());
+			client.set_FirstXY(e.getX(), e.getY());
 		}
 	}
+	
 	@Override
 	public void mouseReleased(MouseEvent e) {
 		check = false;
+		int r_x = e.getX();
+		int r_y = e.getY();
+		
 	
 	}
 	@Override
