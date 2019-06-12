@@ -12,6 +12,7 @@ import gui.play.Draw;
 import gui.play.MakeCanvas;
 import gui.play.MakeRoom;
 import gui.play.MakeRoom2;
+import gui.play.Word;
 import gui.user.Login;
 import gui.user.Notice;
 import gui.user.Register;
@@ -266,6 +267,10 @@ public class Client {
 							draw.graphic.clearRect(0, 0, 900, 900);
 						case 400:	// chat
 							appendChat(message);
+							break;
+						case 460:
+							System.out.println("정욱123"+message);
+							makeRoom.lb_answerWord.setText(message);
 							break;
 						}
 					}

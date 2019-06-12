@@ -40,7 +40,7 @@ public class MakeRoom2 extends JFrame implements ActionListener, KeyListener{
 	
 	public JPanel p_border, p_east, p_west, p_south, p_north, p_center, p_user1, p_user2, p_user3, p_user4;
 	public JPanel p_word, p_drawCanvas, p_chat, p_chatlog, p_chatsend, p_btnbar;
-	public JLabel lb_user1, lb_user2, lb_user3, lb_user4, lb_answer;
+	public JLabel lb_user1, lb_user2, lb_user3, lb_user4, lb_answer, lb_answerWord;
 	public JTextField tf_msg;
 	public JButton btn_send, btn_logout;
 	public JTextArea ta_chatlog;
@@ -73,14 +73,16 @@ public class MakeRoom2 extends JFrame implements ActionListener, KeyListener{
 		p_user2 = new JPanel();
 		lb_user2 = new JLabel("user2");
 		p_center = new JPanel();
-		p_word = new JPanel();
+		p_word = new JPanel(new GridLayout(1, 2));
 		lb_answer = new JLabel("정답 : ");
+		lb_answerWord = new JLabel("정답 단어");
 		p_drawCanvas = new JPanel();
 		p_chat = new JPanel();
 		p_chatlog = new JPanel();
 		p_chatsend = new JPanel();
 		p_north = new JPanel();
 		p_btnbar = new JPanel();
+		
 		
 		ta_chatlog = new JTextArea();
 		tf_msg = new JTextField();
@@ -144,7 +146,9 @@ public class MakeRoom2 extends JFrame implements ActionListener, KeyListener{
 		p_word.setBorder(new LineBorder(new Color(0, 0, 0)));
 		p_word.setLayout(new BorderLayout(0, 0));
 		p_word.add(lb_answer, BorderLayout.NORTH);
+		p_word.add(lb_answerWord, BorderLayout.EAST);
 			lb_answer.setPreferredSize(new Dimension(43, 30));
+			
 		
 		p_drawCanvas.setBorder(new LineBorder(new Color(0, 0, 0)));
 		p_drawCanvas.setForeground(Color.BLACK);

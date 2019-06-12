@@ -20,7 +20,7 @@ public class Word {
 	String[] alreadyWord = new String[50]; 
 	int num = 0;
 	int flag = 0;
-	Word() {
+	public Word() {
 //		
 //		랜덤수 생성
 		for(int i=0; i<rNum.length; i++) {

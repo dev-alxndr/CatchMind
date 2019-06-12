@@ -13,6 +13,8 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.StringTokenizer;
 
+import gui.play.Word;
+
 
 
 
@@ -23,6 +25,7 @@ public class Server {
 	private String nick = null;
 	private BufferedReader br;
 	private UserInfoMap userInfoMap;
+	private Word word;
 	public Server() { 
 		userInfoMap = new UserInfoMap();	
 	}
@@ -180,6 +183,16 @@ public class Server {
 				String message = "201#"+seat+"*"+nick+"*님이 입장하셨습니다.";
 				
 				sendAll(message);
+				
+				System.out.println(userInfoMap.size());
+				if(userInfoMap.size() == 4) {
+					word = new Word();
+					//getSTr로 단어를 가져옴 460#
+					System.out.println("확인1");
+					String answerWord = word.getStr();
+					message = "460#"+answerWord;
+					sendAll(message);
+				}
 			}
 			
 			
