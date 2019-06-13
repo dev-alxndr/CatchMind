@@ -215,13 +215,12 @@ public class Server {
 				if(userInfoMap.size() == 1) {					
 					userInfoMap.get().get(nick).host = true;
 				}
-				if(userInfoMap.size()> 2) {
+				if(userInfoMap.size()== 2) {
 					start_game(userInfoMap.getHost());
 				}
 				get_players();
 				String msg = "202#"+nick+"(이)가 입장하셨습니다."; //사용자가 입장하셧습니다.
 				sendAll(msg);
-				
 				
 			}
 			
@@ -234,7 +233,6 @@ public class Server {
 				while (it.hasNext()) {
 					try {
 						nick = (String) userInfoMap.get().get(it.next()).name;
-						System.out.println(nick+"....");
 						message = "201#" + seat + "*" + nick + "*님이 입장하셨습니다.";	
 						seat++;
 						sendAll(message);
@@ -249,8 +247,7 @@ public class Server {
 				set_turn("310#--");// 차레지정
 				String aa = give_me_question();
 				set_turn(aa);
-				//get_players();
-				//readyForGame(userInfo);
+			
 				
 			}
 
@@ -275,7 +272,7 @@ public class Server {
 				word = new Word();
 				// getSTr로 단어를 가져옴 460#
 				answerWord = word.getStr();
-				
+				System.out.println("answerWord = "+ answerWord);
 				msg = "460#" + answerWord;
 				return msg;
 				//sendAll(msg);
@@ -302,12 +299,13 @@ public class Server {
 				
 				String id = st.nextToken();
 				String word = st.nextToken();
+				
 				System.out.println(word + "/" + answerWord);
 				String chk = "";
 				///////// 480 = 정답나옴.
 				if (word.equals(answerWord)) {
 					System.out.println("정답자 나옴.");
-					chk = "480#" + "[" + id + "]정답을 맞추셨습니다. 정답은 " + answerWord + "입니다.";
+					chk = "480#" + id + "]정답을 맞추셨습니다. 정답은 " + answerWord + "입니다.";
 					sendAll(chk);
 					give_me_question();
 				} else {

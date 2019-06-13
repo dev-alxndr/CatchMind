@@ -42,7 +42,6 @@ public class Client {
 		this.register = register;
 	}
 	public void set_Draw(Draw draw) {
-		System.out.println(draw);
 		this.draw = draw;
 	}
 	public void set_MakeCanvas(MakeCanvas mc) {
@@ -179,7 +178,7 @@ public class Client {
 			try {
 				while (true) {
 					if ((msg = br.readLine()) != null) {
-						System.out.println(msg+ "\\" );
+						
 						st = new StringTokenizer(msg, "#");
 						num = Integer.parseInt(st.nextToken());
 						

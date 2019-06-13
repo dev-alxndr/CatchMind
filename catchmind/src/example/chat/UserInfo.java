@@ -86,7 +86,7 @@ class UserInfoMap {
      * @return
      */
     int size() {
-    	System.out.println("---UserInfoMap = "+clients.size());
+    	
         return clients.size();
     }
 

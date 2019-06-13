@@ -134,60 +134,62 @@ public class Draw extends JPanel implements ActionListener, MouseMotionListener,
 		String penSize;
 		graphic = makeCanvas.getGraphics();
 		Graphics2D g2d = (Graphics2D)graphic;
-		
-		//초기화
-		if(e.getSource() == btn_clear) {
-			graphic.clearRect(0, 0, 900, 900);
-			client.canvas_Clear();
+		if(turn) {
+			//초기화
+			if(e.getSource() == btn_clear) {
+				graphic.clearRect(0, 0, 900, 900);
+				client.canvas_Clear();
+			}
+			
+			//색상 바꾸기
+			if(e.getSource() == btn_Red) {
+				r = 255;
+				g = 0;
+				b = 0;
+			}
+			if(e.getSource() == btn_Green) {
+				r = 0;
+				g = 255;
+				b = 0;
+			}
+			if(e.getSource() == btn_Blue) {
+				r = 0;
+				g = 0;
+				b = 255;
+			}
+			if(e.getSource() == btn_Yellow) {
+				r = 239;
+				g = 234;
+				b = 16;
+			}
+			if(e.getSource() == btn_Black) {
+				r = 0;
+				g = 0;
+				b = 0;
+			}
+			if(e.getSource() == btn_White) {
+				r = 255;
+				g = 255;
+				b = 255;
+			}
+			makeCanvas.color = new Color(r,g,b);
+			colors = ""+r+"*"+g+"*"+b;
+			client.set_Color(colors);
+			
+			//굵기 바꾸기
+			if(e.getSource() == btn_Thin) {
+				pen_size = 3;
+			}
+			if(e.getSource() == btn_Normal) {
+				pen_size = 5;
+			}
+			if(e.getSource() == btn_Thick) {
+				pen_size = 10;
+			}
+			
+			client.set_penSize(pen_size);	// 메소드가 필요함. 하지만 귀찮
 		}
 		
-		//색상 바꾸기
-		if(e.getSource() == btn_Red) {
-			r = 255;
-			g = 0;
-			b = 0;
-		}
-		if(e.getSource() == btn_Green) {
-			r = 0;
-			g = 255;
-			b = 0;
-		}
-		if(e.getSource() == btn_Blue) {
-			r = 0;
-			g = 0;
-			b = 255;
-		}
-		if(e.getSource() == btn_Yellow) {
-			r = 239;
-			g = 234;
-			b = 16;
-		}
-		if(e.getSource() == btn_Black) {
-			r = 0;
-			g = 0;
-			b = 0;
-		}
-		if(e.getSource() == btn_White) {
-			r = 255;
-			g = 255;
-			b = 255;
-		}
-		makeCanvas.color = new Color(r,g,b);
-		colors = ""+r+"*"+g+"*"+b;
-		client.set_Color(colors);
-		
-		//굵기 바꾸기
-		if(e.getSource() == btn_Thin) {
-			pen_size = 3;
-		}
-		if(e.getSource() == btn_Normal) {
-			pen_size = 5;
-		}
-		if(e.getSource() == btn_Thick) {
-			pen_size = 10;
-		}
-		
-		client.set_penSize(pen_size);	// 메소드가 필요함. 하지만 귀찮
 		
 	}
 	@Override
