@@ -28,8 +28,8 @@ public class Client {
 	private Register register;
 	private Draw draw;
 	private MakeCanvas mc;
-	
 	private String temp_id = "";
+	private boolean turn = false;
 	
 	
 	public void setLogin(Login login) {
@@ -222,6 +222,7 @@ public class Client {
 							break;
 						case 200: //Start Game When players Number is 4
 							System.out.println("Start Game");
+							
 							break;
 						case 201 : // set Seat
 							st = new StringTokenizer(message,"*");
@@ -241,7 +242,7 @@ public class Client {
 								makeRoom.lb_user4.setText(id);
 							}
 							break;
-						case 202:
+						case 202:		// 사용자 입장
 							appendChat(message);
 							break;
 						case 300:
@@ -252,6 +253,11 @@ public class Client {
 							mc.x = x;
 							mc.y = y;
 							mc.repaint();
+							break;
+						case 310:
+							System.out.println("내차례");
+							appendChat(message);
+							draw.turn = true;
 							break;
 						case 320:
 							st = new StringTokenizer(message, "*");
