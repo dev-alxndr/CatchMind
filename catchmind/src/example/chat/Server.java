@@ -102,6 +102,8 @@ public class Server {
 			private BufferedReader br;
 			private StringTokenizer st;
 			
+			String answerWord = "";
+			
 			public Receiver(Socket socket) {
 				this.socket = socket;
 
@@ -146,8 +148,9 @@ public class Server {
 								case 350:
 									sendAll("350#"+message);
 									break;
-								case 400:		//채팅
-									sendAll("400#"+message);
+								case 400:		//채팅  -- 정답체크 해줘야함
+									check_answer(message);
+									//sendAll("400#"+message);
 									break;
 							}
 						}
@@ -188,8 +191,8 @@ public class Server {
 				if(userInfoMap.size() == 4) {
 					word = new Word();
 					//getSTr로 단어를 가져옴 460#
-					System.out.println("확인1");
-					String answerWord = word.getStr();
+					
+					answerWord = word.getStr();
 					message = "460#"+answerWord;
 					sendAll(message);
 				}
@@ -231,6 +234,26 @@ public class Server {
 				
 			}
 		
+			void check_answer(String message) {
+				st = new StringTokenizer(message, "]");
+				System.out.println(message);
+				String id = st.nextToken();
+				String word = st.nextToken();
+				System.out.println(word +"/"+ answerWord);
+				String chk = "";
+				/////////  480 = 정답나옴.
+				if(word.equals(answerWord)) {
+					System.out.println("정답자 나옴.");
+					chk = "480#"+"["+id+"]정답을 맞추셨습니다. 정답은 "+ answerWord +"입니다.";
+					sendAll(chk);
+				}else {
+					sendAll("400#"+message);
+				}
+				
+						
+			}
+			
+			
 			void do_login(String msg) {	// 로그인시 메소드
 				
 				st = new StringTokenizer(msg, ",");

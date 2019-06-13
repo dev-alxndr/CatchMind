@@ -78,7 +78,7 @@ public class Client {
 	// 사용자 채팅 전
 	public void send_msg(String message) {
 		String status = "400#";
-		String msg = status+"["+nick+"] "+ message;
+		String msg = status+"["+nick+"]"+ message;
 		pw.println(msg);
 		pw.flush();
 	}
@@ -145,21 +145,7 @@ public class Client {
 			this.nick = nick;
 
 		}
-//		public void go_chat() {
-//			BufferedReader keyboard = new BufferedReader(new InputStreamReader(System.in)); // 키보드 입력을 위한 버
-//			String line = "";
-//			try {
-//				while ((line = keyboard.readLine()) != null) {
-//					pw.println(line);
-//					pw.flush();
-//				}
-//			} catch (IOException e) {
-//
-//				e.printStackTrace();
-//			}
-//		}
 
-	
 	}
 
 	class GetStr extends Thread { // 클라이언트는 서버로 부터 정보를 받아서 그린다.
@@ -187,6 +173,7 @@ public class Client {
 			try {
 				while (true) {
 					if ((msg = br.readLine()) != null) {
+						System.out.println(msg+ "\\" );
 						st = new StringTokenizer(msg, "#");
 						num = Integer.parseInt(st.nextToken());
 						
@@ -270,12 +257,18 @@ public class Client {
 						case 350:
 							draw.graphic = mc.getGraphics();
 							draw.graphic.clearRect(0, 0, 900, 900);
+							break;
 						case 400:	// chat
 							appendChat(message);
 							break;
-						case 460:
-							System.out.println("정욱123"+message);
+						case 460:	// 문제 출제
 							makeRoom.lb_answerWord.setText(message);
+							break;
+						case 480:	// 정답 시
+							appendChat(message);
+							Notice notice2 = new Notice();
+							notice2.text(message);
+							notice2.display("Correct");
 							break;
 						}
 					}

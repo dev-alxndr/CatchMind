@@ -202,12 +202,11 @@ public class MakeRoom2 extends JFrame implements ActionListener, KeyListener{
 			String chat = "";
 			chat = tf_msg.getText();
 			
-			//널값이 아니면
-			if(!chat.equals(""))
-			{
+			if(!chat.equals("")) {
 //				client.send_msg(chat);
-				ta_chatlog.append(chat + "\n");
+				
 				tf_msg.setText("");
+				client.send_msg(chat);
 			}
 			else if(chat.equals("")) {
 				
