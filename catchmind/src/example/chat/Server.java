@@ -218,6 +218,8 @@ public class Server {
 				if (userInfoMap.size() == 4) {
 					give_me_question();
 				}
+				String msg = "202#"+nick+"(이)가 입장하셨습니다."; //사용자가 입장하셧습니다.
+				sendAll(msg);
 			}
 			
 			void get_players() {
@@ -232,11 +234,10 @@ public class Server {
 						System.out.println(nick+"....");
 						message = "201#" + seat + "*" + nick + "*님이 입장하셨습니다.";	
 						seat++;
-						pw.println(message);
-						pw.flush();
+						sendAll(message);
 					} catch (Exception e) {
 					}
-				} // while	
+				} // while
 			}
 
 			void give_me_question() { // 문제 제출
@@ -289,9 +290,15 @@ public class Server {
 
 			}
 
+			
+			// 특정 사용자에게 턴을 보냄.
+			public void sendToTurn() {
+				
+			}
+			
 			// 모든 사용자에게 전파
 			public void sendAll(String str) {
-				Iterator it = userInfoMap.get().keySet().iterator();
+				Iterator<String> it = userInfoMap.get().keySet().iterator();
 				while (it.hasNext()) {
 					try {
 						PrintWriter out = (PrintWriter) userInfoMap.get().get(it.next()).pw;

@@ -58,8 +58,6 @@ class UserInfoMap {
      * 닉네임 name과 PrintWriter out을 인자로 받아
      * HashMap에 새 UserInfo 객체를 추가한다.
      *
-     * @param name
-     * @param out
      */
     void add(String name, PrintWriter out) {
         clients.put(name, new UserInfo(name, out));
@@ -67,8 +65,7 @@ class UserInfoMap {
 
     /**
      * name 이름을 가진 객체를 map에서 삭제
-     *
-     * @param name
+     
      */
     void remove(String name) {
         clients.remove(name);

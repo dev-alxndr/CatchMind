@@ -29,6 +29,8 @@ public class Client {
 	private Draw draw;
 	private MakeCanvas mc;
 	
+	private String temp_id = "";
+	
 	
 	public void setLogin(Login login) {
 		this.login = login;
@@ -154,6 +156,10 @@ public class Client {
 		private StringTokenizer st;
 		private MakeRoom2 makeRoom;
 		
+		private boolean turn = false;
+	
+		
+		
 		
 		GetStr(Socket socket) {
 			this.socket = socket;
@@ -225,8 +231,6 @@ public class Client {
 							
 							String msg1 = st.nextToken();
 							
-							
-							appendChat((id+msg1));
 							if(seat == 1) {
 								makeRoom.lb_user1.setText(id);								
 							}else if(seat == 2) {
@@ -236,6 +240,9 @@ public class Client {
 							}else if(seat == 4) {
 								makeRoom.lb_user4.setText(id);
 							}
+							break;
+						case 202:
+							appendChat(message);
 							break;
 						case 300:
 							st = new StringTokenizer(message, "*");

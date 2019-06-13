@@ -21,19 +21,9 @@ import javax.swing.border.LineBorder;
 import example.chat.Client;
 import gui.user.Login;
 
-//public class Play {
-//
-//	public static void main(String[] args) {
-//		MakeRoom mr = new MakeRoom();
-//		mr.display();
-//	}
-//
-//}
+
 public class MakeRoom2 extends JFrame implements ActionListener, KeyListener{
-//	public static void main(String[] args) {
-//		MakeRoom2 mr = new MakeRoom2();
-//		mr.setVisible(true);
-//	}
+
 	Client client;
 	MakeCanvas mc;
 	Draw draw;

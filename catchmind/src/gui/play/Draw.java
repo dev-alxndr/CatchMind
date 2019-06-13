@@ -32,7 +32,7 @@ public class Draw extends JPanel implements ActionListener, MouseMotionListener,
 	public Graphics graphic;
 	public int pen_size = 3;
 	public int r,g,b = 0;
-	
+	public boolean turn = false;
 	
 //	public static void main(String[] args) {
 //		Draw draw = new Draw();
@@ -192,18 +192,22 @@ public class Draw extends JPanel implements ActionListener, MouseMotionListener,
 	}
 	@Override
 	public void mouseDragged(MouseEvent e) {
-		makeCanvas.x = e.getX();
-		makeCanvas.y = e.getY();
-		makeCanvas.repaint();	
-		client.user_draw(e.getX(), e.getY());
+		if(turn) {
+			makeCanvas.x = e.getX();
+			makeCanvas.y = e.getY();
+			makeCanvas.repaint();	
+			client.user_draw(e.getX(), e.getY());	
+		}
+		
 	}
 
 	@Override
 	public void mouseMoved(MouseEvent e) {
-		if(!check) {
-			
-			makeCanvas.pre_x = e.getX();
-			makeCanvas.pre_y = e.getY();
+		if(turn) {			
+			if(!check) {
+				makeCanvas.pre_x = e.getX();
+				makeCanvas.pre_y = e.getY();
+			}
 		}
 	}
 	
@@ -214,19 +218,24 @@ public class Draw extends JPanel implements ActionListener, MouseMotionListener,
 	
 	@Override
 	public void mousePressed(MouseEvent e) {
-		check = true;
-		if(first) {
-			first = false;
-			makeCanvas.pre_x = e.getX();
-			makeCanvas.pre_y = e.getY();
-			System.out.println("pre_x = "+e.getX()+"/pre_y = "+e.getY());
-			client.set_FirstXY(e.getX(), e.getY());
+		if(turn) {
+			check = true;
+			if(first) {
+				first = false;
+				makeCanvas.pre_x = e.getX();
+				makeCanvas.pre_y = e.getY();
+				System.out.println("pre_x = "+e.getX()+"/pre_y = "+e.getY());
+				client.set_FirstXY(e.getX(), e.getY());
+			}
 		}
 	}
 	
 	@Override
 	public void mouseReleased(MouseEvent e) {
-		check = false;
+		if(turn) {
+			
+			check = false;
+		}
 
 	}
 	@Override
