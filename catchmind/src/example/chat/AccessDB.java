@@ -48,9 +48,10 @@ public class AccessDB {
 	}
 	
 	// 로그인 하기
-	int do_login(String id, String pw) {
+	String do_login(String id, String pw) {
 		int chk = 0;
 		String password= "";
+		String nick = "";
 		
 		try {
 			conn = DriverManager.getConnection(url, "root", "1234");
@@ -62,8 +63,8 @@ public class AccessDB {
 			while(rs.next()) {
 				id = rs.getString("id");
 				password = rs.getString("password");
+				nick = rs.getString("nick");
 			}
-			System.out.println(id);
 			if(pw.equals(password)) {
 				chk = 1;
 			}else {
@@ -75,7 +76,7 @@ public class AccessDB {
 		} catch(Exception e1) {
 			e1.getStackTrace();
 		}
-		return chk;
+		return nick;
 	}
 
 	public int set_userInfo(String id, String password, String nick) {

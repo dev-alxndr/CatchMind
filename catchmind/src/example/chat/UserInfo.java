@@ -30,8 +30,7 @@ public class UserInfo {
     /**
      * 게임 접속시 입력한 닉네임을 name으로, PrintWriter를 pw로 받아 객체 생성
      *
-     * @param name
-     * @param pw
+
      */
     public UserInfo(String name, PrintWriter pw) {
         this.name = name;

@@ -227,10 +227,7 @@ public class Draw extends JPanel implements ActionListener, MouseMotionListener,
 	@Override
 	public void mouseReleased(MouseEvent e) {
 		check = false;
-		int r_x = e.getX();
-		int r_y = e.getY();
-		
-	
+
 	}
 	@Override
 	public void mouseEntered(MouseEvent e) {

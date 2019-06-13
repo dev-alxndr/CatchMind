@@ -181,11 +181,16 @@ public class Client {
 						
 						switch (num) {
 						case 100: //Login
-							if(message.equals("1")) {
+							if(!message.equals("")) {
 								login.setVisible(false);
-								String str = "200#"+nick;
-								pw.println(str);
-								pw.flush();
+								
+								//String str = "200#"+nick;
+								System.out.println("[Client] Success LogIn");
+								makeRoom = new MakeRoom2(client);								
+								
+								makeRoom.display();
+								//pw.println(str);
+								//pw.flush();
 							}else {
 								Notice notice = new Notice();
 								
@@ -198,20 +203,19 @@ public class Client {
 							int check = Integer.parseInt(message);
 							Notice notice = new Notice();
 							if(check == 1) {
-								
+								System.out.println("[Client] Success Sign Up ");
 								login.setVisible(true);
 								register.setVisible(false);
 								notice.text("회원가입 성공");
 								notice.display("성공");
 							}else {
+								System.out.println("[Client] Failed Sign Up");
 								notice.text("회원가입 실패");
 								notice.display("실패");
 							}
 							break;
-						case 200: //Ready for Game
-							makeRoom = new MakeRoom2(client);								
-					
-							makeRoom.display();
+						case 200: //Start Game When players Number is 4
+							System.out.println("Start Game");
 							break;
 						case 201 : // set Seat
 							st = new StringTokenizer(message,"*");
