@@ -244,7 +244,7 @@ public class Server {
 			//////Start Flag/////
 			void start_game(UserInfo user) {
 				userInfoMap.setTurn(user);
-				set_turn("310#--");// 차레지정
+				set_turn("310#"+user.name+"당신차례입니다.");// 차레지정
 				String aa = give_me_question();
 				set_turn(aa);
 			
@@ -307,12 +307,19 @@ public class Server {
 					System.out.println("정답자 나옴.");
 					chk = "480#" + id + "]정답을 맞추셨습니다. 정답은 " + answerWord + "입니다.";
 					sendAll(chk);
-					give_me_question();
+					//give_me_question();
+					start_game(userInfoMap.getUser(getUser(id)));
+					
 				} else {
 					sendAll("400#" + message);
 				}
 			}
-
+			
+			public String getUser(String msg) {
+				System.out.println(msg.substring(1));
+				return msg.substring(1);
+				
+			}
 			
 
 			
