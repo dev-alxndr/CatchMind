@@ -143,7 +143,7 @@ public class Server {
 								case 350:
 									sendAll("350#"+message);
 									break;
-								case 400:
+								case 400:		//채팅
 									sendAll("400#"+message);
 									break;
 							}

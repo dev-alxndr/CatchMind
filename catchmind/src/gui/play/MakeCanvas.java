@@ -21,13 +21,6 @@ public class MakeCanvas extends Canvas	//스케치북
 		
 	}
 	
-//	public void setVariable(boolean check, int f_x, int f_y) {
-//		this.check = check;
-//		this.x = f_x;
-//		this.y = f_y;
-//		System.out.println("mc = "+f_x+"/"+f_y);
-////		this.sc = sc;
-//	}
 	public void paint(Graphics g)
 	{
 
