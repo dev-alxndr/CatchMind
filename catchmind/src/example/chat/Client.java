@@ -58,7 +58,7 @@ public class Client {
 	
 	public void runClient() {
 		try {
-			Socket socket = new Socket("172.16.52.66", PORT);
+			Socket socket = new Socket("localhost", PORT);
 
 			pw = new PrintWriter(socket.getOutputStream());
 			
@@ -297,7 +297,8 @@ public class Client {
 		}
 
 		public void appendChat(String str) {
-			makeRoom.ta_chatlog.append(str+" \n");			
+			makeRoom.ta_chatlog.append(str+" \n");
+			makeRoom.txtScroll.getVerticalScrollBar().setValue(makeRoom.txtScroll.getVerticalScrollBar().getMaximum());
 		}
 	}
 

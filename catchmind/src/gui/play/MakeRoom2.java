@@ -14,6 +14,7 @@ import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.border.LineBorder;
@@ -34,7 +35,7 @@ public class MakeRoom2 extends JFrame implements ActionListener, KeyListener{
 	public JTextField tf_msg;
 	public JButton btn_send, btn_logout;
 	public JTextArea ta_chatlog;
-	
+	public JScrollPane txtScroll;
 	
 	//삭제할 버튼(자리 확인용)
 	JButton btn1 = new JButton("자리 확인용 버튼");
@@ -73,8 +74,9 @@ public class MakeRoom2 extends JFrame implements ActionListener, KeyListener{
 		p_north = new JPanel();
 		p_btnbar = new JPanel();
 		
-		
 		ta_chatlog = new JTextArea();
+		txtScroll = new JScrollPane(ta_chatlog,JScrollPane.VERTICAL_SCROLLBAR_ALWAYS,JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
+		
 		tf_msg = new JTextField();
 		btn_logout = new JButton("로그아웃");
 		btn_send = new JButton("보내기");
@@ -155,8 +157,9 @@ public class MakeRoom2 extends JFrame implements ActionListener, KeyListener{
 		p_chatlog.setBorder(new LineBorder(new Color(0, 0, 0)));
 		p_chatlog.setBackground(Color.ORANGE);
 		
-		p_chatlog.add(ta_chatlog);
-			ta_chatlog.setPreferredSize(new Dimension(4, 140));
+		p_chatlog.add(txtScroll);
+//			ta_chatlog.setPreferredSize(new Dimension(4, 140));
+			ta_chatlog.setRows(8);
 			ta_chatlog.setColumns(65);
 		
 		
