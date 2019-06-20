@@ -266,13 +266,14 @@ public class Server {
 		            }
 		        }
 			}
+			
 			String give_me_question() { // 문제 제출
 				String msg = "";
 
 				word = new Word();
 				// getSTr로 단어를 가져옴 460#
 				answerWord = word.getStr();
-				System.out.println("answerWord = "+ answerWord);
+				
 				msg = "460#" + answerWord;
 				return msg;
 				//sendAll(msg);
