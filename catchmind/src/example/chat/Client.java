@@ -90,7 +90,7 @@ public class Client {
 	public void do_login(String id, String password){
 		String str = "100#"+id+","+password;
 
-		nick = id;
+		//nick = id;
 		pw.println(str);
 		pw.flush();
 	}
@@ -194,7 +194,7 @@ public class Client {
 								//String str = "200#"+nick;
 								System.out.println("[Client] Success LogIn");
 								makeRoom = new MakeRoom2(client);								
-								
+								nick = message;
 								makeRoom.display();
 								//pw.println(str);
 								//pw.flush();
@@ -258,7 +258,7 @@ public class Client {
 							mc.repaint();
 							break;
 						case 310:		// 내 차례
-							appendChat(message);
+							//appendChat(message);
 							//Notice notice3 = new Notice();
 //							notice3.text(message);
 //							notice3.display("차례");

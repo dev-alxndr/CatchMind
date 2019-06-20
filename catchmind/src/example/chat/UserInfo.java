@@ -158,6 +158,7 @@ class UserInfoMap {
      * @return
      */
     UserInfo getUser(String name) {
+    	
         if (clients.containsKey(name)) {
             return clients.get(name);
         } else {

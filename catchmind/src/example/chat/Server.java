@@ -146,9 +146,7 @@ public class Server {
 								sendAll("350#" + message);
 								break;
 							case 400: // 채팅 -- 정답체크 해줘야함
-								System.out.println(message + "======"+answerWord);
-								
-								
+								System.out.println(message+"^^^");
 								check_answer(message);
 								
 								// sendAll("400#"+message);
@@ -264,7 +262,7 @@ public class Server {
 				word = new Word();
 				// getSTr로 단어를 가져옴 460#
 				answerWord = word.getStr();
-				System.out.println(answerWord);
+				
 				msg = "460#" + answerWord;
 				return msg;
 				//sendAll(msg);
@@ -273,24 +271,28 @@ public class Server {
 			
 			//////Start Flag/////
 			void start_game(UserInfo user) {
+				System.out.println("Start Game = "+user);
 				userInfoMap.setTurn(user);
-				set_turn("310#["+user.name+"]당신차례입니다.");// 차레지정
-				String aa = give_me_question();
-				set_turn(aa);
+				set_turn("310#["+user.name+"]당신차례입니다.");// 차례지정
+				String str = give_me_question();
+				set_turn(str);
 				sendAll("400#["+user.name+"]님 차례입니다.");
 			}
 
 			void set_turn(String msg) {
 				Iterator<String> it = userInfoMap.get().keySet().iterator();
-				System.out.println("user_ "+ msg);
+				
+				
 		        while (it.hasNext()) {
 		            try {
 		                UserInfo user = userInfoMap.get().get(it.next());
 		                if (user.turn) {
+		                	System.out.println(msg+"$$$$");
 		                    PrintWriter out = user.pw;
 		                    out.println(msg);
 		                    out.flush();
 		                }else {
+		                	
 		                	PrintWriter out = user.pw;
 		                	out.print("315#당신차례가 아닙니다.");
 		                	out.flush();
@@ -332,7 +334,7 @@ public class Server {
 					chk = "480#" + id + "]정답을 맞추셨습니다. 정답은 " + answerWord + "입니다.";
 					sendAll(chk);
 					//give_me_question();
-					
+					System.out.println(getUser(id)+"&&&&&&&&");
 					start_game(userInfoMap.getUser(getUser(id)));
 					
 				} else {
