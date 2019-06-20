@@ -33,7 +33,7 @@ public class MakeRoom2 extends JFrame implements ActionListener, KeyListener{
 	public JPanel p_word, p_drawCanvas, p_chat, p_chatlog, p_chatsend, p_btnbar;
 	public JLabel lb_user1, lb_user2, lb_user3, lb_user4, lb_answer, lb_answerWord;
 	public JTextField tf_msg;
-	public JButton btn_send, btn_logout;
+	public JButton btn_Start, btn_send, btn_logout;
 	public JTextArea ta_chatlog;
 	public JScrollPane txtScroll;
 	
