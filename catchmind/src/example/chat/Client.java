@@ -80,6 +80,8 @@ public class Client {
 	public void send_msg(String message) {
 		String status = "400#";
 		String msg = status+"["+nick+"]"+ message;
+		System.out.println("###"+nick +"##"+message);
+		
 		pw.println(msg);
 		pw.flush();
 	}
@@ -225,11 +227,12 @@ public class Client {
 							break;
 						case 201 : // set Seat
 							st = new StringTokenizer(message,"*");
+							
 							int seat = Integer.parseInt(st.nextToken());
 							
 							String id = st.nextToken();
 							
-							String msg1 = st.nextToken();
+							
 							
 							if(seat == 1) {
 								makeRoom.lb_user1.setText(id);								
@@ -240,6 +243,7 @@ public class Client {
 							}else if(seat == 4) {
 								makeRoom.lb_user4.setText(id);
 							}
+							
 							break;
 						case 202:		// 사용자 입장
 							appendChat(message);
@@ -253,10 +257,20 @@ public class Client {
 							mc.y = y;
 							mc.repaint();
 							break;
-						case 310:
-							System.out.println("내차례");
+						case 310:		// 내 차례
 							appendChat(message);
+							//Notice notice3 = new Notice();
+//							notice3.text(message);
+//							notice3.display("차례");
 							draw.turn = true;
+							break;
+						case 315: // 내차례가 아님.
+							draw.turn = false;
+							makeRoom.lb_answerWord.setText("");
+//							Notice notice4 = new Notice();
+//							
+//							notice4.text(message);
+//							notice4.display("차례");
 							break;
 						case 320:
 							st = new StringTokenizer(message, "*");
@@ -281,7 +295,10 @@ public class Client {
 							makeRoom.lb_answerWord.setText(message);
 							break;
 						case 480:	// 정답 시
-							appendChat(message);
+							System.out.println("---정답:"+message);
+							//appendChat(message);
+							draw.graphic = mc.getGraphics();
+							draw.graphic.clearRect(0, 0, 900, 900);
 							Notice notice2 = new Notice();
 							notice2.text(message);
 							notice2.display("Correct");

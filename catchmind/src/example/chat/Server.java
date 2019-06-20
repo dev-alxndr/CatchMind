@@ -23,7 +23,7 @@ public class Server {
 	private BufferedReader br;
 	private UserInfoMap userInfoMap;
 	private Word word;
-
+	String answerWord = "";
 	public Server() {
 		userInfoMap = new UserInfoMap();
 	}
@@ -88,6 +88,7 @@ public class Server {
 				System.out.println("over 4");
 			}
 		}
+		
 
 		// 클라이언트에게 전송
 
@@ -98,7 +99,7 @@ public class Server {
 			private BufferedReader br;
 			private StringTokenizer st;
 
-			String answerWord = "";
+			
 
 			public Receiver(Socket socket) {
 				this.socket = socket;
@@ -145,7 +146,11 @@ public class Server {
 								sendAll("350#" + message);
 								break;
 							case 400: // 채팅 -- 정답체크 해줘야함
+								System.out.println(message + "======"+answerWord);
+								
+								
 								check_answer(message);
+								
 								// sendAll("400#"+message);
 								break;
 							}
@@ -172,6 +177,8 @@ public class Server {
 				}
 
 			}
+			
+			
 	
 			void do_login(String msg) { // 로그인시 메소드
 
@@ -212,17 +219,27 @@ public class Server {
 
 			void readyForGame(String nick) { // 사용자의 자리 지정이 필요
 				join_member(pw, nick); // HashMap에 저장
+				
+				join_msg(nick);
+				get_players();
+				String msg = "202#"+nick+"(이)가 입장하셨습니다."; //사용자가 입장하셧습니다.
+				sendAll(msg);
 				if(userInfoMap.size() == 1) {					
 					userInfoMap.get().get(nick).host = true;
 				}
 				if(userInfoMap.size()== 2) {
 					start_game(userInfoMap.getHost());
 				}
-				get_players();
-				String msg = "202#"+nick+"(이)가 입장하셨습니다."; //사용자가 입장하셧습니다.
-				sendAll(msg);
 				
 			}
+			
+			void join_msg(String nick) {
+				int seat = userInfoMap.size();
+				
+				String msg = "201#"+seat+"*"+nick;
+				sendAll(msg);
+			}
+			
 			
 			void get_players() {
 				Iterator<String> it = userInfoMap.get().keySet().iterator();
@@ -233,38 +250,12 @@ public class Server {
 				while (it.hasNext()) {
 					try {
 						nick = (String) userInfoMap.get().get(it.next()).name;
-						message = "201#" + seat + "*" + nick + "*님이 입장하셨습니다.";	
+						message = "201#" + seat + "*" + nick +"*d";	
 						seat++;
 						sendAll(message);
 					} catch (Exception e) {
 					}
 				} // while
-			}
-			
-			//////Start Flag/////
-			void start_game(UserInfo user) {
-				userInfoMap.setTurn(user);
-				set_turn("310#"+user.name+"당신차례입니다.");// 차레지정
-				String aa = give_me_question();
-				set_turn(aa);
-			
-				
-			}
-
-			void set_turn(String msg) {
-				Iterator<String> it = userInfoMap.get().keySet().iterator();
-
-		        while (it.hasNext()) {
-		            try {
-		                UserInfo user = userInfoMap.get().get(it.next());
-		                if (user.turn) {
-		                    PrintWriter out = user.pw;
-		                    out.println(msg);
-		                    out.flush();
-		                }
-		            } catch (Exception e) {
-		            }
-		        }
 			}
 			
 			String give_me_question() { // 문제 제출
@@ -273,11 +264,43 @@ public class Server {
 				word = new Word();
 				// getSTr로 단어를 가져옴 460#
 				answerWord = word.getStr();
-				
+				System.out.println(answerWord);
 				msg = "460#" + answerWord;
 				return msg;
 				//sendAll(msg);
 			}
+			
+			
+			//////Start Flag/////
+			void start_game(UserInfo user) {
+				userInfoMap.setTurn(user);
+				set_turn("310#["+user.name+"]당신차례입니다.");// 차레지정
+				String aa = give_me_question();
+				set_turn(aa);
+				sendAll("400#["+user.name+"]님 차례입니다.");
+			}
+
+			void set_turn(String msg) {
+				Iterator<String> it = userInfoMap.get().keySet().iterator();
+				System.out.println("user_ "+ msg);
+		        while (it.hasNext()) {
+		            try {
+		                UserInfo user = userInfoMap.get().get(it.next());
+		                if (user.turn) {
+		                    PrintWriter out = user.pw;
+		                    out.println(msg);
+		                    out.flush();
+		                }else {
+		                	PrintWriter out = user.pw;
+		                	out.print("315#당신차례가 아닙니다.");
+		                	out.flush();
+		                }
+		            } catch (Exception e) {
+		            }
+		        }
+			}
+			
+			
 
 			void do_draw(String message) {
 
@@ -309,6 +332,7 @@ public class Server {
 					chk = "480#" + id + "]정답을 맞추셨습니다. 정답은 " + answerWord + "입니다.";
 					sendAll(chk);
 					//give_me_question();
+					
 					start_game(userInfoMap.getUser(getUser(id)));
 					
 				} else {
@@ -317,7 +341,7 @@ public class Server {
 			}
 			
 			public String getUser(String msg) {
-				System.out.println(msg.substring(1));
+				
 				return msg.substring(1);
 				
 			}

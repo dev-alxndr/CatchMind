@@ -59,8 +59,7 @@ public class Login extends JFrame implements ActionListener {
 		pbtn.add(btnlogin);
 		pbtn.add(btnregister);
 		
-//		tfid.setText("");
-//		tfpw.setText("");
+
 		add(ptitle);
 		add(pid);
 		add(pps);

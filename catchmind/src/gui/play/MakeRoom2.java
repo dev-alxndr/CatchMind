@@ -14,6 +14,7 @@ import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.border.LineBorder;
@@ -73,8 +74,9 @@ public class MakeRoom2 extends JFrame implements ActionListener, KeyListener{
 		p_north = new JPanel();
 		p_btnbar = new JPanel();
 		
-		
 		ta_chatlog = new JTextArea();
+		
+	
 		tf_msg = new JTextField();
 		btn_logout = new JButton("로그아웃");
 		btn_send = new JButton("보내기");
