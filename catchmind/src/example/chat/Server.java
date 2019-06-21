@@ -139,9 +139,14 @@ public class Server {
 								do_draw(message);
 								break;
 							case 310:
-								start_game(userInfoMap.getHost());
-								sendAll("310#"+message);
-								break;
+								int result = start_game(userInfoMap.getHost());
+								if(result == 1) {
+									sendAll("310#"+message);
+									break;
+								}else {
+									System.out.println("인원이 부족해요");
+								}
+									
 							case 320:
 								set_Colors(message);
 								break;
@@ -280,13 +285,19 @@ public class Server {
 			
 			
 			//////Start Flag/////
-			void start_game(UserInfo user) {
-				System.out.println("Start Game = "+user);
-				userInfoMap.setTurn(user);
-				set_turn("310#["+user.name+"]당신차례입니다.");// 차례지정
-				String str = give_me_question();
-				set_turn(str);
-				sendAll("400#["+user.name+"]님 차례입니다.");
+			int start_game(UserInfo user) {
+				if(userInfoMap.size()>1) {
+					System.out.println("Start Game = "+user);
+					userInfoMap.setTurn(user);
+					set_turn("310#["+user.name+"]당신차례입니다.");// 차례지정
+					String str = give_me_question();
+					set_turn(str);
+					sendAll("400#["+user.name+"]님 차례입니다.");
+					return 1;
+				}else {
+					System.out.println("인원이 부족합니다");
+					return 0;
+				}
 			}
 
 			void set_turn(String msg) {
