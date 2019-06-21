@@ -82,7 +82,6 @@ public class MakeRoom2 extends JFrame implements ActionListener, KeyListener{
 		btn_start = new JButton("시작하기");
 		btn_logout = new JButton("로그아웃");
 		btn_send = new JButton("보내기");
-		btn_start.setEnabled(false);
 //		draw.setSize(900,900);
 		
 		//큰 테두리 동 서 북 중앙

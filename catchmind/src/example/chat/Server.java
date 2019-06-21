@@ -23,6 +23,7 @@ public class Server {
 	private BufferedReader br;
 	private UserInfoMap userInfoMap;
 	private Word word;
+	
 	String answerWord = "";
 	
 	public Server() {
@@ -139,6 +140,7 @@ public class Server {
 								break;
 							case 310:
 								start_game(userInfoMap.getHost());
+								sendAll("310#"+message);
 								break;
 							case 320:
 								set_Colors(message);
@@ -233,6 +235,7 @@ public class Server {
 				}
 				if(userInfoMap.size() == 2) {
 //					start_game(userInfoMap.getHost());
+					
 					
 				}
 				

@@ -267,6 +267,7 @@ public class Client {
 							//Notice notice3 = new Notice();
 //							notice3.text(message);
 //							notice3.display("차례");
+							makeRoom.btn_start.setVisible(false);
 							draw.turn = true;
 							break;
 						case 315: // 내차례가 아님.
