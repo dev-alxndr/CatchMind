@@ -137,6 +137,9 @@ public class Server {
 							case 300:
 								do_draw(message);
 								break;
+							case 310:
+								start_game(userInfoMap.getHost());
+								break;
 							case 320:
 								set_Colors(message);
 								break;
@@ -228,8 +231,9 @@ public class Server {
 				if(userInfoMap.size() == 1) {					
 					userInfoMap.get().get(nick).host = true;
 				}
-				if(userInfoMap.size()== 2) {
-					start_game(userInfoMap.getHost());
+				if(userInfoMap.size() == 2) {
+//					start_game(userInfoMap.getHost());
+					
 				}
 				
 			}

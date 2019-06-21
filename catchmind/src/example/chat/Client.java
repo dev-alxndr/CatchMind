@@ -101,6 +101,11 @@ public class Client {
 		pw.flush();
 	}
 	
+	public void gameStart() {
+		String str = "310#-";
+		pw.println(str);
+		pw.flush();
+	}
 	
 	public void set_Color(String colors) {
 		String str = "320#"+colors;
