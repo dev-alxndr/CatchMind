@@ -4,6 +4,7 @@ import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
+import java.awt.Font;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -32,10 +33,12 @@ public class MakeRoom2 extends JFrame implements ActionListener, KeyListener{
 	public JPanel p_border, p_east, p_west, p_south, p_north, p_center, p_user1, p_user2, p_user3, p_user4;
 	public JPanel p_word, p_drawCanvas, p_chat, p_chatlog, p_chatsend, p_btnbar;
 	public JLabel lb_user1, lb_user2, lb_user3, lb_user4, lb_answer, lb_answerWord;
+	public JLabel lb_score1, lb_score2, lb_score3, lb_score4;
 	public JTextField tf_msg;
 	public JButton btn_start, btn_send, btn_logout;
 	public JTextArea ta_chatlog;
 	public JScrollPane txtScroll;
+	public Font user_font, score_font;
 	
 	//삭제할 버튼(자리 확인용)
 	JButton btn1 = new JButton("자리 확인용 버튼");
@@ -52,16 +55,28 @@ public class MakeRoom2 extends JFrame implements ActionListener, KeyListener{
 		add(p_border);
 		p_border.setLayout(new BorderLayout(0, 0));
 		
+		//동
 		p_east = new JPanel();
 		p_user3 = new JPanel();
 		lb_user3 = new JLabel("user3");
+		lb_score3 = new JLabel("0");
+		
 		p_user4 = new JPanel();
 		lb_user4 = new JLabel("user4");
+		lb_score4 = new JLabel("0");
+		
+		//서
 		p_west = new JPanel();
+		
 		p_user1 = new JPanel();
 		lb_user1 = new JLabel("user1");
+		lb_score1 = new JLabel("0");
+		
 		p_user2 = new JPanel();
 		lb_user2 = new JLabel("user2");
+		lb_score2 = new JLabel("0");
+		
+		//중앙
 		p_center = new JPanel();
 		p_word = new JPanel(new GridLayout(1, 2));
 		lb_answer = new JLabel("정답 : ");
@@ -70,19 +85,26 @@ public class MakeRoom2 extends JFrame implements ActionListener, KeyListener{
 		p_chat = new JPanel();
 		p_chatlog = new JPanel();
 		p_chatsend = new JPanel();
+		
+		//북
 		p_north = new JPanel();
 		p_btnbar = new JPanel();
 		
 		ta_chatlog = new JTextArea();
-
 		txtScroll = new JScrollPane(ta_chatlog,JScrollPane.VERTICAL_SCROLLBAR_ALWAYS,JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
 		
-
 		tf_msg = new JTextField();
 		btn_start = new JButton("시작하기");
 		btn_logout = new JButton("로그아웃");
 		btn_send = new JButton("보내기");
 //		draw.setSize(900,900);
+		
+		user_font = new Font("맑은 고딕", Font.PLAIN, 30);
+//		score_font = new Font("맑은 고딕", 15);
+		lb_user1.setFont(user_font);
+		lb_user2.setFont(user_font);
+		lb_user3.setFont(user_font);
+		lb_user4.setFont(user_font);
 		
 		//큰 테두리 동 서 북 중앙
 		p_border.add(p_east, BorderLayout.EAST);
@@ -100,8 +122,10 @@ public class MakeRoom2 extends JFrame implements ActionListener, KeyListener{
 
 		p_east.add(p_user3);
 			p_user3.add(lb_user3);
+			p_user3.add(lb_score3);
 		p_east.add(p_user4);
 			p_user4.add(lb_user4);
+			p_user4.add(lb_score4);
 	
 		//서
 		p_west.setBorder(new LineBorder(new Color(0, 0, 0)));
@@ -113,8 +137,10 @@ public class MakeRoom2 extends JFrame implements ActionListener, KeyListener{
 		
 		p_west.add(p_user1);
 			p_user1.add(lb_user1);
+			p_user1.add(lb_score1);
 		p_west.add(p_user2);
 			p_user2.add(lb_user2);
+			p_user2.add(lb_score2);
 		
 		//북
 		p_north.setBorder(new LineBorder(new Color(0, 0, 0)));

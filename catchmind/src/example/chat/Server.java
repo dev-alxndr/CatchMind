@@ -352,8 +352,10 @@ public class Server {
 				///////// 480 = 정답나옴.
 				if (word.equals(answerWord)) {
 					System.out.println("정답자 나옴.");
+					
 					chk = "480#" + id + "]정답을 맞추셨습니다. 정답은 " + answerWord + "입니다.";
 					sendAll(chk);
+					db.update_score(getUser(id));
 					//give_me_question();
 					System.out.println(getUser(id)+"&&&&&&&&");
 					start_game(userInfoMap.getUser(getUser(id)));

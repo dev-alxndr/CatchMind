@@ -16,6 +16,7 @@ public class AccessDB {
 	PreparedStatement pstm = null; 
 	
 	String url = "";
+	int score = 0;
 	public AccessDB() {
 		try {
 			Class.forName("com.mysql.jdbc.Driver");
@@ -52,6 +53,7 @@ public class AccessDB {
 		int chk = 0;
 		String password= "";
 		String nick = "";
+		int score = 0;
 		
 		try {
 			conn = DriverManager.getConnection(url, "root", "1234");
@@ -64,6 +66,7 @@ public class AccessDB {
 				id = rs.getString("id");
 				password = rs.getString("password");
 				nick = rs.getString("nick");
+				
 			}
 			if(pw.equals(password)) {
 				chk = 1;
@@ -123,13 +126,35 @@ public class AccessDB {
 				password = rs.getString("password");
 				nick = rs.getString("nick");
 			}
-			System.out.println(id);
+			System.out.println("id값을 확인"+id);
 		} catch (ClassNotFoundException e) {
 			
 		} catch (SQLException e) {
 			
 		}
 
+	}
+	
+	public void update_score(String id) {
+		//맞춘 아이디로 스코어를 찾고
+		//스코어에 +10점
+		try {
+			conn = DriverManager.getConnection(url, "root", "1234");
+
+//			String sql = "select * from user where id = ?";
+			String sql = "update user set score = score + 10 where id = ?";
+			System.out.println(sql);
+			pstm = conn.prepareStatement(sql);
+			pstm.setString(1 , id);
+			pstm.executeUpdate();
+			System.out.println("id :: " + id);
+			
+		} catch (SQLException e) {
+			e.getStackTrace();
+			closeDatabases();
+		} catch(Exception e1) {
+			e1.getStackTrace();
+		}
 	}
 	
 }
