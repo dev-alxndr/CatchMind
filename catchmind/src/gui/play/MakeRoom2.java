@@ -33,9 +33,9 @@ public class MakeRoom2 extends JFrame implements ActionListener, KeyListener{
 	public JPanel p_word, p_drawCanvas, p_chat, p_chatlog, p_chatsend, p_btnbar;
 	public JLabel lb_user1, lb_user2, lb_user3, lb_user4, lb_answer, lb_answerWord;
 	public JTextField tf_msg;
-	public JButton btn_send, btn_logout;
+	public JButton btn_start, btn_send, btn_logout;
 	public JTextArea ta_chatlog;
-	
+	public JScrollPane txtScroll;
 	
 	//삭제할 버튼(자리 확인용)
 	JButton btn1 = new JButton("자리 확인용 버튼");
@@ -47,7 +47,6 @@ public class MakeRoom2 extends JFrame implements ActionListener, KeyListener{
 		setBounds(100, 100, 1000, 1000);
 
 		p_border = new JPanel();
-
 		p_border.setBorder(new LineBorder(new Color(0, 0, 0)));
 
 		add(p_border);
@@ -75,12 +74,14 @@ public class MakeRoom2 extends JFrame implements ActionListener, KeyListener{
 		p_btnbar = new JPanel();
 		
 		ta_chatlog = new JTextArea();
+
+		txtScroll = new JScrollPane(ta_chatlog,JScrollPane.VERTICAL_SCROLLBAR_ALWAYS,JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
 		
-	
+
 		tf_msg = new JTextField();
+		btn_start = new JButton("시작하기");
 		btn_logout = new JButton("로그아웃");
 		btn_send = new JButton("보내기");
-		
 		
 //		draw.setSize(900,900);
 		
@@ -122,7 +123,8 @@ public class MakeRoom2 extends JFrame implements ActionListener, KeyListener{
 		p_north.setPreferredSize(new Dimension(100, 50));
 		p_north.add(p_btnbar, BorderLayout.EAST);
 
-		p_btnbar.setLayout(new BorderLayout(0, 0));
+		p_btnbar.setLayout(new GridLayout(1, 2));
+			p_btnbar.add(btn_start);
 			p_btnbar.add(btn_logout);
 		
 		//중앙
@@ -157,8 +159,9 @@ public class MakeRoom2 extends JFrame implements ActionListener, KeyListener{
 		p_chatlog.setBorder(new LineBorder(new Color(0, 0, 0)));
 		p_chatlog.setBackground(Color.ORANGE);
 		
-		p_chatlog.add(ta_chatlog);
-			ta_chatlog.setPreferredSize(new Dimension(4, 140));
+		p_chatlog.add(txtScroll);
+//			ta_chatlog.setPreferredSize(new Dimension(4, 140));
+			ta_chatlog.setRows(8);
 			ta_chatlog.setColumns(65);
 		
 		
@@ -171,6 +174,7 @@ public class MakeRoom2 extends JFrame implements ActionListener, KeyListener{
 		p_chatsend.add(btn_send);
 		
 		btn_send.addActionListener(this);
+		btn_start.addActionListener(this);
 		btn_logout.addActionListener(this);
 		tf_msg.addKeyListener(this);
 	}
@@ -211,7 +215,12 @@ public class MakeRoom2 extends JFrame implements ActionListener, KeyListener{
 			dispose();
 			setVisible(false);
 			//Login login;
-		}	
+		}
+		
+		//시작하기 버튼
+		if(e.getSource() == btn_start) {
+			
+		}
 	}
 
 	@Override
