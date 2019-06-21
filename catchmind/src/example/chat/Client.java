@@ -117,7 +117,16 @@ public class Client {
 		pw.println("311#"+x+"*"+y);
 		pw.flush();
 	}
+	public void set_moved(int x, int y) {
+		pw.println("313#"+x+"*"+y);
+		pw.flush();
+	}
 	
+	public void set_released() {
+		pw.println("314#-");
+		pw.flush();
+	}
+
 	
 	
 	public void do_signUp(String reg_id, String reg_pw, String reg_nick) {
@@ -252,18 +261,40 @@ public class Client {
 							st = new StringTokenizer(message, "*");
 							int x = Integer.parseInt(st.nextToken());
 							int y = Integer.parseInt(st.nextToken());
-							
+							System.out.println("##"+x+"/"+y);
 							mc.x = x;
 							mc.y = y;
 							mc.repaint();
 							break;
 						case 310:		// 내 차례
-							//appendChat(message);
-							//Notice notice3 = new Notice();
-//							notice3.text(message);
-//							notice3.display("차례");
 							draw.turn = true;
 							break;
+							
+						case 312:	// 첫 포인트.
+							st = new StringTokenizer(message, "*");
+							int x_1 = Integer.parseInt(st.nextToken());
+							int y_1 = Integer.parseInt(st.nextToken());
+						
+							
+							mc.pre_x = x_1;
+							mc.pre_y = y_1;
+							draw.check = true;
+							draw.first = false;
+							System.out.println("첫 포인트. = "+x_1+"/"+y_1);
+							break;
+						case 313:
+							st = new StringTokenizer(message, "*");
+							int x_2 = Integer.parseInt(st.nextToken());
+							int y_2 = Integer.parseInt(st.nextToken());
+							
+							mc.pre_x = x_2;
+							mc.pre_y = y_2;
+							
+							break;
+						case 314:
+							//draw.check = false;
+							break;
+							
 						case 315: // 내차례가 아님.
 							draw.turn = false;
 							makeRoom.lb_answerWord.setText("");
@@ -319,6 +350,7 @@ public class Client {
 		}
 	}
 
+	
 	
 	
 }

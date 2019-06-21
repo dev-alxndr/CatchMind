@@ -27,7 +27,7 @@ import example.chat.Client;
 
 public class Draw extends JPanel implements ActionListener, MouseMotionListener, MouseListener{
 	public boolean check = true;
-	boolean first = true;
+	public boolean first = true;
 	private Client client;
 	public Graphics graphic;
 	public int pen_size = 3;
@@ -209,6 +209,7 @@ public class Draw extends JPanel implements ActionListener, MouseMotionListener,
 			if(!check) {
 				makeCanvas.pre_x = e.getX();
 				makeCanvas.pre_y = e.getY();
+				client.set_moved(e.getX(), e.getY());
 			}
 		}
 	}
@@ -218,8 +219,11 @@ public class Draw extends JPanel implements ActionListener, MouseMotionListener,
 		
 	}
 	
+	
+	
 	@Override
 	public void mousePressed(MouseEvent e) {
+		
 		if(turn) {
 			check = true;
 			if(first) {
@@ -235,8 +239,8 @@ public class Draw extends JPanel implements ActionListener, MouseMotionListener,
 	@Override
 	public void mouseReleased(MouseEvent e) {
 		if(turn) {
-			
 			check = false;
+			client.set_released();
 		}
 
 	}

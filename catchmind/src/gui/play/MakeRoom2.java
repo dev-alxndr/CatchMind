@@ -25,6 +25,7 @@ import gui.user.Login;
 
 public class MakeRoom2 extends JFrame implements ActionListener, KeyListener{
 
+	
 	Client client;
 	MakeCanvas mc;
 	Draw draw;
