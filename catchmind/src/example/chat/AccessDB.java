@@ -18,7 +18,7 @@ public class AccessDB {
 	String url = "";
 	public AccessDB() {
 		try {
-			Class.forName("com.mysql.cj.jdbc.Driver");
+			Class.forName("com.mysql.jdbc.Driver");
 			url =  "jdbc:mysql://localhost:3306/catchmind?serverTimezone=Asia/Seoul";
 			System.out.println("Connected DB");
 		} catch (ClassNotFoundException e) {
@@ -29,7 +29,7 @@ public class AccessDB {
 	public void closeDatabases() {
 		try {
 			if(conn != null) {
-				conn.close();
+				conn.close(); 
 			}
 			if(rs != null) {
 				rs.close();

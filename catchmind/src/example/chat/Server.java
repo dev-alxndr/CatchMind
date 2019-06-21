@@ -24,6 +24,7 @@ public class Server {
 	private UserInfoMap userInfoMap;
 	private Word word;
 	String answerWord = "";
+	
 	public Server() {
 		userInfoMap = new UserInfoMap();
 	}
@@ -151,7 +152,8 @@ public class Server {
 								
 								// sendAll("400#"+message);
 								break;
-							
+							case 600:
+								System.out.println("From Android : "+message);
 							}
 						}
 					}
