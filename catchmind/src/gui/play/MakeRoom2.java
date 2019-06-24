@@ -18,6 +18,7 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
+import javax.swing.SwingConstants;
 import javax.swing.border.LineBorder;
 
 import example.chat.Client;
@@ -33,6 +34,7 @@ public class MakeRoom2 extends JFrame implements ActionListener, KeyListener{
 	
 	public JPanel p_border, p_east, p_west, p_south, p_north, p_center, p_user1, p_user2, p_user3, p_user4;
 	public JPanel p_word, p_drawCanvas, p_chat, p_chatlog, p_chatsend, p_btnbar;
+	public JPanel p_user1_grid;
 	public JLabel lb_user1, lb_user2, lb_user3, lb_user4, lb_answer, lb_answerWord;
 	public JLabel lb_score1, lb_score2, lb_score3, lb_score4;
 	public JTextField tf_msg;
@@ -58,22 +60,21 @@ public class MakeRoom2 extends JFrame implements ActionListener, KeyListener{
 		
 		//동
 		p_east = new JPanel();
-		p_user3 = new JPanel();
+		p_user3 = new JPanel(new GridLayout(2, 1));
 		lb_user3 = new JLabel("user3");
 		lb_score3 = new JLabel("0");
 		
-		p_user4 = new JPanel();
+		p_user4 = new JPanel(new GridLayout(2, 1));
 		lb_user4 = new JLabel("user4");
 		lb_score4 = new JLabel("0");
 		
 		//서
-		p_west = new JPanel();
-		
-		p_user1 = new JPanel();
+		p_west = new JPanel(new BorderLayout());
+		p_user1 = new JPanel(new GridLayout(2,1));
 		lb_user1 = new JLabel("user1");
 		lb_score1 = new JLabel("0");
 		
-		p_user2 = new JPanel();
+		p_user2 = new JPanel(new GridLayout(2, 1));
 		lb_user2 = new JLabel("user2");
 		lb_score2 = new JLabel("0");
 		
@@ -104,8 +105,27 @@ public class MakeRoom2 extends JFrame implements ActionListener, KeyListener{
 //		score_font = new Font("맑은 고딕", 15);
 		lb_user1.setFont(user_font);
 		lb_user2.setFont(user_font);
+		lb_user1.setVerticalAlignment(SwingConstants.BOTTOM);
+		lb_user1.setHorizontalAlignment(SwingConstants.CENTER);
+		lb_score1.setVerticalAlignment(SwingConstants.TOP);
+		lb_score1.setHorizontalAlignment(SwingConstants.CENTER);
+		
+		lb_user2.setVerticalAlignment(SwingConstants.BOTTOM);   
+		lb_user2.setHorizontalAlignment(SwingConstants.CENTER); 
+		lb_score2.setVerticalAlignment(SwingConstants.TOP);     
+		lb_score2.setHorizontalAlignment(SwingConstants.CENTER);
+		
 		lb_user3.setFont(user_font);
 		lb_user4.setFont(user_font);
+		lb_user3.setVerticalAlignment(SwingConstants.BOTTOM);   
+		lb_user3.setHorizontalAlignment(SwingConstants.CENTER); 
+		lb_score3.setVerticalAlignment(SwingConstants.TOP);     
+		lb_score3.setHorizontalAlignment(SwingConstants.CENTER);
+		
+		lb_user4.setVerticalAlignment(SwingConstants.BOTTOM);   
+		lb_user4.setHorizontalAlignment(SwingConstants.CENTER); 
+		lb_score4.setVerticalAlignment(SwingConstants.TOP);     
+		lb_score4.setHorizontalAlignment(SwingConstants.CENTER);
 		
 		//큰 테두리 동 서 북 중앙
 		p_border.add(p_east, BorderLayout.EAST);
@@ -137,6 +157,7 @@ public class MakeRoom2 extends JFrame implements ActionListener, KeyListener{
 		p_user2.setBorder(new LineBorder(new Color(0, 0, 0)));
 		
 		p_west.add(p_user1);
+//		p_user1.add(p_user1_grid,BorderLayout.CENTER);	
 			p_user1.add(lb_user1);
 			p_user1.add(lb_score1);
 		p_west.add(p_user2);
