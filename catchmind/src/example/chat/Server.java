@@ -245,10 +245,6 @@ public class Server {
 				if (userInfoMap.size() == 1) {
 					userInfoMap.get().get(nick).host = true;
 				}
-				
-				if(userInfoMap.size() == 2) {
-					start_game(userInfoMap.getHost());
-				}
 			}
 
 			void join_msg(String nick) {
