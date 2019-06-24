@@ -245,8 +245,6 @@ public class Server {
 				if (userInfoMap.size() == 1) {
 					userInfoMap.get().get(nick).host = true;
 				}
-				
-				
 			}
 
 			void join_msg(String nick) {

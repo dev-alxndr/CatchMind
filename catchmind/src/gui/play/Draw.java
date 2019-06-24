@@ -195,6 +195,7 @@ public class Draw extends JPanel implements ActionListener, MouseMotionListener,
 	@Override
 	public void mouseDragged(MouseEvent e) {
 		if(turn) {
+			System.out.println("드래그");
 			makeCanvas.x = e.getX();
 			makeCanvas.y = e.getY();
 			makeCanvas.repaint();	
@@ -206,6 +207,7 @@ public class Draw extends JPanel implements ActionListener, MouseMotionListener,
 	@Override
 	public void mouseMoved(MouseEvent e) {
 		if(turn) {			
+			System.out.println("무브무브");
 			if(!check) {
 				makeCanvas.pre_x = e.getX();
 				makeCanvas.pre_y = e.getY();
@@ -223,6 +225,7 @@ public class Draw extends JPanel implements ActionListener, MouseMotionListener,
 	public void mousePressed(MouseEvent e) {
 		
 		if(turn) {
+			System.out.println("프레스프레스");
 			check = true;
 			if(first) {
 				first = false;
@@ -237,6 +240,7 @@ public class Draw extends JPanel implements ActionListener, MouseMotionListener,
 	@Override
 	public void mouseReleased(MouseEvent e) {
 		if(turn) {
+			System.out.println("릴리즈릴리즈");
 			check = false;
 			client.set_released();
 		}
