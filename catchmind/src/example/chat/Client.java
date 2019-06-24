@@ -278,6 +278,7 @@ public class Client {
 //							notice3.display("차례");
 							makeRoom.btn_start.setVisible(false);
 							draw.turn = true;
+							mc.check = true;
 							break;
 							
 						case 312:	// 첫 포인트.
@@ -307,6 +308,7 @@ public class Client {
 							
 						case 315: // 내차례가 아님.
 							draw.turn = false;
+							mc.check = false;
 							makeRoom.lb_answerWord.setText("");
 //							Notice notice4 = new Notice();
 //							
