@@ -74,6 +74,12 @@ public class Draw extends JPanel implements ActionListener, MouseMotionListener,
 		
 		client.set_MakeCanvas(makeCanvas);
 		
+		btn_Black.setBackground(Color.BLACK);
+		btn_Red.setBackground(Color.RED);
+		btn_Green.setBackground(Color.GREEN);
+		btn_Blue.setBackground(Color.BLUE);
+		btn_Yellow.setBackground(Color.YELLOW);
+		btn_White.setBackground(Color.white);
 		
 		makeCanvas.addMouseMotionListener(this);
 		makeCanvas.addMouseListener(this);
@@ -87,12 +93,13 @@ public class Draw extends JPanel implements ActionListener, MouseMotionListener,
 		
 		p_btnBar.add(p_colorBar);
 		p_btnBar.add(p_sizeBar);
+
 		
+		p_colorBar.add(btn_Black);
 		p_colorBar.add(btn_Red);
 		p_colorBar.add(btn_Green);
 		p_colorBar.add(btn_Blue);
 		p_colorBar.add(btn_Yellow);
-		p_colorBar.add(btn_Black);
 		p_colorBar.add(btn_White);
 		p_colorBar.add(btn_clear);
 		
@@ -195,7 +202,6 @@ public class Draw extends JPanel implements ActionListener, MouseMotionListener,
 	@Override
 	public void mouseDragged(MouseEvent e) {
 		if(turn) {
-			System.out.println("드래그");
 			makeCanvas.x = e.getX();
 			makeCanvas.y = e.getY();
 			makeCanvas.repaint();	
@@ -207,7 +213,6 @@ public class Draw extends JPanel implements ActionListener, MouseMotionListener,
 	@Override
 	public void mouseMoved(MouseEvent e) {
 		if(turn) {			
-			System.out.println("무브무브");
 			if(!check) {
 				makeCanvas.pre_x = e.getX();
 				makeCanvas.pre_y = e.getY();
@@ -225,7 +230,6 @@ public class Draw extends JPanel implements ActionListener, MouseMotionListener,
 	public void mousePressed(MouseEvent e) {
 		
 		if(turn) {
-			System.out.println("프레스프레스");
 			check = true;
 			if(first) {
 				first = false;
@@ -240,7 +244,6 @@ public class Draw extends JPanel implements ActionListener, MouseMotionListener,
 	@Override
 	public void mouseReleased(MouseEvent e) {
 		if(turn) {
-			System.out.println("릴리즈릴리즈");
 			check = false;
 			client.set_released();
 		}

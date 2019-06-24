@@ -185,7 +185,7 @@ public class MakeRoom2 extends JFrame implements ActionListener, KeyListener{
 		p_center.add(draw);
 		p_center.add(p_chat, BorderLayout.SOUTH);
 
-		p_word.setBorder(new LineBorder(new Color(0, 0, 0)));
+//		p_word.setBorder(new LineBorder(new Color(0, 0, 0)));
 		p_word.setLayout(new BorderLayout(0, 0));
 		p_word.add(lb_answerWord, BorderLayout.CENTER);
 		lb_answerWord.setHorizontalAlignment(SwingConstants.CENTER);
@@ -205,7 +205,7 @@ public class MakeRoom2 extends JFrame implements ActionListener, KeyListener{
 		
 		p_chatlog.setPreferredSize(new Dimension(750, 150));
 		p_chatlog.setBorder(new LineBorder(new Color(0, 0, 0)));
-		p_chatlog.setBackground(Color.ORANGE);
+//		p_chatlog.setBackground(Color.ORANGE);
 		
 		p_chatlog.add(txtScroll);
 //			ta_chatlog.setPreferredSize(new Dimension(4, 140));
@@ -214,11 +214,11 @@ public class MakeRoom2 extends JFrame implements ActionListener, KeyListener{
 		
 		
 		p_chatsend.setPreferredSize(new Dimension(750, 35));
-		p_chatsend.setBackground(Color.BLUE);
+//		p_chatsend.setBackground(Color.BLUE);
 		p_chatsend.setBorder(new LineBorder(new Color(0, 0, 0)));
 		
 		p_chatsend.add(tf_msg);
-			tf_msg.setColumns(55);
+			tf_msg.setColumns(59);
 		p_chatsend.add(btn_send);
 		
 		btn_send.addActionListener(this);
