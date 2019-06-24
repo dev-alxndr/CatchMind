@@ -58,7 +58,7 @@ public class Client {
 	
 	public void runClient() {
 		try {
-			Socket socket = new Socket("localhost", PORT);
+			Socket socket = new Socket("172.165.52.66", PORT);
 
 			pw = new PrintWriter(socket.getOutputStream());
 			
