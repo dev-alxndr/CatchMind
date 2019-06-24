@@ -41,7 +41,7 @@ public class MakeRoom2 extends JFrame implements ActionListener, KeyListener{
 	public JButton btn_start, btn_send, btn_logout;
 	public JTextArea ta_chatlog;
 	public JScrollPane txtScroll;
-	public Font user_font, score_font;
+	public Font user_font, score_font, word_font;
 	
 	//삭제할 버튼(자리 확인용)
 	JButton btn1 = new JButton("자리 확인용 버튼");
@@ -102,6 +102,7 @@ public class MakeRoom2 extends JFrame implements ActionListener, KeyListener{
 //		draw.setSize(900,900);
 		
 		user_font = new Font("맑은 고딕", Font.PLAIN, 30);
+		word_font = new Font("나눔고딕", Font.BOLD, 30);
 //		score_font = new Font("맑은 고딕", 15);
 		lb_user1.setFont(user_font);
 		lb_user2.setFont(user_font);
@@ -189,7 +190,16 @@ public class MakeRoom2 extends JFrame implements ActionListener, KeyListener{
 		p_word.add(lb_answer, BorderLayout.NORTH);
 		p_word.add(lb_answerWord, BorderLayout.EAST);
 			lb_answer.setPreferredSize(new Dimension(43, 30));
-			
+			lb_answerWord.setFont(word_font);
+		lb_answer.setVerticalAlignment(SwingConstants.CENTER);
+		lb_answer.setHorizontalAlignment(SwingConstants.RIGHT);
+		
+		lb_answerWord.setVerticalAlignment(SwingConstants.CENTER);
+		lb_answerWord.setHorizontalAlignment(SwingConstants.LEFT);
+//		p_wor.setVerticalAlignment(SwingConstants.BOTTOM);   
+//		lb_user4.setHorizontalAlignment(SwingConstants.CENTER); 
+//		lb_score4.setVerticalAlignment(SwingConstants.TOP);     
+//		lb_score4.setHorizontalAlignment(SwingConstants.CENTER);	
 		
 		p_drawCanvas.setBorder(new LineBorder(new Color(0, 0, 0)));
 		p_drawCanvas.setForeground(Color.BLACK);
