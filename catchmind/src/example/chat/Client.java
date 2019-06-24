@@ -249,13 +249,38 @@ public class Client {
 							
 							
 							if(seat == 1) {
-								makeRoom.lb_user1.setText(id);								
+								if(id.equals(nick)) {
+									makeRoom.lb_user1.setForeground(Color.RED);
+									makeRoom.lb_user1.setText(id);
+								}else {
+									makeRoom.lb_user1.setForeground(Color.BLACK);
+									makeRoom.lb_user1.setText(id);		
+								}
+														
 							}else if(seat == 2) {
-								makeRoom.lb_user2.setText(id);
+								if(id.equals(nick)) {
+									makeRoom.lb_user2.setForeground(Color.RED);
+									makeRoom.lb_user2.setText(id);
+								}else {
+									makeRoom.lb_user2.setForeground(Color.BLACK);
+									makeRoom.lb_user2.setText(id);		
+								}
 							}else if(seat == 3) {
-								makeRoom.lb_user3.setText(id);
+								if(id.equals(nick)) {
+									makeRoom.lb_user3.setForeground(Color.RED);
+									makeRoom.lb_user3.setText(id);
+								}else {
+									makeRoom.lb_user3.setForeground(Color.BLACK);
+									makeRoom.lb_user3.setText(id);		
+								}
 							}else if(seat == 4) {
-								makeRoom.lb_user4.setText(id);
+								if(id.equals(nick)) {
+									makeRoom.lb_user4.setForeground(Color.RED);
+									makeRoom.lb_user4.setText(id);
+								}else {
+									makeRoom.lb_user4.setForeground(Color.BLACK);
+									makeRoom.lb_user4.setText(id);		
+								}
 							}
 							
 							break;
