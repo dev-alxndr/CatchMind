@@ -138,11 +138,12 @@ public class Server {
 							case 310:
 								int result = start_game(userInfoMap.getHost());
 								if(result == 1) {
-									sendAll("310#"+message);
+									sendAll("319#"+message);
 									break;
 								}else {
 									System.out.println("인원이 부족해요");
 								}
+								break;
 							case 311: // 첫번째
 								set_FirstXY(message);
 								break;
@@ -169,6 +170,8 @@ public class Server {
 								break;
 							case 600:
 								System.out.println("From Android : " + message);
+								break;
+			
 							}
 						}
 					}
@@ -238,13 +241,14 @@ public class Server {
 				get_players();
 				String msg = "202#" + nick + "(이)가 입장하셨습니다."; // 사용자가 입장하셧습니다.
 				sendAll(msg);
+				System.out.println("system : "+ msg);
 				if (userInfoMap.size() == 1) {
 					userInfoMap.get().get(nick).host = true;
 				}
+				
 				if(userInfoMap.size() == 2) {
-//					start_game(userInfoMap.getHost());
+					start_game(userInfoMap.getHost());
 				}
-
 			}
 
 			void join_msg(String nick) {

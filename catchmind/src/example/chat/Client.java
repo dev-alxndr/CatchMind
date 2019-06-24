@@ -276,9 +276,10 @@ public class Client {
 							//Notice notice3 = new Notice();
 //							notice3.text(message);
 //							notice3.display("차례");
-							makeRoom.btn_start.setVisible(false);
+							
 							draw.turn = true;
 							mc.check = true;
+							System.out.println("my turn");
 							break;
 							
 						case 312:	// 첫 포인트.
@@ -314,6 +315,9 @@ public class Client {
 //							
 //							notice4.text(message);
 //							notice4.display("차례");
+							break;
+						case 319:
+							makeRoom.btn_start.setVisible(false);
 							break;
 						case 320:
 							st = new StringTokenizer(message, "*");
