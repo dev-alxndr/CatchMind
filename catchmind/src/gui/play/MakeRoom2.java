@@ -80,8 +80,8 @@ public class MakeRoom2 extends JFrame implements ActionListener, KeyListener{
 		
 		//중앙
 		p_center = new JPanel();
-		p_word = new JPanel(new GridLayout(1, 2));
-		lb_answer = new JLabel("정답 : ");
+		p_word = new JPanel(new BorderLayout());
+//		lb_answer = new JLabel("정답 : ");
 		lb_answerWord = new JLabel("정답 단어");
 		p_drawCanvas = new JPanel();
 		p_chat = new JPanel();
@@ -187,19 +187,10 @@ public class MakeRoom2 extends JFrame implements ActionListener, KeyListener{
 
 		p_word.setBorder(new LineBorder(new Color(0, 0, 0)));
 		p_word.setLayout(new BorderLayout(0, 0));
-		p_word.add(lb_answer, BorderLayout.NORTH);
-		p_word.add(lb_answerWord, BorderLayout.EAST);
-			lb_answer.setPreferredSize(new Dimension(43, 30));
+		p_word.add(lb_answerWord, BorderLayout.CENTER);
+		lb_answerWord.setHorizontalAlignment(SwingConstants.CENTER);
 			lb_answerWord.setFont(word_font);
-		lb_answer.setVerticalAlignment(SwingConstants.CENTER);
-		lb_answer.setHorizontalAlignment(SwingConstants.RIGHT);
-		
-		lb_answerWord.setVerticalAlignment(SwingConstants.CENTER);
-		lb_answerWord.setHorizontalAlignment(SwingConstants.LEFT);
-//		p_wor.setVerticalAlignment(SwingConstants.BOTTOM);   
-//		lb_user4.setHorizontalAlignment(SwingConstants.CENTER); 
-//		lb_score4.setVerticalAlignment(SwingConstants.TOP);     
-//		lb_score4.setHorizontalAlignment(SwingConstants.CENTER);	
+//		lb_answerWord.setVerticalAlignment(SwingConstants.CENTER);
 		
 		p_drawCanvas.setBorder(new LineBorder(new Color(0, 0, 0)));
 		p_drawCanvas.setForeground(Color.BLACK);
