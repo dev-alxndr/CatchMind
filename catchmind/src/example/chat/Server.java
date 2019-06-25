@@ -380,20 +380,26 @@ public class Server {
 				System.out.println(word + "/" + answerWord);
 				String chk = "";
 				///////// 480 = 정답나옴.
-				if (word.equals(answerWord)) {
-					System.out.println("정답자 나옴.");
-					
-					chk = "480#" + id + "]정답을 맞추셨습니다. 정답은 " + answerWord + "입니다.";
-					sendAll(chk);
-					db.update_score(getUser(id));
-					
-					System.out.println(getUser(id)+"&&&&&&&&");
-					start_game(userInfoMap.getUser(getUser(id)));
+				if(!userInfoMap.getTurn().name.equals(id)) {
+					if (word.equals(answerWord)) {
+						
+						System.out.println("정답자 나옴.");
+						
+						chk = "480#" + id + "]정답을 맞추셨습니다. 정답은 " + answerWord + "입니다.";
+						sendAll(chk);
+						db.update_score(getUser(id));
+						
+						System.out.println(getUser(id)+"&&&&&&&&");
+						start_game(userInfoMap.getUser(getUser(id)));
 
-				} else {
-					//정답 아닐 경우 그냥 채팅임.
-					sendAll("400#" + message);
+					} else {
+						//정답 아닐 경우 그냥 채팅임.
+						sendAll("400#" + message);
+					}
+				}else {
+					sendAll("400#"+message);
 				}
+				
 			}
 
 			public String getUser(String msg) {
