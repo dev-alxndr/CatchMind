@@ -35,7 +35,7 @@ public class Server {
 		try {
 			ss = new ServerSocket(PORT);
 			System.out.println("Server Running....");
-			// HashMap<String, Object> map = new HashMap<String, Object>();
+	
 			db = new AccessDB(); // DB 생성
 			while (true) {
 				System.out.println("waiting....");
@@ -55,22 +55,17 @@ public class Server {
 
 	class RunServer {
 		private Socket socket;
-		// private HashMap<String, Object> map;
+		
 		private String nick = "";
 		private PrintWriter pw;
 		private BufferedReader br;
-		// UserInfoMap userInfoMap;
+		
 
 		RunServer(Socket socket) {
 			try {
-				// this.map = map;// 사용자 객체를 담을 HashMap
+				
 				this.socket = socket;
-				//
-
-				// br = new BufferedReader(new InputStreamReader(socket.getInputStream()));
-				//
-				// nick = br.readLine();
-				// System.out.println(nick + "접속");
+			
 
 				pw = new PrintWriter(socket.getOutputStream());
 
@@ -205,12 +200,12 @@ public class Server {
 
 				String nick = db.do_login(id, password);
 				if (!nick.equals("")) { // null이 아니면 로그인 성공
-					pw.println("100#" + nick); // 1 = sucess
+					pw.println("100#" + nick); 
 					pw.flush();
 					readyForGame(nick);
 
 				} else {
-					pw.println("100#" + nick); // 0 = failed
+					pw.println("100#" + nick); 
 					pw.flush();
 				}
 			}
@@ -280,7 +275,7 @@ public class Server {
 
 				msg = "460#" + answerWord;
 				return msg;
-				// sendAll(msg);
+				
 			}
 
 			//////Start Flag/////
@@ -322,7 +317,7 @@ public class Server {
 			}
 
 			void set_FirstXY(String message) {		//  나 아닌 다른 사람들에게 전송
-				//UserInfo user = userInfoMap.getTurn();
+				
 				Iterator<String> it = userInfoMap.get().keySet().iterator();
 				while (it.hasNext()) {
 					try {
@@ -391,11 +386,12 @@ public class Server {
 					chk = "480#" + id + "]정답을 맞추셨습니다. 정답은 " + answerWord + "입니다.";
 					sendAll(chk);
 					db.update_score(getUser(id));
-					//give_me_question();
+					
 					System.out.println(getUser(id)+"&&&&&&&&");
 					start_game(userInfoMap.getUser(getUser(id)));
 
 				} else {
+					//정답 아닐 경우 그냥 채팅임.
 					sendAll("400#" + message);
 				}
 			}

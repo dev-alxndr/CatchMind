@@ -205,13 +205,12 @@ public class Client {
 							if(!message.equals("")) {
 								login.setVisible(false);
 								
-								//String str = "200#"+nick;
+								
 								System.out.println("[Client] Success LogIn");
 								makeRoom = new MakeRoom2(client);								
 								nick = message;
 								makeRoom.display();
-								//pw.println(str);
-								//pw.flush();
+								
 							}else {
 								Notice notice = new Notice();
 								
@@ -297,10 +296,6 @@ public class Client {
 							mc.repaint();
 							break;
 						case 310:		// 내 차례
-							//appendChat(message);
-							//Notice notice3 = new Notice();
-//							notice3.text(message);
-//							notice3.display("차례");
 							
 							draw.turn = true;
 							mc.check = true;
@@ -336,10 +331,7 @@ public class Client {
 							draw.turn = false;
 							mc.check = false;
 							makeRoom.lb_answerWord.setText("");
-//							Notice notice4 = new Notice();
-//							
-//							notice4.text(message);
-//							notice4.display("차례");
+
 							break;
 						case 319:
 							makeRoom.btn_start.setVisible(false);
@@ -368,7 +360,11 @@ public class Client {
 							break;
 						case 480:	// 정답 시
 							System.out.println("---정답:"+message);
-							//appendChat(message);
+					
+							// 빠르게 비활성화
+							draw.turn = false;
+							mc.check = false;
+							
 							draw.graphic = mc.getGraphics();
 							draw.graphic.clearRect(0, 0, 900, 900);
 							Notice notice2 = new Notice();
@@ -380,7 +376,7 @@ public class Client {
 				}
 
 			} catch (IOException e) {
-				// TODO Auto-generated catch block
+	
 				e.printStackTrace();
 			}
 		}
