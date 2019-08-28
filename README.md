@@ -7,5 +7,3 @@
 ## 3. 통신 프로토콜을 정의합니다.
 
 ### 감사합니다.
-
-fgdfgdfgdgfdfgdgfdfg
